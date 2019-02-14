@@ -1,0 +1,11 @@
+^examples/*
+^\.travis\.yml$
+^codecov\.yml$
+^CONTRIBUTING.md$
+^NEWS.md$
+^README.md$
+^.*\.Rout$
+^.*\.Rproj$
+^\.Rproj\.user$
+^.*makefile$
+^.*\.tar\.gz$
