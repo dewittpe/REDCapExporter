@@ -1,0 +1,100 @@
+#' Export REDCap Project
+#'
+#' Using the REDCap API, export parts of the project
+#'
+#' To export the data from a REDCap project you will need to have an API Token.
+#' Remember, the token is the equivalent of a username and password.  As such
+#' you should not list the token in plan text.  Several alternative methods for
+#' passing the token to this method will be provided in examples and vignettes.
+#' We strongly encourage the use of the pacakge secret
+#' \url{https://cran.r-project.org/package=secret} to build vaults to store
+#' tokens locally.
+#'
+#' The initial export will consist of four pieces of data, the user data,
+#' metadata, proejct info, and records.
+#'
+#' @param uri The URI for the REDCap API.  This is passed to
+#' \code{\link[RCurl]{postForm}}.
+#' @param token The API token for a REDCap project.
+#' @param other_exports Other things to export from REDCap **To be implimented**
+#' @param path Path where the exported project source will be
+#' created/overwritten.
+#'
+#' @examples
+#' \dontrun{
+#' ## Set up a vault for your API token, if you haven't already.  For more info see
+#' ## vignette(topic = "secrets", package = "secret")
+#'
+#' library(secret)
+#'
+#' export_redcap_project(uri = "https://redcap.ucdenver.edu/api/",
+#'                       token =  get_secret("project10734", key = "~/.ssh/vaults"))
+#' }
+#' @export
+export_redcap_project <- function(uri, token, other_exports, path = NULL) {
+  project_info_raw <- export_content(uri = uri, token = token, content = "project")
+  metadata_raw     <- export_content(uri = uri, token = token, content = "metadata")
+  user_raw         <- export_content(uri = uri, token = token, content = "user")
+  records_raw      <- export_content(uri = uri, token = token, content = "record") 
+
+  access_time  <- Sys.time()
+
+  project_info <- data.table::fread(project_info_raw)
+  user         <- data.table::fread(user_raw)
+
+  # VERIFY WHO IS DOING THE EXPORT
+  # user[api_export == 1, username:lastname]
+
+  if (is.null(path)) {
+    path <- "."
+  }
+  path <- normalizePath(paste0(path, "/rcd", project_info$project_id), mustWork = FALSE)
+  
+  if (dir.exists(path)) {
+    message(sprintf("Exporting to %s\nFiles will be overwritten and updated.", path))
+  } else {
+    message(sprintf("Creating source package at %s", path))
+    dir.create(path)
+  }
+
+  # Create the DESCRIPTION FILE
+  foo <- function(fn, ln, em) { 
+    paste0("c(", paste(sprintf("person(\"%s\", \"%s\", \"%s\")", fn, ln, em), collapse = ",\\n"), ")")
+  }
+  DESCRIPTION_FILE <- list(Package = paste0("rcd", project_info$project_id),
+                           Title   = project_info$project_title,
+                           Version = paste(formatC(lubridate::year(access_time), width = 4),
+                                           formatC(lubridate::month(access_time), width = 2, flag = 0),
+                                           formatC(lubridate::day(access_time), width = 2, flag = 0),
+                                           formatC(lubridate::hour(access_time), width = 2, flag = 0),
+                                           formatC(lubridate::minute(access_time), width = 2, flag = 0),
+                                           sep = "."),
+                           "Authors@R" = foo(user$firstname, user$lastname, user$email) 
+                           )
+  write.dcf(DESCRIPTION_FILE, file = paste(path, "DESCRIPTION", sep = "/"))
+
+
+
+  invisible()
+}
+
+#' Export Content
+#'
+#' Export specific data elemetns from REDCap
+#'
+#' The \code{content} and \code{format} arguements are used to control the
+#' specific items to be exported, and in what format.  **Review the API
+#' documentation**
+#'
+#' @param uri The URI for the REDCap API.
+#' @param token The API token for the projedct you want to export from.
+#' @param content The element to export, see Details.
+#' @param format The format to return.
+#' @param ... additional arguments passed to \code{\link[RCurl]{postForm}}.
+#'
+#' @export
+export_content <- function(uri, token, content, format = "csv", ...) {
+  RCurl::postForm(uri = uri, token = token, content = content, format = format, ...)
+}
+
+#' 
