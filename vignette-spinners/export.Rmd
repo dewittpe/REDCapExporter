@@ -1,0 +1,60 @@
+---
+title: "REDCap ExporteR"
+author: "Peter DeWitt"
+date: "`r Sys.Date()`"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: true
+vignette: >
+ %\VignetteIndexEntry{export}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+
+```{r label = "setup", include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+
+
+```{r }
+3
+# what is this?
+#
+```
+
+
+
+# Introduction
+
+This is the opening paragaph
+
+```{r }
+2 + 3
+
+lm(mpg ~ wt, data = mtcars)
+```
+
+
+What is this paragraph?
+
+more?
+
+
+
+```{r }
+3 + 3
+4 + 4
+```
+
+
+
+# Session Info
+
+
+```{r }
+print(sessionInfo(), local = FALSE)
+```
+
