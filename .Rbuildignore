@@ -9,3 +9,4 @@
 ^\.Rproj\.user$
 ^.*makefile$
 ^.*\.tar\.gz$
+inst/vault/*
