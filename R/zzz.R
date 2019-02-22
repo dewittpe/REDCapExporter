@@ -1,3 +1,3 @@
 .onLoad <- function(libpath, pkgname) {
-  options(REDCap_format = "csv")
+  Sys.setenv(REDCap_API_format = "csv")
 }

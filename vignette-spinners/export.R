@@ -36,20 +36,16 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' TOKEN IN PLAIN TEXT!**
 #'
 #' There are many ways to deal with tokens.  One option would be two require the
-#' end user to enter the key interactively.  For example:
-# /*
-if (interactive()) { } else {
-# */
-#+ label = "getPass_example"
-not_a_real_token <- getPass::getPass()
-# /*
-}
-# */
+#' end user to enter the key interactively via
+#' [getPass](https://cran.r-project.org/package=getPass), e.g.,
+#'
+#+ label = "getPass"
+# a_token <- getPass::getPass()
 #'
 #' However, there are at least two issues with this approach:
 #'
 #' 1. It is interactive and cannot be scripted.
-#' 2. In the example above, storing the token in an object would make it
+#' 2. Storing the token in an object would make it
 #' possible to divulge the token, either accidentally or via malicious intent.
 #'
 #' A better way to handle API tokens is to use the
@@ -61,28 +57,109 @@ not_a_real_token <- getPass::getPass()
 #' Accessing the secret in scripts can be done non-interactively and will a
 #' lower chance of accidental or malicious divulging of a token.
 #'
+#' For the rest of this vignette we will use `secret::get_secret()` to assess a
+#' REDCap API token.
+#'
+#' ## Namespaces, Options, and System Environment Variables
+#'
+#' For this example we will load and attach the following namespaces and set
+#' several options and system environment variables.
+#'
+#+ label = "namespacesAndOptions"
+library(REDCapExporteR)
+library(data.table)
+library(magrittr)
+library(secret)
+library(qwraps2)
+
+options("datatable.print.topn"  = 3)
+options("datatable.print.nrows" = 6)
+
+# private key needed to access the vault
+Sys.setenv(USER_KEY = "~/.ssh/vaults")
+
+# REDCap API uri and token
+Sys.setenv(REDCap_API_uri = "https://redcap.ucdenver.edu/api/")
+Sys.setenv(REDCap_API_TOKEN = get_secret("2000_2001_Avalanche"))
+
+# Set the option the format the data will be returned in.  Possible values are
+# 'csv', 'xml', or 'json'. The default is 'csv', set when
+# qwraps2::Rpkg(REDCapExporteR) is loaded.
+Sys.getenv("REDCap_API_format")
+
+#'
 # /* }}} */
 #'
 # /* Exporting a REDCap Project {{{ */
+#'
 #' # Exporting a REDCap Project
 #'
-#' The primary objective of the {{qwraps2::Rpkg(REDCapExporteR)}} is to export
+#' The primary objective of the `r qwraps2::Rpkg(REDCapExporteR)` is to export
 #' all the data from an REDCap project via the REDCap API and build a R data
 #' package with useful documentation and tools.  The data package will make it
 #' easy to archive data and distribute data, in an analysis ready format, within
 #' a group of analysts.
 #'
-#' **Disclaimer: It is the responsibility of the end user to protect sensitive
-#' data.  Do not use `r qwraps2::Rpkg(REDCapExporteR)` to export data onto a
-#' computer that should not have sensitive data stored on it.  Further, do not
-#' distribute the resulting R package to any other machine or person who does
-#' not have data access rights.**
+#' **Disclaimer and Warning:** It is the responsibility of the end user to
+#' protect sensitive data.  Do not use `r qwraps2::Rpkg(REDCapExporteR)` to
+#' export data onto a computer that should not have sensitive data stored on it.
+#' Further, do not distribute the resulting R package to any other machine or
+#' person who does not have data access rights.
 #'
-#' For the example in this vignette we used
+#' For the example in this vignette we created a REDCap project storing the
+#' roster and statistics for the 2000-2001 Stanley Cup Champion Colorado
+#' Avalanche of the National Hockey League.  The data was acquired from the
+#' web page [Hockey
+#' Reference](https://www.hockey-reference.com/teams/COL/2001.html).
+#'
+#' ## Specific Export Methods
+#'
+#' The `r qwraps2::Rpkg(REDCapExporteR)` method `export_content` can be used to
+#' export specific parts of a REDCap project. Three of the arguments, `uri`,
+#' `token`, and `format`, passed to
+#' `export_content`, if omitted, will default to the system environment
+#' variables.  Thus, only the `content` argument must be defined by the user.
+#' Additional arguments for the API are passed via the `...`.  Check your
+#' specific REDCap API documentation.
+#'
+str(export_content)
+
+#'
+#' For example, the project information and project metadata can be exported
+#' via:
+project_info <- export_content(content = "project")
+metadata     <- export_content(content = "metadata")
+
+#'
+#' The return object from `export_content` are character strings as you would
+#' expect from a call to `postForm` from the
+#' [`r qwraps2::Rpkg(RCurl)`](https://cran.r-project.org/package=RCurl) package.
+#' A couple additional attributes have been added.  The `Sys.time` for the call
+#' and the class `rcer_*` where `*` is replaced by the value of the `content`
+#' argument.
+#'
+#' We opted to have `export_content` return a character string such that the end
+#' user can may select the format for the return and use the tool of their
+#' choice for creating a `data.frame`.  For example, creating a `data.table`
+#' from the csv or json formats.
+from_csv <- data.table::fread(input = metadata, colClasses = "character")
+
+from_json <-
+  export_content(content = "metadata", format = "json") %>%
+  rjson::fromJSON(json_str = .) %>%
+  lapply(as.data.table) %>%
+  rbindlist
+
+identical(from_csv, from_json)
+
 #'
 #'
 # /* }}} */
 #'
+# /* Session Info {{{ */
+#'
 #' # Session Info
 #'
 print(sessionInfo(), local = FALSE)
+#
+# /* }}} */

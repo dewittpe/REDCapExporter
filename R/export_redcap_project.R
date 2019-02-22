@@ -21,21 +21,14 @@
 #' created/overwritten.
 #'
 #' @examples
-#' \dontrun{
-#' ## Set up a vault for your API token, if you haven't already.  For more info see
-#' ## vignette(topic = "secrets", package = "secret")
-#'
-#' library(secret)
-#'
-#' export_redcap_project(uri = "https://redcap.ucdenver.edu/api/",
-#'                       token =  get_secret("project10734", key = "~/.ssh/vaults"))
-#' }
+#' ## Please read the vignette for examples:
+#' ## vignette(topic = "export", package = "REDCapExporteR")
 #' @export
 export_redcap_project <- function(uri, token, other_exports, path = NULL) {
   project_info_raw <- export_content(uri = uri, token = token, content = "project")
   metadata_raw     <- export_content(uri = uri, token = token, content = "metadata")
   user_raw         <- export_content(uri = uri, token = token, content = "user")
-  records_raw      <- export_content(uri = uri, token = token, content = "record") 
+  records_raw      <- export_content(uri = uri, token = token, content = "record")
 
   access_time  <- Sys.time()
 
@@ -49,7 +42,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL) {
     path <- "."
   }
   path <- normalizePath(paste0(path, "/rcd", project_info$project_id), mustWork = FALSE)
-  
+
   if (dir.exists(path)) {
     message(sprintf("Exporting to %s\nFiles will be overwritten and updated.", path))
   } else {
@@ -58,7 +51,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL) {
   }
 
   # Create the DESCRIPTION FILE
-  foo <- function(fn, ln, em) { 
+  foo <- function(fn, ln, em) {
     paste0("c(", paste(sprintf("person(\"%s\", \"%s\", \"%s\")", fn, ln, em), collapse = ",\\n"), ")")
   }
   DESCRIPTION_FILE <- list(Package = paste0("rcd", project_info$project_id),
@@ -69,7 +62,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL) {
                                            formatC(lubridate::hour(access_time), width = 2, flag = 0),
                                            formatC(lubridate::minute(access_time), width = 2, flag = 0),
                                            sep = "."),
-                           "Authors@R" = foo(user$firstname, user$lastname, user$email) 
+                           "Authors@R" = foo(user$firstname, user$lastname, user$email)
                            )
   write.dcf(DESCRIPTION_FILE, file = paste(path, "DESCRIPTION", sep = "/"))
 
@@ -93,8 +86,25 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL) {
 #' @param ... additional arguments passed to \code{\link[RCurl]{postForm}}.
 #'
 #' @export
-export_content <- function(uri, token, content, format = "csv", ...) {
-  RCurl::postForm(uri = uri, token = token, content = content, format = format, ...)
+export_content <- function(uri, token, content, format, ...) {
+
+  if (missing(uri)) {
+    uri <- Sys.getenv("REDCap_API_uri")
+  }
+
+  if (missing(token)) {
+    token <- Sys.getenv("REDCap_API_TOKEN")
+  }
+
+  if (missing(format)) {
+    format <- Sys.getenv("REDCap_API_format")
+  }
+
+  x <- RCurl::postForm(uri = uri, token = token, content = content, format = format, ...)
+
+  attr(x, "accessed") <- Sys.time()
+  class(x)            <- c(paste0("rcer_", content), class(x))
+
+  x
 }
 
-#' 
