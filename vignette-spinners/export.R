@@ -109,10 +109,15 @@ Sys.getenv("REDCap_API_format")
 #' For the example in this vignette we created a REDCap project storing the
 #' roster and statistics for the 2000-2001 Stanley Cup Champion Colorado
 #' Avalanche of the National Hockey League.  The data was acquired from the
-#' web page [Hockey
-#' Reference](https://www.hockey-reference.com/teams/COL/2001.html).
+#' web page
+#' [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html).
+#'
+# /* Specific Export Methods {{{ */
 #'
 #' ## Specific Export Methods
+#'
+#' The methods presented here are for one offs.  There are more generic
+#' functions for exporting the whole REDCap project.
 #'
 #' The `r qwraps2::Rpkg(REDCapExporteR)` method `export_content` can be used to
 #' export specific parts of a REDCap project. Three of the arguments, `uri`,
@@ -152,9 +157,39 @@ from_json <-
 
 identical(from_csv, from_json)
 
+# /* end specific export methods }}} */
 #'
 #'
-# /* }}} */
+# /* Data Import Tools {{{ */
+#'
+#' ## Data Import Tools
+#'
+#' When working with REDCap data it is likely that you will have more collumns
+#' than you would want to have to code a data import method for yourself.  This
+#' is especially true if you need to deal with columns that may look like
+#' numeric values but are really categorical.  We provide some tools to help
+#' with the data import process.
+#'
+#' First, you will need to get the project metadata.
+avs_raw_metadata <- export_content(content = "metadata")
+str(avs_raw_metadata)
+
+#'
+#' There are `as.data.frame` and `as.data.table` methods for getting the
+#' metadata into a useful format.
+avs_metadata <- as.data.table(avs_raw_metadata)
+str(avs_metadata)
+
+#'
+#' The function `col_type` will take the metadata and return ...
+col_type(avs_metadata)
+
+# avs_records  <- export_content(content = "record")
+
+#'
+# /* End of "Data Import Tools }}} */
+#'
+# /* End of "Exporting a REDCap Project" }}} */
 #'
 # /* Session Info {{{ */
 #'
