@@ -103,7 +103,7 @@ export_content <- function(uri, token, content, format, ...) {
   x <- RCurl::postForm(uri = uri, token = token, content = content, format = format, ...)
 
   attr(x, "accessed") <- Sys.time()
-  class(x)            <- c(paste0("rcer_", content), class(x))
+  class(x)            <- c(paste0("rcer_raw_", content), class(x))
 
   x
 }
