@@ -84,7 +84,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL) {
 #' @param ... additional arguments passed to \code{\link[RCurl]{postForm}}.
 #'
 #' @export
-export_content <- function(uri, token, content, format = "csv", ...) {
+export_content <- function(uri, token, content, format, ...) {
 
   if (missing(uri)) {
     uri <- Sys.getenv("REDCap_API_uri")
