@@ -1,4 +1,4 @@
-# REDCapExporteR
+# REDCapExporter
 
 Download the data from a [REDCap](https://www.project-redcap.org/)
 project and package the data into a useful R data package.

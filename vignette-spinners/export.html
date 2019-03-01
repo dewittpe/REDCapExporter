@@ -14,7 +14,7 @@
 
 <meta name="date" content="2019-03-01" />
 
-<title>REDCap ExporteR</title>
+<title>REDCap Exporter</title>
 
 
 
@@ -298,7 +298,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">REDCap ExporteR</h1>
+<h1 class="title toc-ignore">REDCap Exporter</h1>
 <h4 class="author"><em>Peter DeWitt</em></h4>
 <h4 class="date"><em>2019-03-01</em></h4>
 
@@ -318,8 +318,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 
 <p>The purpose of this vignette is to show how to export a REDCap project into a R data package. There are some prerequisites, described in detail in the first section, you will need to address before running the examples.</p>
-<p>The primary objective of the <em>REDCapExporteR</em> is to export all the data from an REDCap project via the REDCap API and build a R data package with useful documentation and tools. The data package will make it easy to archive data and distribute data, in an analysis ready format, within a group of analysts.</p>
-<p><strong>Disclaimer and Warning:</strong> It is the responsibility of the end user to protect sensitive data. Do not use <em>REDCapExporteR</em> to export data onto a computer that should not have sensitive data stored on it. Further, do not distribute the resulting R package to any other machine or person who does not have data access rights.</p>
+<p>The primary objective of the <em>REDCapExporter</em> is to export all the data from an REDCap project via the REDCap API and build a R data package with useful documentation and tools. The data package will make it easy to archive data and distribute data, in an analysis ready format, within a group of analysts.</p>
+<p><strong>Disclaimer and Warning:</strong> It is the responsibility of the end user to protect sensitive data. Do not use <em>REDCapExporter</em> to export data onto a computer that should not have sensitive data stored on it. Further, do not distribute the resulting R package to any other machine or person who does not have data access rights.</p>
 <p>For the example in this vignette we created a REDCap project storing the roster and statistics for the 2000-2001 Stanley Cup Champion Colorado Avalanche of the National Hockey League. The data was acquired from the web page <a href="https://www.hockey-reference.com/teams/COL/2001.html">Hockey Reference</a>.</p>
 <div id="prerequisites-and-tokens" class="section level1">
 <h1><span class="header-section-number">1</span> Prerequisites and Tokens</h1>
@@ -338,7 +338,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="namespaces-options-and-system-environment-variables" class="section level2">
 <h2><span class="header-section-number">1.1</span> Namespaces, Options, and System Environment Variables</h2>
 <p>For this example we will load and attach the following namespaces and set several options and system environment variables.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(REDCapExporteR)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(REDCapExporter)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(data.table)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">library</span>(magrittr)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">library</span>(secret)</a>
@@ -359,14 +359,14 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb2-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co"># Set the option the format the data will be returned in.  Possible values are</span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co"># 'csv', 'xml', or 'json'. The default is 'csv', set when</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co"># qwraps2::Rpkg(REDCapExporteR) is loaded.</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co"># qwraps2::Rpkg(REDCapExporter) is loaded.</span></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="kw">Sys.getenv</span>(<span class="st">&quot;REDCap_API_format&quot;</span>)</a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">## [1] &quot;csv&quot;</span></a></code></pre></div>
 </div>
 </div>
 <div id="general-tools" class="section level1">
 <h1><span class="header-section-number">2</span> General Tools</h1>
-<p>The <em>REDCapExporteR</em> package provides several functions and methods which the user may find useful. These functions and methods are used within the package to export and create a R data package. Use of the methods for specific projects, say exporting data from a REDCap project for routine reports or interim analyses.</p>
+<p>The <em>REDCapExporter</em> package provides several functions and methods which the user may find useful. These functions and methods are used within the package to export and create a R data package. Use of the methods for specific projects, say exporting data from a REDCap project for routine reports or interim analyses.</p>
 <div id="specific-export-methods" class="section level2">
 <h2><span class="header-section-number">2.1</span> Specific Export Methods</h2>
 <p>The method <code>export_content</code> can be used to export specific parts of a REDCap project. Three of the arguments, <code>uri</code>, <code>token</code>, and <code>format</code>, passed to <code>export_content</code>, if omitted, will default to the system environment variables. Thus, only the <code>content</code> argument must be defined by the user. Additional arguments for the API are passed via the <code>...</code>. Check your specific REDCap API documentation.</p>
@@ -380,12 +380,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">##  'rcer_raw_project' chr &quot;project_id,project_title,creation_time,production_time,in_production,project_language,purpose,purpose_other,pro&quot;| __truncated__</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 11:06:01&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 14:02:48&quot;</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">str</span>(avs_raw_metadata)</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">##  'rcer_raw_metadata' chr &quot;field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid&quot;| __truncated__</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 11:06:02&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 14:02:48&quot;</span></a></code></pre></div>
 <p>We opted to have <code>export_content</code> return a character string such that the end user can may select the format for the return and use the tool of their choice for creating a <code>data.frame</code>. For example, creating a <code>data.table</code> from the csv or json formats.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">from_csv &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">fread</span>(<span class="dt">input =</span> avs_raw_metadata, <span class="dt">colClasses =</span> <span class="st">&quot;character&quot;</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
@@ -576,33 +576,92 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 <div id="exporting-a-redcap-project-to-a-r-data-package." class="section level1">
 <h1><span class="header-section-number">3</span> Exporting a REDCap Project to a R Data Package.</h1>
+<p>Exporting a REDCap project to a R data package is done with a call to <code>export_redcap_project()</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">str</span>(export_redcap_project)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">## function (uri, token, other_exports, path = NULL, verbose = TRUE)</span></a></code></pre></div>
+<p>The <code>path</code> argument is a directory on your machine were the R data package is going to be built. For this vignette we will use a temporary directory.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">temppath &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a></code></pre></div>
+<p>The exported package name and directory will be <code>rcd&lt;project-id&gt;</code>, that is, <code>rcd</code> for ‘REDCap Data’ and the project-id which, for this example is:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">as.data.frame</span>(avs_raw_project_info)<span class="op">$</span>project_id</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">## [1] &quot;14465&quot;</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">avs_raw_user &lt;-<span class="st"> </span><span class="kw">export_content</span>(<span class="dt">content =</span> <span class="st">&quot;user&quot;</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="kw">as.data.frame</span>(avs_raw_user)</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">##   username                     email firstname lastname expiration</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">## 1  dewittp peter.dewitt@ucdenver.edu     Peter   DeWitt           </span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">##   data_access_group data_access_group_id design user_rights</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">## 1                                             1           1</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">##   data_access_groups data_export reports stats_and_charts</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">## 1                  1           1       1                1</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">##   manage_survey_participants calendar data_import_tool</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">## 1                          1        1                1</span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">##   data_comparison_tool logging file_repository data_quality_create</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">## 1                    1       1               1                   1</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">##   data_quality_execute api_export api_import mobile_app</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">## 1                    1          1          0          1</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">##   mobile_app_download_data record_create record_rename record_delete</span></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">## 1                        1             1             0             0</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">##   lock_records_all_forms lock_records lock_records_customization</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">## 1                      0            0                          0</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">##                                                                                                      forms</span></a>
+<a class="sourceLine" id="cb13-22" data-line-number="22"><span class="co">## 1 roster:1,regular_season_scoring:1,regular_season_goalies:1,post_season_scoring:1,post_season_goalies_2:1</span></a></code></pre></div>
+<p>Thus we expect the source package to be at</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">prj_path &lt;-</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">paste</span>(temppath, <span class="kw">paste0</span>(<span class="st">&quot;rcd&quot;</span>, <span class="kw">as.data.frame</span>(avs_raw_project_info)<span class="op">$</span>project_id), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">prj_path</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">## [1] &quot;/tmp/RtmpUgYo6b/rcd14465&quot;</span></a></code></pre></div>
+<p>Exporting the project</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">export_redcap_project</span>(<span class="dt">path =</span> temppath)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">## Getting Project Info</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">## Getting project metadata</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">## Getting user data</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">## Getting project record</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">## Creating source package at /tmp/RtmpUgYo6b/rcd14465</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="kw">list.files</span>(prj_path, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">## [1] &quot;DESCRIPTION&quot;                    &quot;inst/raw-data/metadata.rds&quot;    </span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">## [3] &quot;inst/raw-data/project_info.rds&quot; &quot;inst/raw-data/records.rds&quot;     </span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">## [5] &quot;inst/raw-data/user.rds&quot;         &quot;LICENSE&quot;</span></a></code></pre></div>
+<p>Let’s look at some of the files which have been placed into the project path. We will start with the DESCRIPTION file.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">read.dcf</span>(<span class="kw">paste</span>(prj_path, <span class="st">&quot;DESCRIPTION&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">##      Package    Title                          Version           </span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">## [1,] &quot;rcd14465&quot; &quot;2000-2001 Colorado Avalanche&quot; &quot;2019.03.01.14.03&quot;</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">##      Authors@R                                                        </span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">## [1,] &quot;c(person(\&quot;Peter\&quot;, \&quot;DeWitt\&quot;, \&quot;peter.dewitt@ucdenver.edu\&quot;))&quot;</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">##      Description                                       License       </span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">## [1,] &quot;Data and documentation from the REDCap Project.&quot; &quot;file LICENSE&quot;</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">##      Encoding LazyData Suggests VignetteBuilder</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">## [1,] &quot;UTF-8&quot;  &quot;true&quot;   &quot;knitr&quot;  &quot;knitr&quot;</span></a></code></pre></div>
+<p>The package name is as noted above, the verions number is worth noting, the version is the year.month.day.hour.minute for when the data was exported from REDCap.</p>
+<p>The Author field is also of note. Authors are ge</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># write_authors(avs_raw_user)</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co"># devtools::check(pkg = prj_path)</span></a></code></pre></div>
 </div>
 <div id="session-info" class="section level1">
 <h1><span class="header-section-number">4</span> Session Info</h1>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">local =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">## R Under development (unstable) (2019-01-13 r75986)</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">## Running under: Debian GNU/Linux 9 (stretch)</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">## </span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">## Matrix products: default</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">## BLAS/LAPACK: /usr/lib/libopenblasp-r0.2.19.so</span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">## </span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">## attached base packages:</span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">## </span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">## other attached packages:</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">## [1] qwraps2_0.4.0             secret_1.0.0             </span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">## [3] magrittr_1.5              data.table_1.12.0        </span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">## [5] REDCapExporteR_0.0.0.9000</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">## </span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">## loaded via a namespace (and not attached):</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">##  [1] Rcpp_1.0.0       knitr_1.21       rjson_0.2.20     rlang_0.3.1     </span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">##  [5] stringr_1.4.0    tools_3.6.0      xfun_0.5         htmltools_0.3.6 </span></a>
-<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">##  [9] askpass_1.1      openssl_1.2.2    yaml_2.2.0       digest_0.6.18   </span></a>
-<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">## [13] assertthat_0.2.0 rprojroot_1.3-2  bitops_1.0-6     RCurl_1.95-4.11 </span></a>
-<a class="sourceLine" id="cb11-22" data-line-number="22"><span class="co">## [17] curl_3.3         evaluate_0.13    rmarkdown_1.11   stringi_1.3.1   </span></a>
-<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="co">## [21] compiler_3.6.0   backports_1.1.3  lubridate_1.7.4  jsonlite_1.6</span></a>
-<a class="sourceLine" id="cb11-24" data-line-number="24"><span class="co">#</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">local =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">## R Under development (unstable) (2019-01-13 r75986)</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">## Running under: Debian GNU/Linux 9 (stretch)</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">## </span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">## Matrix products: default</span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">## BLAS/LAPACK: /usr/lib/libopenblasp-r0.2.19.so</span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">## </span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">## attached base packages:</span></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">## </span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">## other attached packages:</span></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">## [1] qwraps2_0.4.0             secret_1.0.0             </span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">## [3] magrittr_1.5              data.table_1.12.0        </span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">## [5] REDCapExporter_0.0.0.9000</span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">## </span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">## loaded via a namespace (and not attached):</span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">##  [1] Rcpp_1.0.0       knitr_1.21       rjson_0.2.20     rlang_0.3.1     </span></a>
+<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="co">##  [5] stringr_1.4.0    tools_3.6.0      xfun_0.5         htmltools_0.3.6 </span></a>
+<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="co">##  [9] askpass_1.1      openssl_1.2.2    yaml_2.2.0       digest_0.6.18   </span></a>
+<a class="sourceLine" id="cb18-21" data-line-number="21"><span class="co">## [13] assertthat_0.2.0 rprojroot_1.3-2  bitops_1.0-6     RCurl_1.95-4.11 </span></a>
+<a class="sourceLine" id="cb18-22" data-line-number="22"><span class="co">## [17] curl_3.3         evaluate_0.13    rmarkdown_1.11   stringi_1.3.1   </span></a>
+<a class="sourceLine" id="cb18-23" data-line-number="23"><span class="co">## [21] compiler_3.6.0   backports_1.1.3  lubridate_1.7.4  jsonlite_1.6</span></a>
+<a class="sourceLine" id="cb18-24" data-line-number="24"><span class="co">#</span></a></code></pre></div>
 </div>
 
 

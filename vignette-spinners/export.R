@@ -1,6 +1,6 @@
 # /* Header and Set up {{{ */
 #'---
-#'title: "REDCap ExporteR"
+#'title: "REDCap Exporter"
 #'author: "Peter DeWitt"
 #'date: "`r Sys.Date()`"
 #'output:
@@ -22,14 +22,14 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' R data package.  There are some prerequisites, described in detail in the
 #' first section, you will need to address before running the examples.
 #'
-#' The primary objective of the `r qwraps2::Rpkg(REDCapExporteR)` is to export
+#' The primary objective of the `r qwraps2::Rpkg(REDCapExporter)` is to export
 #' all the data from an REDCap project via the REDCap API and build a R data
 #' package with useful documentation and tools.  The data package will make it
 #' easy to archive data and distribute data, in an analysis ready format, within
 #' a group of analysts.
 #'
 #' **Disclaimer and Warning:** It is the responsibility of the end user to
-#' protect sensitive data.  Do not use `r qwraps2::Rpkg(REDCapExporteR)` to
+#' protect sensitive data.  Do not use `r qwraps2::Rpkg(REDCapExporter)` to
 #' export data onto a computer that should not have sensitive data stored on it.
 #' Further, do not distribute the resulting R package to any other machine or
 #' person who does not have data access rights.
@@ -84,7 +84,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' several options and system environment variables.
 #'
 #+ label = "namespacesAndOptions"
-library(REDCapExporteR)
+library(REDCapExporter)
 library(data.table)
 library(magrittr)
 library(secret)
@@ -102,7 +102,7 @@ Sys.setenv(REDCap_API_TOKEN = get_secret("2000_2001_Avalanche"))
 
 # Set the option the format the data will be returned in.  Possible values are
 # 'csv', 'xml', or 'json'. The default is 'csv', set when
-# qwraps2::Rpkg(REDCapExporteR) is loaded.
+# qwraps2::Rpkg(REDCapExporter) is loaded.
 Sys.getenv("REDCap_API_format")
 
 #'
@@ -112,7 +112,7 @@ Sys.getenv("REDCap_API_format")
 #'
 #' # General Tools
 #'
-#' The `r qwraps2::Rpkg(REDCapExporteR)` package provides several functions and
+#' The `r qwraps2::Rpkg(REDCapExporter)` package provides several functions and
 #' methods which the user may find useful.  These functions and methods are used
 #' within the package to export and create a R data package.  Use of the methods
 #' for specific projects, say exporting data from a REDCap project for routine
@@ -256,7 +256,7 @@ prj_path <-
 prj_path
 
 #'
-#' Exporting the project 
+#' Exporting the project
 export_redcap_project(path = temppath)
 list.files(prj_path, recursive = TRUE)
 
@@ -271,11 +271,11 @@ read.dcf(paste(prj_path, "DESCRIPTION", sep = "/"))
 #' REDCap.
 #'
 #' The Author field is also of note.  Authors are ge
-write_authors(avs_raw_user)
+# write_authors(avs_raw_user)
 
 # devtools::check(pkg = prj_path)
 
-#' 
+#'
 # /* End of "Exporting a REDCap Project" }}} */
 #'
 # /* Session Info {{{ */

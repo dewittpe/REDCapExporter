@@ -19,21 +19,29 @@
 #' @param other_exports Other things to export from REDCap **To be implimented**
 #' @param path Path where the exported project source will be
 #' created/overwritten.
+#' @param verbose provide messages to tell the user what is happening
 #'
 #' @examples
 #' ## Please read the vignette for examples:
 #' ## vignette(topic = "export", package = "REDCapExporteR")
 #' @export
-export_redcap_project <- function(uri, token, other_exports, path = NULL) {
+export_redcap_project <- function(uri, token, other_exports, path = NULL, verbose = TRUE) {
+  if (verbose) message("Getting Project Info")
   project_info_raw <- export_content(uri = uri, token = token, content = "project")
+
+  if (verbose) message("Getting project metadata")
   metadata_raw     <- export_content(uri = uri, token = token, content = "metadata")
+
+  if (verbose) message("Getting user data")
   user_raw         <- export_content(uri = uri, token = token, content = "user")
+
+  if (verbose) message("Getting project record")
   records_raw      <- export_content(uri = uri, token = token, content = "record")
 
   access_time  <- Sys.time()
 
-  project_info <- data.table::fread(project_info_raw)
-  user         <- data.table::fread(user_raw)
+  project_info <- as.data.frame(project_info_raw)
+  user         <- as.data.frame(user_raw)
 
   # VERIFY WHO IS DOING THE EXPORT
   # user[api_export == 1, username:lastname]

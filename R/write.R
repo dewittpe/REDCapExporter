@@ -34,6 +34,6 @@ write_authors.rcer_raw_user <- function(user) {
   write_authors(as.data.frame(user))
 }
 
-write_authors.rcer_user <- function(user) { 
+write_authors.rcer_user <- function(user) {
   paste0("c(", paste(sprintf("person(\"%s\", \"%s\", \"%s\")", user$firstname, user$lastname, user$email), collapse = ",\n             "), ")")
 }

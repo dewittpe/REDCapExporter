@@ -1,4 +1,4 @@
-Package: REDCapExporteR
+Package: REDCapExporter
 Title: REDCap Exporter
 Version: 0.0.0.9000
 Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@ucdenver.edu", role = c("aut", "cre"))
