@@ -51,21 +51,19 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL) {
   }
 
   # Create the DESCRIPTION FILE
-  foo <- function(fn, ln, em) {
-    paste0("c(", paste(sprintf("person(\"%s\", \"%s\", \"%s\")", fn, ln, em), collapse = ",\\n"), ")")
-  }
-  DESCRIPTION_FILE <- list(Package = paste0("rcd", project_info$project_id),
-                           Title   = project_info$project_title,
-                           Version = paste(formatC(lubridate::year(access_time), width = 4),
-                                           formatC(lubridate::month(access_time), width = 2, flag = 0),
-                                           formatC(lubridate::day(access_time), width = 2, flag = 0),
-                                           formatC(lubridate::hour(access_time), width = 2, flag = 0),
-                                           formatC(lubridate::minute(access_time), width = 2, flag = 0),
-                                           sep = "."),
-                           "Authors@R" = foo(user$firstname, user$lastname, user$email)
-                           )
-  write.dcf(DESCRIPTION_FILE, file = paste(path, "DESCRIPTION", sep = "/"))
+  write_descritption_file(access_time, user, project_info, path)
 
+  # LICENSE File
+  cat("Proprietary\n\n
+      Do not distribute to anyone or to machines which are not authorized to hold the data.",
+      file = paste(path, "LICENSE", sep = "/"))
+
+  # Write Data
+  dir.create(paste(path, "inst", "raw-data", sep = "/"), showWarnings = FALSE, recursive = TRUE)
+  saveRDS(project_info_raw, file = paste(path, "inst", "raw-data", "project_info.rds", sep = "/"))
+  saveRDS(metadata_raw,     file = paste(path, "inst", "raw-data", "metadata.rds",     sep = "/"))
+  saveRDS(user_raw,         file = paste(path, "inst", "raw-data", "user.rds",         sep = "/"))
+  saveRDS(records_raw,      file = paste(path, "inst", "raw-data", "records.rds",      sep = "/"))
 
 
   invisible()
@@ -106,5 +104,34 @@ export_content <- function(uri, token, content, format, ...) {
   class(x)            <- c(paste0("rcer_raw_", content), class(x))
 
   x
+}
+
+write_descritption_file <- function(access_time, user, project_info, path) {
+
+  pkg_version <-
+    paste(formatC(lubridate::year(access_time), width = 4),
+          formatC(lubridate::month(access_time), width = 2, flag = 0),
+          formatC(lubridate::day(access_time), width = 2, flag = 0),
+          formatC(lubridate::hour(access_time), width = 2, flag = 0),
+          formatC(lubridate::minute(access_time), width = 2, flag = 0),
+          sep = ".")
+
+  cat("Package: ", paste0("rcd", project_info$project_id), "\n",
+      "Title: ",   project_info$project_title, "\n",
+      "Version: ", pkg_version, "\n",
+      "Authors@R: ", write_authors(user), "\n",
+      "Description: Data and documentation from the REDCap Project.", "\n",
+      "License: file LICENSE\n",
+      "Encoding: UTF-8\n",
+      "LazyData: true\n",
+      "Suggests:\n    knitr\n",
+      "VignetteBuilder: knitr\n",
+      sep = "", file = paste(path, "DESCRIPTION", sep = "/"), append = FALSE)
+
+  invisible()
+}
+
+write_authors <- function(user) {
+  paste0("c(", paste(sprintf("person(\"%s\", \"%s\", \"%s\")", user$firstname, user$lastname, user$email), collapse = ",\n             "), ")")
 }
 
