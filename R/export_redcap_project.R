@@ -25,7 +25,7 @@
 #' ## Please read the vignette for examples:
 #' ## vignette(topic = "export", package = "REDCapExporteR")
 #' @export
-export_redcap_project <- function(uri, token, other_exports, path = NULL, verbose = TRUE) {
+export_redcap_project <- function(uri, token, other_exports, path = NULL, author_roles = NULL, verbose = TRUE) {
   if (verbose) message("Getting Project Info")
   project_info_raw <- export_content(uri = uri, token = token, content = "project")
 
@@ -59,7 +59,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL, verbos
   }
 
   # Create the DESCRIPTION FILE
-  write_descritption_file(access_time, user, project_info, path)
+  write_descritption_file(access_time, user, roles = author_roles, project_info, path)
 
   # LICENSE File
   cat("Proprietary\n\n

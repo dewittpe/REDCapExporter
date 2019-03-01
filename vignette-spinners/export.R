@@ -247,7 +247,7 @@ temppath <- tempdir()
 #' for 'REDCap Data' and the project-id which, for this example is:
 as.data.frame(avs_raw_project_info)$project_id
 avs_raw_user <- export_content(content = "user")
-as.data.frame(avs_raw_user)
+avs_user <- as.data.frame(avs_raw_user)
 
 #'
 #' Thus we expect the source package to be at
@@ -256,9 +256,11 @@ prj_path <-
 prj_path
 
 #'
-#' Exporting the project
-export_redcap_project(path = temppath)
-list.files(prj_path, recursive = TRUE)
+#' Exporting the project will require you to provide at some information about
+#' the users.  You need to list at least one of the `usernames` from the user
+#' data and give that person the 'cre' role.
+export_redcap_project(path = temppath,
+                      author_roles = list(dewittp = c("cre", "aut")))
 
 #'
 #' Let's look at some of the files which have been placed into the project path.
@@ -270,8 +272,6 @@ read.dcf(paste(prj_path, "DESCRIPTION", sep = "/"))
 #' version is the year.month.day.hour.minute for when the data was exported from
 #' REDCap.
 #'
-#' The Author field is also of note.  Authors are ge
-# write_authors(avs_raw_user)
 
 # devtools::check(pkg = prj_path)
 

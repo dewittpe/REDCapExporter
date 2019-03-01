@@ -380,12 +380,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">##  'rcer_raw_project' chr &quot;project_id,project_title,creation_time,production_time,in_production,project_language,purpose,purpose_other,pro&quot;| __truncated__</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 14:02:48&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 14:07:39&quot;</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">str</span>(avs_raw_metadata)</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">##  'rcer_raw_metadata' chr &quot;field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid&quot;| __truncated__</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 14:02:48&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-03-01 14:07:40&quot;</span></a></code></pre></div>
 <p>We opted to have <code>export_content</code> return a character string such that the end user can may select the format for the return and use the tool of their choice for creating a <code>data.frame</code>. For example, creating a <code>data.table</code> from the csv or json formats.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">from_csv &lt;-<span class="st"> </span>data.table<span class="op">::</span><span class="kw">fread</span>(<span class="dt">input =</span> avs_raw_metadata, <span class="dt">colClasses =</span> <span class="st">&quot;character&quot;</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
@@ -608,14 +608,14 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">prj_path &lt;-</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">paste</span>(temppath, <span class="kw">paste0</span>(<span class="st">&quot;rcd&quot;</span>, <span class="kw">as.data.frame</span>(avs_raw_project_info)<span class="op">$</span>project_id), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">prj_path</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">## [1] &quot;/tmp/RtmpUgYo6b/rcd14465&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">## [1] &quot;/tmp/RtmpwqrxZg/rcd14465&quot;</span></a></code></pre></div>
 <p>Exporting the project</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">export_redcap_project</span>(<span class="dt">path =</span> temppath)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">## Getting Project Info</span></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">## Getting project metadata</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">## Getting user data</span></a>
 <a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">## Getting project record</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">## Creating source package at /tmp/RtmpUgYo6b/rcd14465</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">## Creating source package at /tmp/RtmpwqrxZg/rcd14465</span></a>
 <a class="sourceLine" id="cb15-7" data-line-number="7"><span class="kw">list.files</span>(prj_path, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">## [1] &quot;DESCRIPTION&quot;                    &quot;inst/raw-data/metadata.rds&quot;    </span></a>
 <a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">## [3] &quot;inst/raw-data/project_info.rds&quot; &quot;inst/raw-data/records.rds&quot;     </span></a>
@@ -623,7 +623,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>Let’s look at some of the files which have been placed into the project path. We will start with the DESCRIPTION file.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">read.dcf</span>(<span class="kw">paste</span>(prj_path, <span class="st">&quot;DESCRIPTION&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">##      Package    Title                          Version           </span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">## [1,] &quot;rcd14465&quot; &quot;2000-2001 Colorado Avalanche&quot; &quot;2019.03.01.14.03&quot;</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">## [1,] &quot;rcd14465&quot; &quot;2000-2001 Colorado Avalanche&quot; &quot;2019.03.01.14.08&quot;</span></a>
 <a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">##      Authors@R                                                        </span></a>
 <a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">## [1,] &quot;c(person(\&quot;Peter\&quot;, \&quot;DeWitt\&quot;, \&quot;peter.dewitt@ucdenver.edu\&quot;))&quot;</span></a>
 <a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">##      Description                                       License       </span></a>
