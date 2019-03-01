@@ -10,7 +10,7 @@
 #' @param ... not currently used
 #'
 #' @export
-col_type <- function(x, ...) {
+col_type <- function(x, factors = TRUE, ...) {
   UseMethod("col_type")
 }
 

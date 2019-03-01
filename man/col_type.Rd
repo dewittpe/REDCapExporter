@@ -4,16 +4,16 @@
 \alias{col_type}
 \title{Column Types}
 \usage{
-col_type(x, ...)
+col_type(x, factors = TRUE, ...)
 }
 \arguments{
 \item{x}{a \code{rcer_metadata} object}
 
-\item{...}{not currently used}
-
 \item{factors}{If \code{TRUE} (default) then variables inputed via drop-down
 lists and radio buttons are set up to be \code{factor}s.  If \code{FALSE},
 then the column type will be \code{character}.}
+
+\item{...}{not currently used}
 }
 \description{
 Define a type for each column of the records for a REDCap project based on

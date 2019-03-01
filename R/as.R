@@ -2,7 +2,7 @@
 #' @method as.data.frame rcer_raw_metadata
 as.data.frame.rcer_raw_metadata <- function(x, ...) {
   if (attr(x, "Content-Type")[1] == "text/csv") {
-    out <- read.csv(text = x, colClasses = "character")
+    out <- utils::read.csv(text = x, colClasses = "character")
   } else if (attr(x, "Content-Type")[1] == "application/json") {
     out <- rjson::fromJSON(json_str = x)
     out <- lapply(out, as.data.frame, stringsAsFactors = FALSE)
@@ -28,7 +28,7 @@ as.data.table.rcer_raw_metadata <- function(x, ...) {
 #' @method as.data.frame rcer_raw_record
 as.data.frame.rcer_raw_record <- function(x, ...) {
   if (attr(x, "Content-Type")[1] == "text/csv") {
-    out <- read.csv(text = x, colClasses = "character")
+    out <- utils::read.csv(text = x, colClasses = "character")
   } else if (attr(x, "Content-Type")[1] == "application/json") {
     out <- rjson::fromJSON(json_str = x)
     out <- lapply(out, as.data.frame, stringsAsFactors = FALSE)
