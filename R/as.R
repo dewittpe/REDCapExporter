@@ -1,12 +1,12 @@
-#' @method as.data.frame rcer_raw_metadata
 #' @export
+#' @method as.data.frame rcer_raw_metadata
 as.data.frame.rcer_raw_metadata <- function(x, ...) {
   if (attr(x, "Content-Type")[1] == "text/csv") {
     out <- read.csv(text = x, colClasses = "character")
   } else if (attr(x, "Content-Type")[1] == "application/json") {
     out <- rjson::fromJSON(json_str = x)
     out <- lapply(out, as.data.frame)
-    out <- do.call(rbind, out) 
+    out <- do.call(rbind, out)
   } else {
     stop(sprintf("as.data.frame.rcer_metadata does not currently handle %s",
                  attr(x, "Content-Type")[1]))
@@ -15,10 +15,11 @@ as.data.frame.rcer_raw_metadata <- function(x, ...) {
   out
 }
 
-#' @method as.data.table rcer_raw_metadata
 #' @export
+#' @method as.data.table rcer_raw_metadata
 as.data.table.rcer_raw_metadata <- function(x, ...) {
   out <- data.table::as.data.table(as.data.frame(x))
   class(out) <- c("rcer_metadata", class(out))
   out
 }
+
