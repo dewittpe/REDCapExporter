@@ -229,6 +229,52 @@ str(temp1)
 # /* Exporting a REDCap Project {{{ */
 #'
 #' # Exporting a REDCap Project to a R Data Package.
+#'
+#' Exporting a REDCap project to a R data package is done with a call to
+#' `export_redcap_project()`.
+#'
+str(export_redcap_project)
+
+#'
+#' The `path` argument is a directory on your machine were the R data package is
+#' going to be built.  For this vignette we will use a temporary directory.
+#'
+temppath <- tempdir()
+
+#'
+#' The
+#' exported package name and directory will be `rcd<project-id>`, that is, `rcd`
+#' for 'REDCap Data' and the project-id which, for this example is:
+as.data.frame(avs_raw_project_info)$project_id
+avs_raw_user <- export_content(content = "user")
+as.data.frame(avs_raw_user)
+
+#'
+#' Thus we expect the source package to be at
+prj_path <-
+  paste(temppath, paste0("rcd", as.data.frame(avs_raw_project_info)$project_id), sep = "/")
+prj_path
+
+#'
+#' Exporting the project 
+export_redcap_project(path = temppath)
+list.files(prj_path, recursive = TRUE)
+
+#'
+#' Let's look at some of the files which have been placed into the project path.
+#' We will start with the DESCRIPTION file.
+read.dcf(paste(prj_path, "DESCRIPTION", sep = "/"))
+
+#'
+#' The package name is as noted above, the verions number is worth noting, the
+#' version is the year.month.day.hour.minute for when the data was exported from
+#' REDCap.
+#'
+#' The Author field is also of note
+
+# devtools::check(pkg = prj_path)
+
+#' 
 # /* End of "Exporting a REDCap Project" }}} */
 #'
 # /* Session Info {{{ */
