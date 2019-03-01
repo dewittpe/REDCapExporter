@@ -182,9 +182,31 @@ str(avs_metadata)
 
 #'
 #' The function `col_type` will take the metadata and return ...
-col_type(avs_metadata)
+ct <- col_type(avs_metadata)
 
-# avs_records  <- export_content(content = "record")
+
+
+avs_records_raw  <- export_content(content = "record")
+# avs_records <- as.data.table(avs_records_raw)    ### GET THIS INTO THE R/ code
+avs_records <- fread(avs_records_raw)
+
+as.data.table(lapply(ct, function(x) {with(avs_records, eval(x))}))
+
+avs_records$birthdate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #'
 # /* End of "Data Import Tools }}} */
