@@ -270,7 +270,8 @@ read.dcf(paste(prj_path, "DESCRIPTION", sep = "/"))
 #' version is the year.month.day.hour.minute for when the data was exported from
 #' REDCap.
 #'
-#' The Author field is also of note
+#' The Author field is also of note.  Authors are ge
+write_authors(avs_raw_user)
 
 # devtools::check(pkg = prj_path)
 

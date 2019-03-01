@@ -32,18 +32,34 @@ as.data.table.rcer_raw_record <- function(x, ...) {
 }
 
 #' @export
-#' @method as.data.frame rcer_raw_project_info
-as.data.frame.rcer_raw_project_info <- function(x, ...) {
+#' @method as.data.frame rcer_raw_project
+as.data.frame.rcer_raw_project <- function(x, ...) {
   out <- read_text(x)
   class(out) <- c("rcer_project_info", class(out))
   out
 }
 
 #' @export
-#' @method as.data.table rcer_raw_project_info
-as.data.table.rcer_raw_project_info <- function(x, ...) {
+#' @method as.data.table rcer_raw_project
+as.data.table.rcer_raw_project <- function(x, ...) {
   out <- data.table::as.data.table(as.data.frame(x, ...))
   class(out) <- c("rcer_project_info", class(out))
+  out
+}
+
+#' @export
+#' @method as.data.frame rcer_raw_user
+as.data.frame.rcer_raw_user <- function(x, ...) {
+  out <- read_text(x)
+  class(out) <- c("rcer_user", class(out))
+  out
+}
+
+#' @export
+#' @method as.data.table rcer_raw_user
+as.data.table.rcer_raw_user <- function(x, ...) {
+  out <- data.table::as.data.table(as.data.frame(x, ...))
+  class(out) <- c("rcer_user", class(out))
   out
 }
 
