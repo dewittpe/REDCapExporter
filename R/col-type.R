@@ -10,6 +10,16 @@
 #' @param ... not currently used
 #'
 #' @export
+col_type <- function(x, ...) {
+  UseMethod("col_type")
+}
+
+#' @export
+col_type.rcer_raw_metadata <- function(x, factors = TRUE, ...) {
+  col_type(as.data.frame(x), factors = factors, ...)
+}
+
+#' @export
 col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
 
   # Field Types:
@@ -123,7 +133,3 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
 
 }
 
-#' @export
-col_type <- function(x, ...) {
-  UseMethod("col_type")
-}

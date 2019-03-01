@@ -6,6 +6,15 @@
 \usage{
 col_type(x, ...)
 }
+\arguments{
+\item{x}{a \code{rcer_metadata} object}
+
+\item{...}{not currently used}
+
+\item{factors}{If \code{TRUE} (default) then variables inputed via drop-down
+lists and radio buttons are set up to be \code{factor}s.  If \code{FALSE},
+then the column type will be \code{character}.}
+}
 \description{
 Define a type for each column of the records for a REDCap project based on
 the metadata for the project.

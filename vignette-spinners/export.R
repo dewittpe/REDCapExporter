@@ -22,6 +22,24 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' R data package.  There are some prerequisites, described in detail in the
 #' first section, you will need to address before running the examples.
 #'
+#' The primary objective of the `r qwraps2::Rpkg(REDCapExporteR)` is to export
+#' all the data from an REDCap project via the REDCap API and build a R data
+#' package with useful documentation and tools.  The data package will make it
+#' easy to archive data and distribute data, in an analysis ready format, within
+#' a group of analysts.
+#'
+#' **Disclaimer and Warning:** It is the responsibility of the end user to
+#' protect sensitive data.  Do not use `r qwraps2::Rpkg(REDCapExporteR)` to
+#' export data onto a computer that should not have sensitive data stored on it.
+#' Further, do not distribute the resulting R package to any other machine or
+#' person who does not have data access rights.
+#'
+#' For the example in this vignette we created a REDCap project storing the
+#' roster and statistics for the 2000-2001 Stanley Cup Champion Colorado
+#' Avalanche of the National Hockey League.  The data was acquired from the
+#' web page
+#' [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html).
+#'
 # /* Prerequisites {{{ */
 #'
 #' # Prerequisites and Tokens
@@ -90,36 +108,21 @@ Sys.getenv("REDCap_API_format")
 #'
 # /* }}} */
 #'
-# /* Exporting a REDCap Project {{{ */
+# /* General Tools {{{ */
 #'
-#' # Exporting a REDCap Project
+#' # General Tools
 #'
-#' The primary objective of the `r qwraps2::Rpkg(REDCapExporteR)` is to export
-#' all the data from an REDCap project via the REDCap API and build a R data
-#' package with useful documentation and tools.  The data package will make it
-#' easy to archive data and distribute data, in an analysis ready format, within
-#' a group of analysts.
-#'
-#' **Disclaimer and Warning:** It is the responsibility of the end user to
-#' protect sensitive data.  Do not use `r qwraps2::Rpkg(REDCapExporteR)` to
-#' export data onto a computer that should not have sensitive data stored on it.
-#' Further, do not distribute the resulting R package to any other machine or
-#' person who does not have data access rights.
-#'
-#' For the example in this vignette we created a REDCap project storing the
-#' roster and statistics for the 2000-2001 Stanley Cup Champion Colorado
-#' Avalanche of the National Hockey League.  The data was acquired from the
-#' web page
-#' [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html).
+#' The `r qwraps2::Rpkg(REDCapExporteR)` package provides several functions and
+#' methods which the user may find useful.  These functions and methods are used
+#' within the package to export and create a R data package.  Use of the methods
+#' for specific projects, say exporting data from a REDCap project for routine
+#' reports or interim analyses.
 #'
 # /* Specific Export Methods {{{ */
 #'
 #' ## Specific Export Methods
 #'
-#' The methods presented here are for one offs.  There are more generic
-#' functions for exporting the whole REDCap project.
-#'
-#' The `r qwraps2::Rpkg(REDCapExporteR)` method `export_content` can be used to
+#' The method `export_content` can be used to
 #' export specific parts of a REDCap project. Three of the arguments, `uri`,
 #' `token`, and `format`, passed to
 #' `export_content`, if omitted, will default to the system environment
@@ -130,24 +133,28 @@ Sys.getenv("REDCap_API_format")
 str(export_content)
 
 #'
-#' For example, the project information and project metadata can be exported
+#' For example, the project information and project metadata can be obtained
 #' via:
-project_info <- export_content(content = "project")
-metadata     <- export_content(content = "metadata")
+avs_raw_project_info <- export_content(content = "project")
+avs_raw_metadata     <- export_content(content = "metadata")
 
 #'
 #' The return object from `export_content` are character strings as you would
 #' expect from a call to `postForm` from the
 #' [`r qwraps2::Rpkg(RCurl)`](https://cran.r-project.org/package=RCurl) package.
 #' A couple additional attributes have been added.  The `Sys.time` for the call
-#' and the class `rcer_*` where `*` is replaced by the value of the `content`
+#' and the class `rcer_raw_*` where `*` is replaced by the value of the `content`
 #' argument.
+#'
+str(avs_raw_project_info)
+str(avs_raw_metadata)
+
 #'
 #' We opted to have `export_content` return a character string such that the end
 #' user can may select the format for the return and use the tool of their
 #' choice for creating a `data.frame`.  For example, creating a `data.table`
 #' from the csv or json formats.
-from_csv <- data.table::fread(input = metadata, colClasses = "character")
+from_csv <- data.table::fread(input = avs_raw_metadata, colClasses = "character")
 
 from_json <-
   export_content(content = "metadata", format = "json") %>%
@@ -157,8 +164,21 @@ from_json <-
 
 identical(from_csv, from_json)
 
-# /* end specific export methods }}} */
 #'
+#' A easier way to get the raw export into a \code{data.frame} or
+#' \code{data.table} is to use the `as.data.frame` or `as.data.table` methods.
+csv_metadata  <- export_content(content = "metadata", format = "csv")
+json_metadata <- export_content(content = "metadata", format = "json")
+
+df_from_csv  <- as.data.frame(csv_metadata)
+df_from_json <- as.data.frame(json_metadata)
+identical(df_from_csv, df_from_json)
+
+dt_from_csv  <- as.data.table(csv_metadata)
+dt_from_json <- as.data.table(json_metadata)
+identical(dt_from_csv, dt_from_json)
+
+# /* end specific export methods }}} */
 #'
 # /* Data Import Tools {{{ */
 #'
@@ -170,47 +190,45 @@ identical(from_csv, from_json)
 #' numeric values but are really categorical.  We provide some tools to help
 #' with the data import process.
 #'
-#' First, you will need to get the project metadata.
+#' First, you will need to get the project metadata and record.
 avs_raw_metadata <- export_content(content = "metadata")
-str(avs_raw_metadata)
+avs_raw_record   <- export_content(content = "record")
 
-#'
-#' There are `as.data.frame` and `as.data.table` methods for getting the
-#' metadata into a useful format.
 avs_metadata <- as.data.table(avs_raw_metadata)
-str(avs_metadata)
+avs_record   <- as.data.table(avs_raw_record)
 
 #'
-#' The function `col_type` will take the metadata and return ...
+#' The function `col_type` will take the metadata and return a list of calls to
+#' set the specific storage modes of the projet record.
+identical(col_type(avs_raw_metadata), col_type(avs_metadata))
+
 ct <- col_type(avs_metadata)
-
-
-
-avs_records_raw  <- export_content(content = "record")
-# avs_records <- as.data.table(avs_records_raw)    ### GET THIS INTO THE R/ code
-avs_records <- fread(avs_records_raw)
-
-as.data.table(lapply(ct, function(x) {with(avs_records, eval(x))}))
-
-avs_records$birthdate
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+str(ct)
 
 #'
-# /* End of "Data Import Tools }}} */
+#' The function `format_records()` will build a `data.frame` for the the project
+#' records using the columns types defined by `col_type()`.
+# format_records(avs_metadata, avs_raw_records)
+
+temp1 <- format_record(avs_raw_metadata, avs_raw_record)
+temp2 <- format_record(avs_raw_metadata, avs_record)
+temp3 <- format_record(avs_metadata,     avs_raw_record)
+temp4 <- format_record(avs_metadata,     avs_record)
+
+identical(temp1, temp2)
+identical(temp1, temp3)
+identical(temp1, temp4)
+
+str(temp1)
+
 #'
+# /* End of General Tools }}} */
+#'
+# /* end of General tools }}} */
+#'
+# /* Exporting a REDCap Project {{{ */
+#'
+#' # Exporting a REDCap Project to a R Data Package.
 # /* End of "Exporting a REDCap Project" }}} */
 #'
 # /* Session Info {{{ */

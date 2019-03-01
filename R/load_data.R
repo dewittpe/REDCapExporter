@@ -1,43 +1,36 @@
-#' Build Column Types
+#' Format Records
 #'
-#' Use the project metadata to build the storage mode for the columns of the
-#' records.
+#' Use REDCap project metadata to build a well formatted \code{data.frame} for
+#' the record.
 #'
-#' @param metadata Project metadata as a \code{data.table}.
+#' @param metadata a \code{rcer_metadata} or \code{rcer_raw_metadata} object.
+#' @param record   a \code{rcer_raw_record} object.
+#' @param ... other arguments passed to \code{\link{col_type}}
 #'
-#' @examples
-#' \dontrun{
-#' 
-#' library(secret)
-#' uri   <- "https://redcap.ucdenver.edu/api/"
-#' token <-  get_secret("project10734", key = "~/.ssh/vaults")
-#' metadata_raw <- export_content(uri = uri, token = token, content = "metadata")
-#' metadata <- data.table::fread(metadata_raw)
-#' build_col_types(metadata)
+#' @return A \code{data.frame}
 #'
-#' token <-  get_secret("project13219", key = "~/.ssh/vaults")
-#' metadata_raw <- export_content(uri = uri, token = token, content = "metadata")
-#' metadata <- data.table::fread(metadata_raw)
-#' build_col_types(metadata)
-#' 
-#'
-#' }
 #' @export
-build_col_types <- function(metadata) {
+format_record <- function(metadata, record, ...) {
+  
+  if (!(inherits(metadata, "rcer_metadata") | inherits(metadata, "rcer_raw_metadata"))) {
+    stop("format_record expects the `metadata` argument to be a `rcer_raw_metadata` or `rcer_metadata` object.")
+  }
 
-  col_types <- lapply(metadata$text_validation_type_or_show_slider_number,
-                      switch,
-                      number = "numeric",
-                      integer = "integer",
-                      date_ymd = "character",
-                      "character")
-  col_types <- setNames(col_types, metadata$field_name)
-  col_types <- do.call(c, col_types)
+  if (!(inherits(record, "rcer_record") | inherits(record, "rcer_raw_record"))) {
+    stop("format_record expects the `record` argument to be a `rcer_raw_record` or `rcer_record` object.") 
+  }
 
-  col_types[metadata$field_type == "yesno"] <- "integer"
+  if (inherits(metadata, "rcer_raw_metadata")) {
+    metadata <- as.data.frame(metadata)
+  }
+  
+  if (inherits(record, "rcer_raw_record")) {
+    record <- as.data.frame(record)
+  }
 
-  col_types
+  ct <- col_type(metadata, ...)
+
+  as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
 }
-
 
 
