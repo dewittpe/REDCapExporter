@@ -272,8 +272,19 @@ read.dcf(paste(prj_path, "DESCRIPTION", sep = "/"))
 #' version is the year.month.day.hour.minute for when the data was exported from
 #' REDCap.
 #'
+#'
 
-# devtools::check(pkg = prj_path)
+devtools::check(pkg = prj_path)
+
+install.packages(
+grep("*.tar.gz", list.files(path = prj_path, recursive = TRUE, full.names = TRUE), value = TRUE),
+lib = temppath)
+
+library(rcd14465, lib.loc = temppath)
+data(package = "rcd14465")$results
+
+data(metadata)
+all.equal(as.data.frame(avs_metadata), metadata, check.attributes = FALSE)
 
 #'
 # /* End of "Exporting a REDCap Project" }}} */

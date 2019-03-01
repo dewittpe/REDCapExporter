@@ -4,7 +4,7 @@
 \alias{write_authors}
 \title{Write the Authors for the DESCRIPTION file}
 \usage{
-write_authors(user)
+write_authors(user, roles = NULL)
 }
 \description{
 Write the Authors for the DESCRIPTION file

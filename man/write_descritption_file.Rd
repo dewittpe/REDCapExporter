@@ -4,7 +4,7 @@
 \alias{write_descritption_file}
 \title{Write the DESCRIPTION file for an Exported REDCap Project}
 \usage{
-write_descritption_file(access_time, user, project_info, path)
+write_descritption_file(access_time, user, roles, project_info, path)
 }
 \description{
 Write the DESCRIPTION file for an Exported REDCap Project

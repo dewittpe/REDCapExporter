@@ -275,7 +275,7 @@ for 'REDCap Data' and the project-id which, for this example is:
 ```{r }
 as.data.frame(avs_raw_project_info)$project_id
 avs_raw_user <- export_content(content = "user")
-as.data.frame(avs_raw_user)
+avs_user <- as.data.frame(avs_raw_user)
 ```
 
 
@@ -288,11 +288,13 @@ prj_path
 ```
 
 
-Exporting the project
+Exporting the project will require you to provide at some information about
+the users.  You need to list at least one of the `usernames` from the user
+data and give that person the 'cre' role.
 
 ```{r }
-export_redcap_project(path = temppath)
-list.files(prj_path, recursive = TRUE)
+export_redcap_project(path = temppath,
+                      author_roles = list(dewittp = c("cre", "aut")))
 ```
 
 
@@ -308,12 +310,20 @@ The package name is as noted above, the verions number is worth noting, the
 version is the year.month.day.hour.minute for when the data was exported from
 REDCap.
 
-The Author field is also of note.  Authors are ge
+
 
 ```{r }
-# write_authors(avs_raw_user)
+devtools::check(pkg = prj_path)
 
-# devtools::check(pkg = prj_path)
+install.packages(
+grep("*.tar.gz", list.files(path = prj_path, recursive = TRUE, full.names = TRUE), value = TRUE),
+lib = temppath)
+
+library(rcd14465, lib.loc = temppath)
+data(package = "rcd14465")$results
+
+data(metadata)
+all.equal(as.data.frame(avs_metadata), metadata, check.attributes = FALSE)
 ```
 
 
