@@ -34,10 +34,13 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 		-e "options(warn = 2)" \
 		-e "devtools::document('$(PKG_ROOT)')" \
 		-e "invisible(file.create('$(PKG_ROOT)/$@', showWarnings = FALSE))"
-	if [ -e "$(PKG_ROOT)/vignette-spinners/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/vignette-spinners/; else echo "Nothing to do"; fi
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .document.Rout .install_dev_deps.Rout $(TESTS)
+	R CMD build --no-build-vignettes --no-resave-data --md5 $(build-options) $(PKG_ROOT)
+	R CMD INSTALL $@
+	if [ -e "$(PKG_ROOT)/vignette-spinners/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/vignette-spinners/; else echo "Nothing to do"; fi
 	R CMD build --no-resave-data --md5 $(build-options) $(PKG_ROOT)
+	R CMD INSTALL $@
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
