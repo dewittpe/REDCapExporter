@@ -152,32 +152,9 @@ str(avs_raw_metadata)
 #'
 #' We opted to have `export_content` return a character string such that the end
 #' user can may select the format for the return and use the tool of their
-#' choice for creating a `data.frame`.  For example, creating a `data.table`
-#' from the csv or json formats.
-from_csv <- data.table::fread(input = avs_raw_metadata, colClasses = "character")
-
-from_json <-
-  export_content(content = "metadata", format = "json") %>%
-  rjson::fromJSON(json_str = .) %>%
-  lapply(as.data.table) %>%
-  rbindlist
-
-identical(from_csv, from_json)
-
+#' choice for creating a `data.frame` or other objects.  However, as you will
+#' see in the next section there are default methods for building `data.frame`s.
 #'
-#' A easier way to get the raw export into a \code{data.frame} or
-#' \code{data.table} is to use the `as.data.frame` or `as.data.table` methods.
-csv_metadata  <- export_content(content = "metadata", format = "csv")
-json_metadata <- export_content(content = "metadata", format = "json")
-
-df_from_csv  <- as.data.frame(csv_metadata)
-df_from_json <- as.data.frame(json_metadata)
-identical(df_from_csv, df_from_json)
-
-dt_from_csv  <- as.data.table(csv_metadata)
-dt_from_json <- as.data.table(json_metadata)
-identical(dt_from_csv, dt_from_json)
-
 # /* end specific export methods }}} */
 #'
 # /* Data Import Tools {{{ */
