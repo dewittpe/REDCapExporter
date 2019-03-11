@@ -101,8 +101,8 @@ Sys.setenv(REDCap_API_uri = "https://redcap.ucdenver.edu/api/")
 Sys.setenv(REDCap_API_TOKEN = get_secret("2000_2001_Avalanche"))
 
 # Set the option the format the data will be returned in.  Possible values are
-# 'csv', 'xml', or 'json'. The default is 'csv', set when
-# qwraps2::Rpkg(REDCapExporter) is loaded.
+# 'csv', 'xml', or 'json'.   Methods to build data sets from csv and json have
+# been built, xml is not yet supported.  csv is the default format.
 Sys.getenv("REDCap_API_format")
 
 #'
