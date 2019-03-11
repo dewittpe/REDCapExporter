@@ -9,6 +9,8 @@
 #' then the column type will be \code{character}.
 #' @param ... not currently used
 #'
+#' @return a \code{rcer_col_type} object
+#'
 #' @export
 col_type <- function(x, factors = TRUE, ...) {
   UseMethod("col_type")
@@ -129,7 +131,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
     nm = x$field_name[x$field_type %in% "yesno"])
 
 
-  c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
-
+  out <- c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
+  class(out) <- c("rcer_col_type", class(out))
+  out 
 }
 

@@ -18,6 +18,10 @@ export_redcap_project(uri, token, other_exports, path = NULL,
 \item{path}{Path where the exported project source will be
 created/overwritten.}
 
+\item{author_roles}{a list naming specific roles for each user id found in
+the user table from an exported project.  By default all users with be
+contributers ('ctb').  You will need to define a author/creater.}
+
 \item{verbose}{provide messages to tell the user what is happening}
 }
 \description{

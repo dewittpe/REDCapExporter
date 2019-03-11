@@ -1,5 +1,4 @@
-#' Write the DESCRIPTION file for an Exported REDCap Project
-#' 
+# Write the DESCRIPTION file for an Exported REDCap Project
 write_descritption_file <- function(access_time, user, roles, project_info, path) {
 
   pkg_version <-
@@ -25,7 +24,7 @@ write_descritption_file <- function(access_time, user, roles, project_info, path
   invisible()
 }
 
-#' Write the Authors for the DESCRIPTION file
+# Write the Authors for the DESCRIPTION file
 write_authors <- function(user, roles = NULL) {
   UseMethod("write_authors")
 }
@@ -46,8 +45,8 @@ write_authors.rcer_user <- function(user, roles = NULL) {
 
   forDESCRIPTION <-
     data.frame(username = user$username,
-               given  = user$firstname, 
-               family = user$lastname, 
+               given  = user$firstname,
+               family = user$lastname,
                email  = user$email,
                stringsAsFactors = FALSE)
 

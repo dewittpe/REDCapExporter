@@ -15,6 +15,9 @@ then the column type will be \code{character}.}
 
 \item{...}{not currently used}
 }
+\value{
+a \code{rcer_col_type} object
+}
 \description{
 Define a type for each column of the records for a REDCap project based on
 the metadata for the project.

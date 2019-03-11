@@ -104,8 +104,8 @@ Sys.setenv(REDCap_API_uri = "https://redcap.ucdenver.edu/api/")
 Sys.setenv(REDCap_API_TOKEN = get_secret("2000_2001_Avalanche"))
 
 # Set the option the format the data will be returned in.  Possible values are
-# 'csv', 'xml', or 'json'. The default is 'csv', set when
-# qwraps2::Rpkg(REDCapExporter) is loaded.
+# 'csv', 'xml', or 'json'.   Methods to build data sets from csv and json have
+# been built, xml is not yet supported.  csv is the default format.
 Sys.getenv("REDCap_API_format")
 ```
 
@@ -162,43 +162,14 @@ str(avs_raw_metadata)
 
 We opted to have `export_content` return a character string such that the end
 user can may select the format for the return and use the tool of their
-choice for creating a `data.frame`.  For example, creating a `data.table`
-from the csv or json formats.
-
-```{r }
-from_csv <- data.table::fread(input = avs_raw_metadata, colClasses = "character")
-
-from_json <-
-  export_content(content = "metadata", format = "json") %>%
-  rjson::fromJSON(json_str = .) %>%
-  lapply(as.data.table) %>%
-  rbindlist
-
-identical(from_csv, from_json)
-```
-
-
-A easier way to get the raw export into a \code{data.frame} or
-\code{data.table} is to use the `as.data.frame` or `as.data.table` methods.
-
-```{r }
-csv_metadata  <- export_content(content = "metadata", format = "csv")
-json_metadata <- export_content(content = "metadata", format = "json")
-
-df_from_csv  <- as.data.frame(csv_metadata)
-df_from_json <- as.data.frame(json_metadata)
-identical(df_from_csv, df_from_json)
-
-dt_from_csv  <- as.data.table(csv_metadata)
-dt_from_json <- as.data.table(json_metadata)
-identical(dt_from_csv, dt_from_json)
-```
+choice for creating a `data.frame` or other objects.  However, as you will
+see in the next section there are default methods for building `data.frame`s.
 
 
 
 ## Data Import Tools
 
-When working with REDCap data it is likely that you will have more collumns
+When working with REDCap data it is likely that you will have more columns
 than you would want to have to code a data import method for yourself.  This
 is especially true if you need to deal with columns that may look like
 numeric values but are really categorical.  We provide some tools to help
@@ -206,42 +177,87 @@ with the data import process.
 
 First, you will need to get the project metadata and record.
 
+
 ```{r }
 avs_raw_metadata <- export_content(content = "metadata")
-avs_raw_record   <- export_content(content = "record")
+avs_raw_metadata
 
+avs_raw_record   <- export_content(content = "record")
+avs_raw_record
+```
+
+
+There are `as.data.frame` and `as.data.table` methods for translating the raw
+export to the noted class.
+
+
+```{r }
 avs_metadata <- as.data.table(avs_raw_metadata)
 avs_record   <- as.data.table(avs_raw_record)
 ```
 
 
-The function `col_type` will take the metadata and return a list of calls to
-set the specific storage modes of the projet record.
+The initial mapping to a `data.frame` treats all columns as `character`.
+
 
 ```{r }
-identical(col_type(avs_raw_metadata), col_type(avs_metadata))
-
-ct <- col_type(avs_metadata)
-str(ct)
+all(sapply(avs_metadata, mode) == "character")
+all(sapply(avs_record, mode) == "character")
 ```
 
 
-The function `format_records()` will build a `data.frame` for the the project
-records using the columns types defined by `col_type()`.
+To create a `data.frame` with useful data storage modes in each column you
+can use `format_record`.  The easiest option is to pass the record and
+metadata to `format_record` as shown below.
+
 
 ```{r }
-# format_records(avs_metadata, avs_raw_records)
+temp1 <- format_record(record = avs_record, metadata = avs_raw_metadata)
+str(temp1[1:10])
+```
 
-temp1 <- format_record(avs_raw_metadata, avs_raw_record)
-temp2 <- format_record(avs_raw_metadata, avs_record)
-temp3 <- format_record(avs_metadata,     avs_raw_record)
-temp4 <- format_record(avs_metadata,     avs_record)
 
-identical(temp1, temp2)
-identical(temp1, temp3)
-identical(temp1, temp4)
+The mode for each column is defined by the function call `col_type`. The
+default modes are set via the metadata:
 
-str(temp1)
+| Field Type                                                             | mode             |
+| :----------                                                            | :----            |
+| Text Fields: `field_type == "text"`                                    |                  |
+| &nbsp;&nbsp; `text_validation_type_or_show_slider_number == "number"`  | `as.numeric`     |
+| &nbsp;&nbsp; `text_validation_type_or_show_slider_number == "integer"` | `as.integer`     |
+| &nbsp;&nbsp; `text_validation_type_or_show_slider_number == "date_*"`  | `lubridate::ymd` |
+| &nbsp;&nbsp; Default                                                   | `as.character`   |
+| Multiple Choice: `field_type %in% c("radio", "dropdown")`              |                  |
+|                                                                        | `as.factor`      |
+| Calculated Fields: `field_type == "calc"`                              |                  |
+|                                                                        | `as.numeric`     |
+| Yes / No: `field_type == "yesno"`                                      |                  |
+|                                                                        | `as.integer`     |
+
+NOTES:
+
+* Dates can be entered into REDCap as mdy, dmy, or ymd.  However, it
+appears that the record will have the date in ymd format regardless of the
+input format.
+
+* Multiple Choice fields can be set as `character` but passing `factor =
+FALSE` to `col_type`.
+
+* Additional defaults are to be defined.
+
+If the user wishes to define the storage mode for a specific subset of
+columns we recommend the user call `col_type` explicitly, store the result,
+modify as needed, then pass the modified object to `format_record`.  For
+example, we will set `hof` which is yes/no variable to `boolean`, and modify
+the height column to be in meters instead of inches.
+
+```{r }
+ct <- col_type(avs_metadata)
+ct$hof <- expression(as.logical(as.integer(hof)))
+ct$height <- expression(0.0254 * as.numeric(height))
+
+temp2 <- format_record(avs_raw_record, col_type = ct)
+str(temp2[1:10])
 ```
 
 
@@ -302,28 +318,52 @@ Let's look at some of the files which have been placed into the project path.
 We will start with the DESCRIPTION file.
 
 ```{r }
-read.dcf(paste(prj_path, "DESCRIPTION", sep = "/"))
+read.dcf(paste(prj_path, "DESCRIPTION", sep = "/")) %>% t
 ```
 
 
-The package name is as noted above, the verions number is worth noting, the
+The package name is as noted above, the version number is worth noting, the
 version is the year.month.day.hour.minute for when the data was exported from
 REDCap.
 
 
 
 ```{r }
-devtools::check(pkg = prj_path)
+check <- devtools::check(pkg = prj_path, quiet = TRUE)
+check
+```
 
-install.packages(
-grep("*.tar.gz", list.files(path = prj_path, recursive = TRUE, full.names = TRUE), value = TRUE),
-lib = temppath)
+
+We see that the package passes basic checks and can be installed.
+Let's install the package and explore the contents.
+
+```{r }
+install.packages(grep("*.tar.gz", list.files(path = prj_path, recursive = TRUE, full.names = TRUE), value = TRUE),
+                 lib = temppath)
 
 library(rcd14465, lib.loc = temppath)
 data(package = "rcd14465")$results
+```
 
-data(metadata)
-all.equal(as.data.frame(avs_metadata), metadata, check.attributes = FALSE)
+
+The data sets provided on this initial export are:
+
+* `metadata`: project metadata as a `data.frame`; all columns are characters.
+
+* `project`: project info, a `data.frame`; all columns are characters.
+
+* `record`: a `data.frame` based on the defualt `format_record` call.
+
+* `user`: a `data.frame` of the user data for the project.
+
+```{r }
+data(metadata, record)
+all.equal(target  = as.data.frame(avs_metadata),
+          current = metadata,
+          check.attributes = FALSE)
+all.equal(target = format_record(avs_record, metadata),
+          current = record,
+          check.attributes = FALSE)
 ```
 
 

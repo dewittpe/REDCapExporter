@@ -19,6 +19,9 @@
 #' @param other_exports Other things to export from REDCap **To be implimented**
 #' @param path Path where the exported project source will be
 #' created/overwritten.
+#' @param author_roles a list naming specific roles for each user id found in
+#' the user table from an exported project.  By default all users with be
+#' contributers ('ctb').  You will need to define a author/creater.
 #' @param verbose provide messages to tell the user what is happening
 #'
 #' @examples
@@ -43,7 +46,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL, author
   project  <- as.data.frame(project_raw)
   user     <- as.data.frame(user_raw)
   metadata <- as.data.frame(metadata_raw)
-  record   <- as.data.frame(record_raw)
+  record   <- format_record(record_raw, metadata_raw)
 
   # VERIFY WHO IS DOING THE EXPORT
   # user[api_export == 1, username:lastname]

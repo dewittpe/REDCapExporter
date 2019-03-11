@@ -4,12 +4,15 @@
 \alias{format_record}
 \title{Format Records}
 \usage{
-format_record(metadata, record, ...)
+format_record(record, metadata = NULL, col_type = NULL, ...)
 }
 \arguments{
-\item{metadata}{a \code{rcer_metadata} or \code{rcer_raw_metadata} object.}
-
 \item{record}{a \code{rcer_raw_record} object.}
+
+\item{metadata}{a \code{rcer_metadata} or \code{rcer_raw_metadata} object.
+Will be ignored if \code{col_type} is defined.}
+
+\item{col_type}{a \code{rcer_col_type} object.}
 
 \item{...}{other arguments passed to \code{\link{col_type}}}
 }
