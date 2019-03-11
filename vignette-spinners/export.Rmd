@@ -96,7 +96,7 @@ library(qwraps2)
 options("datatable.print.topn"  = 3)
 options("datatable.print.nrows" = 6)
 
-# private key needed to access the vault
+# Set the private key needed to access the vault, if needed.
 Sys.setenv(USER_KEY = "~/.ssh/vaults")
 
 # REDCap API uri and token
