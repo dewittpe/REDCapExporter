@@ -16,7 +16,6 @@
 #' @param uri The URI for the REDCap API.  This is passed to
 #' \code{\link[RCurl]{postForm}}.
 #' @param token The API token for a REDCap project.
-#' @param other_exports Other things to export from REDCap **To be implimented**
 #' @param path Path where the exported project source will be
 #' created/overwritten.
 #' @param author_roles a list naming specific roles for each user id found in
@@ -28,7 +27,7 @@
 #' ## Please read the vignette for examples:
 #' ## vignette(topic = "export", package = "REDCapExporteR")
 #' @export
-export_redcap_project <- function(uri, token, other_exports, path = NULL, author_roles = NULL, verbose = TRUE) {
+export_redcap_project <- function(uri, token, path = NULL, author_roles = NULL, verbose = TRUE) {
   if (verbose) message("Getting Project Info")
   project_raw <- export_content(uri = uri, token = token, content = "project")
 
@@ -48,9 +47,6 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL, author
   metadata <- as.data.frame(metadata_raw)
   record   <- format_record(record_raw, metadata_raw)
 
-  # VERIFY WHO IS DOING THE EXPORT
-  # user[api_export == 1, username:lastname]
-
   if (is.null(path)) {
     path <- "."
   }
@@ -68,7 +64,7 @@ export_redcap_project <- function(uri, token, other_exports, path = NULL, author
 
   # LICENSE File
   cat("Proprietary\n\n
-      Do not distribute to anyone or to machines which are not authorized to hold the data.",
+      Do not distribute to anyone or to machines which are not authorized to hold the data.\n",
       file = paste(path, "LICENSE", sep = "/"))
 
   # Write Raw Data
