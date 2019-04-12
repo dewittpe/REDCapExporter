@@ -142,7 +142,7 @@ export_redcap_project <- function(uri, token, path = NULL, author_roles = NULL, 
 export_content <- function(uri, token, content, format, ...) {
 
   if (missing(uri)) {
-    uri <- Sys.getenv("REDCap_API_uri")
+    uri <- Sys.getenv("REDCap_API_URI")
   }
 
   if (missing(token)) {

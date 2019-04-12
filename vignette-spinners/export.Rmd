@@ -93,7 +93,7 @@ options("datatable.print.nrows" = 6)
 Sys.setenv(USER_KEY = "~/.ssh/vaults")
 
 # REDCap API uri and token
-Sys.setenv(REDCap_API_uri = "https://redcap.ucdenver.edu/api/")
+Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
 Sys.setenv(REDCap_API_TOKEN = get_secret("2000_2001_Avalanche"))
 
 # Set the option the format the data will be returned in.  Possible values are
