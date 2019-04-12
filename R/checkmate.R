@@ -27,14 +27,12 @@ free_form_text <- function(x) {
   all_text_fields  <- which(x$field_type == "text")
   free_text_fields <- which(x$field_type == "text" & x$text_validation_type_or_show_slider_number == "")
 
-  list(all_text_fields = all_text_fields,
-       free_text_fields = free_text_fields
-       # message =
-       #   sprintf("%s\\% of the fields in this study are free form text (Number of Text Fields: %d) If responses can be categorized, consider using a dropdown field type to reduce risk of data entry error and make the data easier to analyze."
-       #           , qwraps2::frmt(length(free_text_fields) / nrow(x) * 100, 1),
-       #           nrow(all_text_fields)
-       #           )
-  )
+  cat(crayon::blue(paste0(qwraps2::frmt(length(free_text_fields) / nrow(x) * 100, 1), "% of field are free text.")),
+      crayon::blue("If responses can be categorized, consider using a dropdown field type to reduce risk of data entry error and make the data easier to analyze."),
+      sep = "\n")
+
+  invisible( x[free_text_fields, ] )
+
 }
 
 form_length <- function(x) {
@@ -42,46 +40,51 @@ form_length <- function(x) {
 
   cat(crayon::blue(paste0(sum(fields_per_form > 30), ' of ', length(fields_per_form), " forms in this study have more than 30 fields.\n")))
 
-  if (any(fields_per_form < 30)) {
+  if (any(fields_per_form > 30)) {
     cat(crayon::bgRed("Consider creating shorter forms for better data entry."), "\n")
   }
+
+  invisible(fields_per_form)
 
 }
 
 possible_phi <- function(x) {
 
-  x[, c(5, 8)]
-
   # when extending this character vector do so in all lower case and in
   # alphabetical order
-  possible_phi_vars <-
+  field_label_phi <-
     c(
-      "account number",
-      "address",
-      "birth",
-      "cell number",
-      "cell phone",
-      "city",
-      "dob",
-      "e-mail",
-      "email",
-      "fax",
-      "health plan number",
-      "insurance number",
-      "medical record number",
-      "mrn",
-      "name",
-      "pager",
-      "phone",
-      "phone",
-      "postal code",
-      "social security number",
-      "ssn",
-      "state",
-      "street",
-      "website",
-      "zip"
+      "account number", "address", "birth", "cell number", "cell phone", "city",
+      "dob", "e-mail", "email", "fax", "health plan number", "insurance number",
+      "medical record number", "mrn", "name", "pager", "phone", "phone",
+      "postal code", "social security number", "ssn", "state", "street",
+      "website", "zip"
     )
+  text_validator_phi <- c("email", "phone", "ssn", "postal", "zipcode")
+  field_annotation_phi <- c("latitude", "longitude", "default")
+
+  x[, c(5, 8, 11, 18)]
+
+  field_label_tests      <- lapply(field_label_phi,    grepl, x = x$field_label, ignore.case = TRUE)
+  text_validator_tests   <- lapply(text_validator_phi, grepl, x = x$text_validation_type_or_show_slider_number, ignore.case = TRUE)
+  field_annotation_tests <- lapply(field_annotation_phi, grepl, x = x$field_annotation, ignore.case = TRUE)
+
+  field_label_tests      <- Filter(any, setNames(field_label_tests, paste0("fld_lbl_phi_", field_label_phi)))
+  text_validator_tests   <- Filter(any, setNames(text_validator_tests, paste0("txt_vld_phi_", text_validator_phi)))
+  field_annotation_tests <- Filter(any, setNames(field_annotation_tests, paste0("fld_ann_phi_", field_annotation_phi)))
+
+  rtn <- cbind(x[, c(5, 8, 11, 18)],
+               as.data.frame(field_label_tests),
+               as.data.frame(text_validator_tests),
+               as.data.frame(field_annotation_tests))[apply(do.call(cbind, c(field_label_tests, text_validator_tests, field_annotation_tests)), 1, any) , ]
+
+  if (all(rtn$identifier == "y")) {
+    cat(crayon::blue("All detected possible PHI has been marked as `identifier`."), "\n")
+  } else {
+    cat(crayon::bgRed("Not all detected possible PHI has been marked as `identifier`."), "\n")
+  }
+
+  invisible(rtn)
 
 }
 
