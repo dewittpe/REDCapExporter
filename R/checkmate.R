@@ -20,6 +20,29 @@ checkmate.rcer_raw_metadata <- function(x) {
 checkmate.rcer_metadata <- function(x) {
 }
 
+# Check for Free From Text and report the
+# Free Form Text:
+free_form_text <- function(x) {
+
+  all_text_fields  <- which(x$field_type == "text")
+  free_text_fields <- which(x$field_type == "text" & x$text_validation_type_or_show_slider_number == "")
+
+  list(all_text_fields = all_text_fields,
+       free_text_fields = free_text_fields
+       # message =
+       #   sprintf("%s\\% of the fields in this study are free form text (Number of Text Fields: %d) If responses can be categorized, consider using a dropdown field type to reduce risk of data entry error and make the data easier to analyze."
+       #           , qwraps2::frmt(length(free_text_fields) / nrow(x) * 100, 1),
+       #           nrow(all_text_fields)
+       #           )
+  )
+}
+
+
+
+
+
+
+
 check_for_phi <- function(x) {
   UseMethod('check_for_phi')
 }
@@ -59,3 +82,31 @@ check_for_phi.rcer_metadata <- function(x) {
 
 }
 
+
+
+
+
+#
+# FrmLngth
+# ActiveCell.FormulaR1C1 = lngFrms & " out of " & nmFrms & " forms in this study have more than 30 fields.  Consider creating shorter forms for better data entry."
+# Else
+# ActiveCell.FormulaR1C1 = " 0 out of " & nmFrms & " forms in this study have more than 30 fields."
+
+#
+# Possible PHI
+#
+
+#
+# PssblPHIFA
+#
+
+#
+# Cnsstnt
+# Ccltns
+# AddrssLng
+# SggstMinMax
+# SggstMinMaxDate
+# TxtVldtr
+# LabVldtr
+# CnsstntAll
+# main
