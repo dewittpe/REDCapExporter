@@ -89,23 +89,31 @@ possible_phi <- function(x) {
 }
 
 
-
-
+# C
+consistancy <- function(x) {
+  x[, 5]
+}
 
 
 #
-# Possible PHI
-#
-
-#
-# PssblPHIFA
-#
-
-#
-# Cnsstnt
 # Ccltns
 # AddrssLng
 # SggstMinMax
+suggest_min_max <- function(x) {
+  x[, c(8, 9, 10)]
+
+  out <- x[grepl("number|integer|date_", x$text_validation_type_or_show_slider_number), c(1,2,5,8,9,10)]
+  out <- out[out$text_validation_min == "" | out$text_validation_max == "", ]
+
+  if (nrow(out)) {
+    cat(crayon::blue("There are fields validated as integer, number, or date which do not have min or max values set.", "\n"))
+  } else {
+    cat(crayon::blue("All integer, number, and date fields are have min and max values set."), "\n")
+  }
+
+  invisible(out)
+}
+
 # SggstMinMaxDate
 # TxtVldtr
 # LabVldtr
