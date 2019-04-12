@@ -15,9 +15,10 @@ Imports:
     RCurl
 Suggests:
     devtools,
+    fs,
     knitr,
     magrittr,
-    qwraps2,
+    qwraps2 (> 0.4.1),
     R.rsp,
     rjson,
     secret

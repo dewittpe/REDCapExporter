@@ -4,16 +4,14 @@
 \alias{export_redcap_project}
 \title{Export REDCap Project}
 \usage{
-export_redcap_project(uri, token, other_exports, path = NULL,
-  author_roles = NULL, verbose = TRUE)
+export_redcap_project(uri, token, path = NULL, author_roles = NULL,
+  verbose = TRUE)
 }
 \arguments{
 \item{uri}{The URI for the REDCap API.  This is passed to
 \code{\link[RCurl]{postForm}}.}
 
 \item{token}{The API token for a REDCap project.}
-
-\item{other_exports}{Other things to export from REDCap **To be implimented**}
 
 \item{path}{Path where the exported project source will be
 created/overwritten.}
