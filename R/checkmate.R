@@ -37,17 +37,20 @@ free_form_text <- function(x) {
   )
 }
 
+form_length <- function(x) {
+  fields_per_form <- table(x[, 2])
 
+  cat(crayon::blue(paste0(sum(fields_per_form > 30), ' of ', length(fields_per_form), " forms in this study have more than 30 fields.\n")))
 
+  if (any(fields_per_form < 30)) {
+    cat(crayon::bgRed("Consider creating shorter forms for better data entry."), "\n")
+  }
 
-
-
-
-check_for_phi <- function(x) {
-  UseMethod('check_for_phi')
 }
 
-check_for_phi.rcer_metadata <- function(x) {
+possible_phi <- function(x) {
+
+  x[, c(5, 8)]
 
   # when extending this character vector do so in all lower case and in
   # alphabetical order
@@ -86,11 +89,6 @@ check_for_phi.rcer_metadata <- function(x) {
 
 
 
-#
-# FrmLngth
-# ActiveCell.FormulaR1C1 = lngFrms & " out of " & nmFrms & " forms in this study have more than 30 fields.  Consider creating shorter forms for better data entry."
-# Else
-# ActiveCell.FormulaR1C1 = " 0 out of " & nmFrms & " forms in this study have more than 30 fields."
 
 #
 # Possible PHI
