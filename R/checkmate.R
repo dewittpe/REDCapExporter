@@ -69,9 +69,9 @@ possible_phi <- function(x) {
   text_validator_tests   <- lapply(text_validator_phi, grepl, x = x$text_validation_type_or_show_slider_number, ignore.case = TRUE)
   field_annotation_tests <- lapply(field_annotation_phi, grepl, x = x$field_annotation, ignore.case = TRUE)
 
-  field_label_tests      <- Filter(any, setNames(field_label_tests, paste0("fld_lbl_phi_", field_label_phi)))
-  text_validator_tests   <- Filter(any, setNames(text_validator_tests, paste0("txt_vld_phi_", text_validator_phi)))
-  field_annotation_tests <- Filter(any, setNames(field_annotation_tests, paste0("fld_ann_phi_", field_annotation_phi)))
+  field_label_tests      <- Filter(any, stats::setNames(field_label_tests, paste0("fld_lbl_phi_", field_label_phi)))
+  text_validator_tests   <- Filter(any, stats::setNames(text_validator_tests, paste0("txt_vld_phi_", text_validator_phi)))
+  field_annotation_tests <- Filter(any, stats::setNames(field_annotation_tests, paste0("fld_ann_phi_", field_annotation_phi)))
 
   rtn <- cbind(x[, c(5, 8, 11, 18)],
                as.data.frame(field_label_tests),
