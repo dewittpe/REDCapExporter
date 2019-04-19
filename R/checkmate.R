@@ -120,6 +120,7 @@ address_long <- function(x) {
 }
 
 # SggstMinMax
+# SggstMinMaxDate
 suggest_min_max <- function(x) {
   x[, c(8, 9, 10)]
 
@@ -135,8 +136,25 @@ suggest_min_max <- function(x) {
   invisible(out)
 }
 
-# SggstMinMaxDate
 # TxtVldtr
+text_validator <- function(x) {
+
+
+  ### What to do here?  Note: in the Avs data example "Ties / Overtime losses"
+  ### is identified as something that needs to have some type of validiation.
+  ### This function seems like it is looking to make sure a variable recording
+  ### time has a time value, this is an issue here.
+
+  #   tv <- sapply(x$text_validation_type_or_show_slider_number, nchar) > 0
+  #   fl <- lapply(c("date", "time", "zip", "phone", "cell phone", "cell number", "fax", "pager", "email", "dob", "ssn", "postal"),
+  #                grepl,
+  #                x = x$field_label)
+  #   fl <- apply(do.call(cbind, fl), 1, any)
+  # 
+  #   x[fl, 5]
+
+}
+
 # LabVldtr
 # CnsstntAll
 # main
