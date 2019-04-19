@@ -89,15 +89,36 @@ possible_phi <- function(x) {
 }
 
 
-# C
+# Cnsstnt(wordCheck) .... I'm not sure what this is doing, see line 235 of
+# inst/checkMate/Module1.bas
 consistancy <- function(x) {
   x[, 5]
 }
 
 
 #
-# Ccltns
-# AddrssLng
+# Ccltns ... I'm not sure what this is doing, see line 288 of
+# inst/checkMate/Module1.bas
+
+
+# AddrssLng ...
+address_long <- function(x) {
+
+  long_address <-
+    apply(
+          matrix(c(grepl("street", x$field_label, ignore.case = TRUE),
+                   grepl("city",   x$field_label, ignore.case = TRUE),
+                   grepl("state",  x$field_label, ignore.case = TRUE),
+                   grepl("zip",    x$field_label, ignore.case = TRUE)),
+                 ncol = 4),
+          1, any)
+
+  if (long_address) {
+    cat(crayon::bgRed("Break out the street, city, state, zip suggested by vanderbilt"), "\n")
+  }
+
+}
+
 # SggstMinMax
 suggest_min_max <- function(x) {
   x[, c(8, 9, 10)]
