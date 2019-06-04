@@ -1,6 +1,6 @@
 Package: REDCapExporter
 Title: REDCap Exporter
-Version: 0.0.2
+Version: 0.0.2.9000
 Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@ucdenver.edu", role = c("aut", "cre"))
 Description: Export all data, including metadata, from a REDCap Project via the REDCap
     API.  The exported (meta)data will be processed and formated into a stand

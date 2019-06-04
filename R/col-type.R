@@ -76,8 +76,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
           cl[[2]] <- as.name(nm)
           cl
           },
-        nm = x$field_name[x$field_type == "text"],
-        tp = x$text_validation_type_or_show_slider_number[x$field_type == "text"])
+        nm = x$field_name[x$field_type %in% c("notes", "text")],
+        tp = x$text_validation_type_or_show_slider_number[x$field_type %in% c("notes", "text")])
 
   text_fields <- lapply(text_fields, as.call)
 
