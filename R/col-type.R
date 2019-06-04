@@ -61,6 +61,7 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
 
 
   ## Text Fields
+  ## 4 June 2019: I am adding field_type == "file" to this set as well as a placeholder for later work.
   text_fields <-
     Map(function(nm, tp) {
           cl <- list()
@@ -76,8 +77,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
           cl[[2]] <- as.name(nm)
           cl
           },
-        nm = x$field_name[x$field_type %in% c("notes", "text")],
-        tp = x$text_validation_type_or_show_slider_number[x$field_type %in% c("notes", "text")])
+        nm = x$field_name[x$field_type %in% c("notes", "text", "file")],
+        tp = x$text_validation_type_or_show_slider_number[x$field_type %in% c("notes", "text", "file")])
 
   text_fields <- lapply(text_fields, as.call)
 
@@ -110,6 +111,32 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
           mc_fields)
   }
 
+
+  # field denoteding completed status of a form and form names
+  cmplt_fields <- paste(unique(x$form_name), "complete", sep = "_")
+  cmplt_fields <-
+    stats::setNames(
+                    lapply(cmplt_fields,
+                           function(nm, choices) {
+                             cl <- list(quote(factor),
+                                        x = as.name(nm),
+                                        levels = c(0, 1, 2),
+                                        labels = c("Incomplete", "Unverified", "Complete"))
+                             as.call(cl)
+                           }),
+                    cmplt_fields)
+
+  if (!factors) {
+    cmplt_fields <-
+      Map(function(xx) {
+            cl <- list()
+            cl[[1]] <- quote(as.character)
+            cl[[2]] <- xx
+            as.call(cl)
+          },
+          mc_fields)
+  }
+
   # calc fields
   calc_fields <-
     Map(function(nm) {
@@ -132,7 +159,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
 
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
+  out <- c(out, cmplt_fields)
   class(out) <- c("rcer_col_type", class(out))
-  out 
+  out
 }
 
