@@ -137,6 +137,10 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
           mc_fields)
   }
 
+  # Repeated forms?
+  rpt_fields <- list("redcap_repeat_instrument" = as.call(list(quote(as.character), as.name("redcap_repeat_instrument"))),
+                     "redcap_repeat_instance" = as.call(list(quote(as.integer), as.name("redcap_repeat_instance"))))
+
   # calc fields
   calc_fields <-
     Map(function(nm) {
@@ -159,7 +163,7 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
 
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
-  out <- c(out, cmplt_fields)
+  out <- c(out, rpt_fields, cmplt_fields)
   class(out) <- c("rcer_col_type", class(out))
   out
 }
