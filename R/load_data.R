@@ -19,13 +19,13 @@ format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
   }
 
   if (!(inherits(record, "rcer_record") | inherits(record, "rcer_raw_record"))) {
-    stop("format_record expects the `record` argument to be a `rcer_raw_record` or `rcer_record` object.") 
+    stop("format_record expects the `record` argument to be a `rcer_raw_record` or `rcer_record` object.")
   }
 
   if (inherits(record, "rcer_raw_record")) {
     record <- as.data.frame(record)
   }
-  
+
 
   if (is.null(col_type)) {
     if (!(inherits(metadata, "rcer_metadata") | inherits(metadata, "rcer_raw_metadata"))) {
@@ -37,14 +37,28 @@ format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
     }
 
     ct <- col_type(metadata, ...)
-  } else { 
+  } else {
     if (!inherits(col_type, "rcer_col_type")) {
       stop("col_type needs to be rcer_col_type object")
     }
     ct <- col_type
   }
 
-  as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
+  formated_record <- lapply(ct,
+                            function(x) {
+                              out <- try(eval(x, envir = record), silent = TRUE)
+                              if (!inherits(out, "try-error")) {
+                                return(out) }
+                              else {
+                                return(NA)
+                              }
+                            })
+
+  formated_record <-
+    Filter(f = function(x) {!all(is.na(x))},
+           formated_record)
+
+  as.data.frame(formated_record, stringsAsFactors = FALSE)
 }
 
 
