@@ -3,7 +3,6 @@
 \docType{package}
 \name{REDCapExporter}
 \alias{REDCapExporter}
-\alias{REDCapExporter-package}
 \title{REDCapExporter}
 \description{
 REDCapExporter

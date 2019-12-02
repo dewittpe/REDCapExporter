@@ -4,8 +4,13 @@
 \alias{export_redcap_project}
 \title{Export REDCap Project}
 \usage{
-export_redcap_project(uri, token, path = NULL, author_roles = NULL,
-  verbose = TRUE)
+export_redcap_project(
+  uri,
+  token,
+  path = NULL,
+  author_roles = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{uri}{The URI for the REDCap API.  This is passed to
