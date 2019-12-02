@@ -1,7 +1,7 @@
 Package: REDCapExporter
 Title: REDCap Exporter
 Version: 0.0.2
-Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@ucdenver.edu", role = c("aut", "cre"))
+Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"))
 Description: Export all data, including metadata, from a REDCap Project via the REDCap
     API.  The exported (meta)data will be processed and formated into a stand
     alone R data package which can be installed and shared between researchers.
@@ -23,5 +23,4 @@ Suggests:
     rjson,
     secret
 VignetteBuilder: R.rsp
-RoxygenNote: 6.1.1
-
+RoxygenNote: 7.0.2
