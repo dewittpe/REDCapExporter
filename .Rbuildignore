@@ -10,3 +10,4 @@
 ^.*makefile$
 ^.*\.tar\.gz$
 inst/vault/*
+vignette-spinners/*

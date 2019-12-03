@@ -174,10 +174,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## Getting project metadata
 ## Getting user data
 ## Getting project record
-## Creating source package at /tmp/RtmpB6XBcK/rcd14465
+## Creating source package at /tmp/RtmpjTMo2P/rcd14465
 ## Updating rcd14465 documentation
 ## First time using roxygen2. Upgrading automatically...
-## Updating roxygen version in /tmp/RtmpB6XBcK/rcd14465/DESCRIPTION
+## Updating roxygen version in /tmp/RtmpjTMo2P/rcd14465/DESCRIPTION
 ## Writing NAMESPACE
 ## Loading rcd14465
 ## Writing project.Rd
@@ -186,8 +186,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## Writing record.Rd</code></pre></div>
 <p>The resulting directory is:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fs<span class="op">::</span><span class="kw">dir_tree</span>(temppath)
-## /tmp/RtmpB6XBcK
-## ├── file80361577678
+## /tmp/RtmpjTMo2P
+## ├── file3e3e2d8e3392
 ## └── rcd14465
 ##     ├── DESCRIPTION
 ##     ├── LICENSE
@@ -221,7 +221,7 @@ prj_dir &lt;-<span class="st"> </span>prj_dir[<span class="kw">grepl</span>(<spa
 ##                 [,1]                                                                                                                                                                                                                               
 ## Package         &quot;rcd14465&quot;                                                                                                                                                                                                                         
 ## Title           &quot;2000-2001 Colorado Avalanche&quot;                                                                                                                                                                                                     
-## Version         &quot;2019.12.02.13.38&quot;                                                                                                                                                                                                                 
+## Version         &quot;2019.12.03.10.50&quot;                                                                                                                                                                                                                 
 ## Authors@R       &quot;c(person(given = \&quot;Tell\&quot;, family = \&quot;Bennett\&quot;, email = \&quot;tell.bennett@ucdenver.edu\&quot;, role = c(\&quot;ctb\&quot;)),\nperson(given = \&quot;Peter\&quot;, family = \&quot;DeWitt\&quot;, email = \&quot;peter.dewitt@cuanschutz.edu\&quot;, role = c(\&quot;cre\&quot;, \&quot;aut\&quot;)))&quot;
 ## Description     &quot;Data and documentation from the REDCap Project.&quot;                                                                                                                                                                                  
 ## License         &quot;file LICENSE&quot;                                                                                                                                                                                                                     
@@ -249,8 +249,8 @@ prj_dir &lt;-<span class="st"> </span>prj_dir[<span class="kw">grepl</span>(<spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">check &lt;-<span class="st"> </span>devtools<span class="op">::</span><span class="kw">check</span>(<span class="dt">pkg =</span> prj_dir, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)
 ## Loading rcd14465
 check
-## ── R CMD check results ────────────────────────── rcd14465 2019.12.02.13.38 ────
-## Duration: 13.8s
+## ── R CMD check results ────────────────────────── rcd14465 2019.12.03.10.50 ────
+## Duration: 13.4s
 ## 
 ## 0 errors ✔ | 0 warnings ✔ | 0 notes ✔</code></pre></div>
 </div>
@@ -264,10 +264,10 @@ check
 <p>The available data sets:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="dt">package =</span> <span class="st">&quot;rcd14465&quot;</span>)<span class="op">$</span>results
 ##      Package    LibPath           Item       Title
-## [1,] &quot;rcd14465&quot; &quot;/tmp/RtmpB6XBcK&quot; &quot;metadata&quot; &quot;&quot;   
-## [2,] &quot;rcd14465&quot; &quot;/tmp/RtmpB6XBcK&quot; &quot;project&quot;  &quot;&quot;   
-## [3,] &quot;rcd14465&quot; &quot;/tmp/RtmpB6XBcK&quot; &quot;record&quot;   &quot;&quot;   
-## [4,] &quot;rcd14465&quot; &quot;/tmp/RtmpB6XBcK&quot; &quot;user&quot;     &quot;&quot;</code></pre></div>
+## [1,] &quot;rcd14465&quot; &quot;/tmp/RtmpjTMo2P&quot; &quot;metadata&quot; &quot;&quot;   
+## [2,] &quot;rcd14465&quot; &quot;/tmp/RtmpjTMo2P&quot; &quot;project&quot;  &quot;&quot;   
+## [3,] &quot;rcd14465&quot; &quot;/tmp/RtmpjTMo2P&quot; &quot;record&quot;   &quot;&quot;   
+## [4,] &quot;rcd14465&quot; &quot;/tmp/RtmpjTMo2P&quot; &quot;user&quot;     &quot;&quot;</code></pre></div>
 <p>A simple data analysis question: how many goals were scored by position?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.data.table</span>(record)[, <span class="kw">sum</span>(goals), by =<span class="st"> </span>position]
 ##      position V1
@@ -295,12 +295,12 @@ avs_raw_metadata     &lt;-<span class="st"> </span><span class="kw">export_conte
 ##  'rcer_raw_project' chr &quot;project_id,project_title,creation_time,production_time,in_production,project_language,purpose,purpose_other,pro&quot;| __truncated__
 ##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;
 ##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;
-##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-12-02 13:38:44&quot;
+##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-12-03 10:50:41&quot;
 <span class="kw">str</span>(avs_raw_metadata)
 ##  'rcer_raw_metadata' chr &quot;field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid&quot;| __truncated__
 ##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;
 ##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;
-##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-12-02 13:38:44&quot;</code></pre></div>
+##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-12-03 10:50:41&quot;</code></pre></div>
 <p>We opted to have <code>export_content</code> return a character string such that the end user can may select the format for the return and use the tool of their choice for creating a data.frame or other objects. However, as you will see in the next section there are default methods for building data frames.</p>
 </div>
 <div id="data-import-tools" class="section level2">
@@ -314,7 +314,7 @@ avs_raw_metadata
 ##               charset 
 ## &quot;text/csv&quot;    &quot;utf-8&quot; 
 ## attr(,&quot;accessed&quot;)
-## [1] &quot;2019-12-02 13:38:44 MST&quot;
+## [1] &quot;2019-12-03 10:50:42 MST&quot;
 ## attr(,&quot;class&quot;)
 ## [1] &quot;rcer_raw_metadata&quot; &quot;character&quot;
 
@@ -325,7 +325,7 @@ avs_raw_record
 ##               charset 
 ## &quot;text/csv&quot;    &quot;utf-8&quot; 
 ## attr(,&quot;accessed&quot;)
-## [1] &quot;2019-12-02 13:38:44 MST&quot;
+## [1] &quot;2019-12-03 10:50:42 MST&quot;
 ## attr(,&quot;class&quot;)
 ## [1] &quot;rcer_raw_record&quot; &quot;character&quot;</code></pre></div>
 <p>There are <code>as.data.frame</code> and <code>as.data.table</code> methods for translating the raw export to the noted class.</p>
@@ -392,7 +392,7 @@ temp2 &lt;-<span class="st"> </span><span class="kw">format_record</span>(avs_ra
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] rcd14465_2019.12.02.13.38 qwraps2_0.4.2            
+## [1] rcd14465_2019.12.03.10.50 qwraps2_0.4.2            
 ## [3] secret_1.0.0              magrittr_1.5             
 ## [5] data.table_1.12.6         REDCapExporter_0.0.2     
 ## 
