@@ -1,8 +1,17 @@
 #' REDCapExporter
 #'
+#' Automated Construction of R Data Packages from REDCap Projects
+#'
+#' Use the REDCap (Research Electronic Data CAPture) API to access (meta)data
+#' from a project and format for immediate use or as part of the source code for
+#' a R Data package.
+#'
+#' Please read the vignette for examples and use cases.
+#'
+#' \code{vignette(topic = "export", package = "REDCapExporter")}
+#'
 #' @importFrom data.table as.data.table
 #' @docType package
 #' @name REDCapExporter
 NULL
-
 
