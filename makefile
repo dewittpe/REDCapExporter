@@ -45,6 +45,9 @@ $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(TESTS
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
+check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	R CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
+
 install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
 

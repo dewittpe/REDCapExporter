@@ -6,5 +6,4 @@ r:
 install:
 - Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
 script:
-- make
-- R CMD check --as-cran
+- make check-as-cran
