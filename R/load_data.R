@@ -1,4 +1,4 @@
-#' Format Records
+#' Format Record
 #'
 #' Use REDCap project metadata to build a well formatted \code{data.frame} for
 #' the record.
@@ -19,13 +19,13 @@ format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
   }
 
   if (!(inherits(record, "rcer_record") | inherits(record, "rcer_raw_record"))) {
-    stop("format_record expects the `record` argument to be a `rcer_raw_record` or `rcer_record` object.") 
+    stop("format_record expects the `record` argument to be a `rcer_raw_record` or `rcer_record` object.")
   }
 
   if (inherits(record, "rcer_raw_record")) {
     record <- as.data.frame(record)
   }
-  
+
 
   if (is.null(col_type)) {
     if (!(inherits(metadata, "rcer_metadata") | inherits(metadata, "rcer_raw_metadata"))) {
@@ -37,7 +37,7 @@ format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
     }
 
     ct <- col_type(metadata, ...)
-  } else { 
+  } else {
     if (!inherits(col_type, "rcer_col_type")) {
       stop("col_type needs to be rcer_col_type object")
     }

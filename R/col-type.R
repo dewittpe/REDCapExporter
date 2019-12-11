@@ -133,6 +133,6 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
   class(out) <- c("rcer_col_type", class(out))
-  out 
+  out
 }
 
