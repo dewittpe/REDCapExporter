@@ -2,9 +2,12 @@
 % Please edit documentation in R/write.R
 \name{write_description_file}
 \alias{write_description_file}
+\alias{write_authors}
 \title{Write Description File}
 \usage{
 write_description_file(access_time, user, roles, project_info, path)
+
+write_authors(user, roles = NULL)
 }
 \arguments{
 \item{access_time}{The \code{Sys.time()} when the API calls were made}
@@ -25,6 +28,11 @@ Create the DESCRIPTION file for the R Data package based on an Exported
 REDCap Project
 }
 \details{
-This is a non-exported function and is not expected to be called by the end
+These is a non-exported function and is not expected to be called by the end
 user.
+
+\code{write_description_file} creates the DESCRIPTION file for the
+exported R data package and \code{write_authors} creates the "Authors@R"
+field of the DESCRIPTION based on the "user" data extracted from the REDCap
+project.
 }

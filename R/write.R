@@ -2,10 +2,15 @@
 #'
 #' Create the DESCRIPTION file for the R Data package based on an Exported
 #' REDCap Project
-#' 
-#' This is a non-exported function and is not expected to be called by the end
+#'
+#' These is a non-exported function and is not expected to be called by the end
 #' user.
-#' 
+#'
+#' \code{write_description_file} creates the DESCRIPTION file for the
+#' exported R data package and \code{write_authors} creates the "Authors@R"
+#' field of the DESCRIPTION based on the "user" data extracted from the REDCap
+#' project.
+#'
 #' @param access_time The \code{Sys.time()} when the API calls were made
 #' @param user User(s), as noted in the REDCap project meta data.  This
 #' parameter is singular as it refers to the "user" content one can access from
@@ -40,6 +45,7 @@ write_description_file <- function(access_time, user, roles, project_info, path)
 }
 
 # Write the Authors for the DESCRIPTION file
+#' @rdname write_description_file
 write_authors <- function(user, roles = NULL) {
   UseMethod("write_authors")
 }
