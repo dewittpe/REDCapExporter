@@ -6,4 +6,5 @@ r:
 install:
 - Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
 script:
+- make -C data-raw -t all
 - make check-as-cran
