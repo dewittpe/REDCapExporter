@@ -1,10 +1,13 @@
 language: r
 r:
-- oldrel
-- release
-- devel
+  - oldrel
+  - release
+  - devel
 install:
-- Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
+  - Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
 script:
-- make -C data-raw -t all
-- make check-as-cran
+  - touch data/avs_raw_metadata.rda
+  - touch data/avs_raw_project_info.rda
+  - touch data/avs_raw_record.rda
+  - touch data/avs_raw_user.rda
+  - make check-as-cran
