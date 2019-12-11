@@ -33,7 +33,19 @@ I have changed the title of the package.
 
 >Please add missing .Rd documentation for all functions, e..g.
 >write_descritption_file() in write.R
+
+The missing documentation was for intentionally non-exported functions.
+Documentation has been created for the non-exported functions:
+
+* `write_description_file`
+* `write_authors`
+* `as.data.frame`
+* `as.data.table`
+* `read_text`
+
 >I also suggest renaming this function to write_description_file().
+
+Done.  Thank you for identifying the spelling error.
 
 >Please add small executable examples in your Rd-files to illustrate the
 >use of the exported function but also enable automatic testing.
