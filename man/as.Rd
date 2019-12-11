@@ -34,7 +34,7 @@
 \item{...}{additional arguments to be passed to or from methods.}
 }
 \description{
-Coerce REDCapExporter objects to data.frame or data.tables
+Coerce REDCapExporter objects to data.frame or data.table
 }
 \details{
 These functions are S3 methods for \code{\link{as.data.frame}} and

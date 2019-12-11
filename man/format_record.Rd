@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_data.R
 \name{format_record}
 \alias{format_record}
-\title{Format Records}
+\title{Format Record}
 \usage{
 format_record(record, metadata = NULL, col_type = NULL, ...)
 }
