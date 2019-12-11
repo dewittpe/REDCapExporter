@@ -1,5 +1,7 @@
 # REDCapExporter
 
+[![Build Status](https://travis-ci.com/dewittpe/REDCapExporter.svg?branch=master)](https://travis-ci.com/dewittpe/REDCapExporter)
+
 Download the data from a [REDCap](https://www.project-redcap.org/)
 project and package the data into a useful R data package.
 

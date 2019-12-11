@@ -1,0 +1,10 @@
+language: r
+r:
+- oldrel
+- release
+- devel
+install:
+- Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
+script:
+- make
+- R CMD check --as-cran
