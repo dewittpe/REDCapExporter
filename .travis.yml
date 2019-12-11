@@ -5,6 +5,7 @@ r:
   - devel
 install:
   - Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
+  - Rscript -e 'devtools::install_dev_deps()'
 script:
   - R CMD build .
   - R CMD check --as-cran *.tar.gz
