@@ -60,7 +60,7 @@ export_redcap_project <- function(uri, token, path = NULL, author_roles = NULL, 
   }
 
   # Create the DESCRIPTION FILE
-  write_descritption_file(access_time, user, roles = author_roles, project, path)
+  write_description_file(access_time, user, roles = author_roles, project, path)
 
   # LICENSE File
   cat("Proprietary\n\n

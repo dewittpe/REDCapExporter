@@ -1,5 +1,20 @@
-# Write the DESCRIPTION file for an Exported REDCap Project
-write_descritption_file <- function(access_time, user, roles, project_info, path) {
+#' Write Description File
+#'
+#' Create the DESCRIPTION file for the R Data package based on an Exported
+#' REDCap Project
+#' 
+#' This is a non-exported function and is not expected to be called by the end
+#' user.
+#' 
+#' @param access_time The \code{Sys.time()} when the API calls were made
+#' @param user User(s), as noted in the REDCap project meta data.  This
+#' parameter is singular as it refers to the "user" content one can access from
+#' the REDCap API.
+#' @param roles roles the \code{user} hold with respect to the R data package.
+#' These roles have no relationship to REDCap roles.
+#' @param project_info project metadata
+#' @param path path to the root for the generated R data package.
+write_description_file <- function(access_time, user, roles, project_info, path) {
 
   pkg_version <-
     paste(formatC(lubridate::year(access_time), width = 4),
@@ -36,7 +51,7 @@ write_authors.rcer_raw_user <- function(user, roles = NULL) {
 write_authors.rcer_user <- function(user, roles = NULL) {
   if (is.null(roles)) {
     if (nrow(user) == 1L) {
-      warning("Setting singel user's author role as cre")
+      warning("Setting single user's author role as cre")
       roles <- "cre"
     } else {
       stop("Multiple Users.  You need to define the cre.  All others will default to ctb.")
