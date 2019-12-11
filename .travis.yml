@@ -6,8 +6,5 @@ r:
 install:
   - Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
 script:
-  - touch data/avs_raw_metadata.rda
-  - touch data/avs_raw_project_info.rda
-  - touch data/avs_raw_record.rda
-  - touch data/avs_raw_user.rda
-  - make check-as-cran
+  - R CMD build .
+  - R CMD check --as-cran *.tar.gz
