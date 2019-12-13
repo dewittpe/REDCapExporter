@@ -131,7 +131,7 @@ export_redcap_project <- function(uri, token, path = NULL, author_roles = NULL, 
 
   devtools::document(path)
 
-  invisible()
+  invisible(TRUE)
 }
 
 #' Export Content
