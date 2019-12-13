@@ -23,3 +23,11 @@ A \code{data.frame}
 Use REDCap project metadata to build a well formatted \code{data.frame} for
 the record.
 }
+\examples{
+
+data("avs_raw_metadata")
+data("avs_raw_record")
+
+format_record(avs_raw_record, avs_raw_metadata)
+
+}
