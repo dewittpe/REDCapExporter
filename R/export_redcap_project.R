@@ -142,24 +142,48 @@ export_redcap_project <- function(uri, token, path = NULL, author_roles = NULL, 
 #' specific items to be exported, and in what format.  **Review the API
 #' documentation**
 #'
-#' @param uri The URI for the REDCap API.
-#' @param token The API token for the projedct you want to export from.
+#' The \code{uri}, \code{token}, and \code{format} arguments are set to
+#' \code{NULL} by default and will look to the
+#' \code{Sys.getenv("REDCap_API_URI")},
+#' \code{Sys.getenv("REDCap_API_TOKEN")}, and
+#' \code{Sys.getenv("REDCap_API_format")}, respectively, to define the values if
+#' not explictly done so by the end user.
+#'
+#' @param uri The URI for the REDCap API.  If \code{NULL} (default) the value
+#' \code{Sys.getenv("REDCap_API_URI")} is used.
+#' @param token The API token for the projedct you want to export from. If
+#' \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
+#' used.
 #' @param content The element to export, see Details.
-#' @param format The format to return.
+#' @param format The format to return. If \code{NULL} (default) the value
+#' \code{Sys.getenv("REDCap_API_format")} is used.
 #' @param ... additional arguments passed to \code{\link[RCurl]{postForm}}.
 #'
+#' @return The raw return from the REDCap API with the class
+#' \code{rcer_raw_<content>}.
+#'
+#' @examples
+#'
+#' # A reproducible example would require a REDCap project, accessable via an
+#' # API token.  An example of the return from these calls are provided as data
+#' # with this package.
+#'
+#' # avs_raw_metadata <- export_content(content = "metadata")
+#' data(avs_raw_metadata)
+#' str(avs_raw_metadata)
+#'
 #' @export
-export_content <- function(uri, token, content, format, ...) {
+export_content <- function(uri = NULL, token = NULL, content, format = NULL, ...) {
 
-  if (missing(uri)) {
+  if (is.null(uri)) {
     uri <- Sys.getenv("REDCap_API_URI")
   }
 
-  if (missing(token)) {
+  if (is.null(token)) {
     token <- Sys.getenv("REDCap_API_TOKEN")
   }
 
-  if (missing(format)) {
+  if (is.null(format)) {
     format <- Sys.getenv("REDCap_API_format")
   }
 

@@ -4,18 +4,26 @@
 \alias{export_content}
 \title{Export Content}
 \usage{
-export_content(uri, token, content, format, ...)
+export_content(uri = NULL, token = NULL, content, format = NULL, ...)
 }
 \arguments{
-\item{uri}{The URI for the REDCap API.}
+\item{uri}{The URI for the REDCap API.  If \code{NULL} (default) the value
+\code{Sys.getenv("REDCap_API_URI")} is used.}
 
-\item{token}{The API token for the projedct you want to export from.}
+\item{token}{The API token for the projedct you want to export from. If
+\code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
+used.}
 
 \item{content}{The element to export, see Details.}
 
-\item{format}{The format to return.}
+\item{format}{The format to return. If \code{NULL} (default) the value
+\code{Sys.getenv("REDCap_API_format")} is used.}
 
 \item{...}{additional arguments passed to \code{\link[RCurl]{postForm}}.}
+}
+\value{
+The raw return from the REDCap API with the class
+\code{rcer_raw_<content>}.
 }
 \description{
 Export specific data elemetns from REDCap
@@ -24,4 +32,22 @@ Export specific data elemetns from REDCap
 The \code{content} and \code{format} arguements are used to control the
 specific items to be exported, and in what format.  **Review the API
 documentation**
+
+The \code{uri}, \code{token}, and \code{format} arguments are set to
+\code{NULL} by default and will look to the
+\code{Sys.getenv("REDCap_API_URI")},
+\code{Sys.getenv("REDCap_API_TOKEN")}, and
+\code{Sys.getenv("REDCap_API_format")}, respectively, to define the values if
+not explictly done so by the end user.
+}
+\examples{
+
+# A reproducible example would require a REDCap project, accessable via an
+# API token.  An example of the return from these calls are provided as data
+# with this package.
+
+# avs_raw_metadata <- export_content(content = "metadata")
+data(avs_raw_metadata)
+str(avs_raw_metadata)
+
 }
