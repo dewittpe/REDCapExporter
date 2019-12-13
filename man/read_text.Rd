@@ -17,5 +17,5 @@ Read raw REDCap API return.  Built to parse csv or json.
 }
 \details{
 This is a non-exported function and not expected to be called by the end
-user.
+user.  Ussed by the \code{as.data.frame} methods.
 }

@@ -3,30 +3,18 @@
 \name{as}
 \alias{as}
 \alias{as.data.frame.rcer_raw_metadata}
-\alias{as.data.table.rcer_raw_metadata}
 \alias{as.data.frame.rcer_raw_record}
-\alias{as.data.table.rcer_raw_record}
 \alias{as.data.frame.rcer_raw_project}
-\alias{as.data.table.rcer_raw_project}
 \alias{as.data.frame.rcer_raw_user}
-\alias{as.data.table.rcer_raw_user}
 \title{as.*}
 \usage{
 \method{as.data.frame}{rcer_raw_metadata}(x, ...)
 
-\method{as.data.table}{rcer_raw_metadata}(x, ...)
-
 \method{as.data.frame}{rcer_raw_record}(x, ...)
-
-\method{as.data.table}{rcer_raw_record}(x, ...)
 
 \method{as.data.frame}{rcer_raw_project}(x, ...)
 
-\method{as.data.table}{rcer_raw_project}(x, ...)
-
 \method{as.data.frame}{rcer_raw_user}(x, ...)
-
-\method{as.data.table}{rcer_raw_user}(x, ...)
 }
 \arguments{
 \item{x}{any \R object.}
@@ -34,9 +22,18 @@
 \item{...}{additional arguments to be passed to or from methods.}
 }
 \description{
-Coerce REDCapExporter objects to data.frame or data.table
+Coerce REDCapExporter objects to data.frame.
 }
 \details{
-These functions are S3 methods for \code{\link{as.data.frame}} and
-\code{\link[data.table]{as.data.table}}.
+These functions are S3 methods for \code{\link{as.data.frame}} for the raw
+exports from the REDCap API.
+}
+\examples{
+
+data("avs_raw_record")
+
+avs_record <- as.data.frame(avs_raw_record)
+
+str(avs_record)
+
 }
