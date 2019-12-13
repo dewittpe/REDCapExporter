@@ -24,8 +24,7 @@ Suggests:
     knitr,
     magrittr,
     qwraps2 (> 0.4.1),
-    R.rsp,
     rjson,
     secret
-VignetteBuilder: R.rsp
+VignetteBuilder: knitr
 RoxygenNote: 7.0.2

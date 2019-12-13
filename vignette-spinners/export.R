@@ -13,7 +13,7 @@
 #'---
 #'
 #+ label = "setup", include = FALSE
-knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(collapse = TRUE, eval = FALSE)
 
 # /* }}} */
 #'
@@ -288,8 +288,8 @@ avs_raw_record
 {{ qwraps2::backtick(as.data.table) }}
 #' methods for translating the raw export to the noted class.
 #'
-avs_metadata <- as.data.table(avs_raw_metadata)
-avs_record   <- as.data.table(avs_raw_record)
+avs_metadata <- as.data.frame(avs_raw_metadata)
+avs_record   <- as.data.frame(avs_raw_record)
 
 #'
 #' The initial mapping to a data frame treats all columns as character.

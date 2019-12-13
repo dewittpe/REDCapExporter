@@ -154,8 +154,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="co"># Set the option the format the data will be returned in.  Possible values are</span>
 <span class="co"># 'csv', 'xml', or 'json'.   Methods to build data sets from csv and json have</span>
 <span class="co"># been built, xml is not yet supported.  csv is the default format.</span>
-<span class="kw">Sys.getenv</span>(<span class="st">&quot;REDCap_API_format&quot;</span>)
-## [1] &quot;csv&quot;</code></pre></div>
+<span class="kw">Sys.getenv</span>(<span class="st">&quot;REDCap_API_format&quot;</span>)</code></pre></div>
 </div>
 </div>
 <div id="exporting-a-redcap-project-to-a-r-data-package" class="section level1">
@@ -163,53 +162,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="basic-export" class="section level2">
 <h2><span class="header-section-number">2.1</span> Basic Export</h2>
 <p>Exporting a REDCap project to a R data package is done with a call to <code>export_redcap_project</code> . The output of the call is a syntactically valid source R package directory. The arguments for the call are</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(export_redcap_project)
-## function (uri, token, path = NULL, author_roles = NULL, verbose = TRUE)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(export_redcap_project)</code></pre></div>
 <p>The uri and token can be passed explicitly here, if omitted, the values in the system environment variables will be used. The path argument is a directory on your machine were the R data package is going to be built. For this vignette we will use a temporary directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temppath &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</code></pre></div>
 <p>Exporting the project will require you to provide at some information about the users. In this context, users are the persons who have, or had, access to the REDCap project and are listed under the UserRights section of the REDCap proejct. The user data from REDCap is used to construct the Author section of the DESCRIPTION file for the R data package to be constucted. By default, all users are listed as ‘contributors’. Modification of the roles can be provide by a named list object. In the example below, the user dewittp is going to assigned the creator and author role. To be a valid R package, at least one user will need to have the creator role assigned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">export_redcap_project</span>(<span class="dt">path =</span> temppath,
-                      <span class="dt">author_roles =</span> <span class="kw">list</span>(<span class="dt">dewittp =</span> <span class="kw">c</span>(<span class="st">&quot;cre&quot;</span>, <span class="st">&quot;aut&quot;</span>)))
-## Getting Project Info
-## Getting project metadata
-## Getting user data
-## Getting project record
-## Creating source package at /tmp/RtmpvkjQrU/rcd14465
-## Updating rcd14465 documentation
-## First time using roxygen2. Upgrading automatically...
-## Updating roxygen version in /tmp/RtmpvkjQrU/rcd14465/DESCRIPTION
-## Writing NAMESPACE
-## Loading rcd14465
-## Writing project.Rd
-## Writing metadata.Rd
-## Writing user.Rd
-## Writing record.Rd</code></pre></div>
+                      <span class="dt">author_roles =</span> <span class="kw">list</span>(<span class="dt">dewittp =</span> <span class="kw">c</span>(<span class="st">&quot;cre&quot;</span>, <span class="st">&quot;aut&quot;</span>)))</code></pre></div>
 <p>The resulting directory is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fs<span class="op">::</span><span class="kw">dir_tree</span>(temppath)
-## /tmp/RtmpvkjQrU
-## ├── callr-env-341c59eb1d3e
-## └── rcd14465
-##     ├── DESCRIPTION
-##     ├── LICENSE
-##     ├── NAMESPACE
-##     ├── R
-##     │   └── datasets.R
-##     ├── data
-##     │   ├── metadata.rda
-##     │   ├── project.rda
-##     │   ├── record.rda
-##     │   └── user.rda
-##     ├── inst
-##     │   └── raw-data
-##     │       ├── metadata.rds
-##     │       ├── project.rds
-##     │       ├── record.rds
-##     │       └── user.rds
-##     └── man
-##         ├── metadata.Rd
-##         ├── project.Rd
-##         ├── record.Rd
-##         └── user.Rd</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fs<span class="op">::</span><span class="kw">dir_tree</span>(temppath)</code></pre></div>
 </div>
 <div id="details-on-exported-files" class="section level2">
 <h2><span class="header-section-number">2.2</span> Details on exported Files</h2>
@@ -217,26 +177,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The DESCRIPTION file is</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prj_dir &lt;-<span class="st"> </span><span class="kw">list.dirs</span>(temppath)
 prj_dir &lt;-<span class="st"> </span>prj_dir[<span class="kw">grepl</span>(<span class="st">&quot;/rcd</span><span class="ch">\\</span><span class="st">d+$&quot;</span>, prj_dir)]
-<span class="kw">t</span>(<span class="kw">read.dcf</span>(<span class="kw">paste</span>(prj_dir, <span class="st">&quot;DESCRIPTION&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)))
-##                 [,1]                                                                                                                                                                                                                               
-## Package         &quot;rcd14465&quot;                                                                                                                                                                                                                         
-## Title           &quot;2000-2001 Colorado Avalanche&quot;                                                                                                                                                                                                     
-## Version         &quot;2019.12.13.12.05&quot;                                                                                                                                                                                                                 
-## Authors@R       &quot;c(person(given = \&quot;Tell\&quot;, family = \&quot;Bennett\&quot;, email = \&quot;tell.bennett@ucdenver.edu\&quot;, role = c(\&quot;ctb\&quot;)),\nperson(given = \&quot;Peter\&quot;, family = \&quot;DeWitt\&quot;, email = \&quot;peter.dewitt@cuanschutz.edu\&quot;, role = c(\&quot;cre\&quot;, \&quot;aut\&quot;)))&quot;
-## Description     &quot;Data and documentation from the REDCap Project.&quot;                                                                                                                                                                                  
-## License         &quot;file LICENSE&quot;                                                                                                                                                                                                                     
-## Encoding        &quot;UTF-8&quot;                                                                                                                                                                                                                            
-## LazyData        &quot;true&quot;                                                                                                                                                                                                                             
-## Suggests        &quot;knitr&quot;                                                                                                                                                                                                                            
-## VignetteBuilder &quot;knitr&quot;                                                                                                                                                                                                                            
-## RoxygenNote     &quot;7.0.2&quot;</code></pre></div>
+<span class="kw">t</span>(<span class="kw">read.dcf</span>(<span class="kw">paste</span>(prj_dir, <span class="st">&quot;DESCRIPTION&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)))</code></pre></div>
 <p>The title comes from the project info recorded in REDCap. The version number is set as the year.month.day.hour.minute of the export. As noted above, the Author field is built from the user data stored in REDCap.</p>
 <p>The LICENSE file notes that the package is proprietary and should not be installed or distributed to others who are not authorized to have access to the data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">paste</span>(prj_dir[<span class="dv">1</span>], <span class="st">&quot;LICENSE&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
-## Proprietary
-## 
-## 
-##       Do not distribute to anyone or to machines which are not authorized to hold the data.</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="kw">readLines</span>(<span class="kw">paste</span>(prj_dir[<span class="dv">1</span>], <span class="st">&quot;LICENSE&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)), <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</code></pre></div>
 <p>The raw data exports are stored as .rds files under inst/raw-data so that these files will be available in R sesssions after installing the package.</p>
 <p>The data directory has data.table versions of the data sets.</p>
 <p>The R/datasets.R file provides the documentation for the data sets which can be accessed in an interactive R session.</p>
@@ -247,12 +191,7 @@ prj_dir &lt;-<span class="st"> </span>prj_dir[<span class="kw">grepl</span>(<spa
 <h3><span class="header-section-number">2.3.1</span> Check the R Data Package</h3>
 <p>The generated R data package should pass the basic R CMD check.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">check &lt;-<span class="st"> </span>devtools<span class="op">::</span><span class="kw">check</span>(<span class="dt">pkg =</span> prj_dir, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)
-## Loading rcd14465
-check
-## ── R CMD check results ────────────────────────── rcd14465 2019.12.13.12.05 ────
-## Duration: 14s
-## 
-## 0 errors ✔ | 0 warnings ✔ | 0 notes ✔</code></pre></div>
+check</code></pre></div>
 </div>
 <div id="using-the-exported-package" class="section level3">
 <h3><span class="header-section-number">2.3.2</span> Using the Exported Package</h3>
@@ -262,20 +201,9 @@ check
 
 <span class="kw">library</span>(rcd14465, <span class="dt">lib.loc =</span> temppath)</code></pre></div>
 <p>The available data sets:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="dt">package =</span> <span class="st">&quot;rcd14465&quot;</span>)<span class="op">$</span>results
-##      Package    LibPath           Item       Title
-## [1,] &quot;rcd14465&quot; &quot;/tmp/RtmpvkjQrU&quot; &quot;metadata&quot; &quot;&quot;   
-## [2,] &quot;rcd14465&quot; &quot;/tmp/RtmpvkjQrU&quot; &quot;project&quot;  &quot;&quot;   
-## [3,] &quot;rcd14465&quot; &quot;/tmp/RtmpvkjQrU&quot; &quot;record&quot;   &quot;&quot;   
-## [4,] &quot;rcd14465&quot; &quot;/tmp/RtmpvkjQrU&quot; &quot;user&quot;     &quot;&quot;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="dt">package =</span> <span class="st">&quot;rcd14465&quot;</span>)<span class="op">$</span>results</code></pre></div>
 <p>A simple data analysis question: how many goals were scored by position?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.data.table</span>(record)[, <span class="kw">sum</span>(goals), by =<span class="st"> </span>position]
-##      position V1
-## 1:       Goal  0
-## 2:     Center 93
-## 3:    Defence 34
-## 4: Right Wing 72
-## 5:  Left Wing 71</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.data.table</span>(record)[, <span class="kw">sum</span>(goals), by =<span class="st"> </span>position]</code></pre></div>
 </div>
 </div>
 </div>
@@ -285,22 +213,13 @@ check
 <div id="specific-export-methods" class="section level2">
 <h2><span class="header-section-number">3.1</span> Specific Export Methods</h2>
 <p>The method <code>&quot;export_content&quot;</code> can be used to export specific parts of a REDCap project. Three of the arguments, uri, token, and format, if omitted, will default to the system environment variables. Thus, only the content argument must be defined by the user. Additional arguments for the API are passed via the ellipses. Check your specific REDCap API documentation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(export_content)
-## function (uri, token, content, format, ...)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(export_content)</code></pre></div>
 <p>For example, the project information and project metadata can be obtained via:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">avs_raw_project_info &lt;-<span class="st"> </span><span class="kw">export_content</span>(<span class="dt">content =</span> <span class="st">&quot;project&quot;</span>)
 avs_raw_metadata     &lt;-<span class="st"> </span><span class="kw">export_content</span>(<span class="dt">content =</span> <span class="st">&quot;metadata&quot;</span>)</code></pre></div>
 <p>The return object from <code>export_content</code> are character strings as you would expect from a call to <code>postForm</code> from the <em><a href="https://cran.r-project.org/package=RCurl">RCurl</a></em> package. A couple additional attributes have been added. The <code>Sys.time</code> for the call and the class <code>&quot;rcer_raw_*&quot;</code> where * is replaced by the value of the content argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(avs_raw_project_info)
-##  'rcer_raw_project' chr &quot;project_id,project_title,creation_time,production_time,in_production,project_language,purpose,purpose_other,pro&quot;| __truncated__
-##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;
-##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;
-##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-12-13 12:05:45&quot;
-<span class="kw">str</span>(avs_raw_metadata)
-##  'rcer_raw_metadata' chr &quot;field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid&quot;| __truncated__
-##  - attr(*, &quot;Content-Type&quot;)= Named chr [1:2] &quot;text/csv&quot; &quot;utf-8&quot;
-##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;&quot; &quot;charset&quot;
-##  - attr(*, &quot;accessed&quot;)= POSIXct[1:1], format: &quot;2019-12-13 12:05:45&quot;</code></pre></div>
+<span class="kw">str</span>(avs_raw_metadata)</code></pre></div>
 <p>We opted to have <code>export_content</code> return a character string such that the end user can may select the format for the return and use the tool of their choice for creating a data.frame or other objects. However, as you will see in the next section there are default methods for building data frames.</p>
 </div>
 <div id="data-import-tools" class="section level2">
@@ -309,47 +228,18 @@ avs_raw_metadata     &lt;-<span class="st"> </span><span class="kw">export_conte
 <p>First, you will need to get the project metadata and record.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">avs_raw_metadata &lt;-<span class="st"> </span><span class="kw">export_content</span>(<span class="dt">content =</span> <span class="st">&quot;metadata&quot;</span>)
 avs_raw_metadata
-## [1] &quot;field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_validation_type_or_show_slider_number,text_validation_min,text_validation_max,identifier,branching_logic,required_field,custom_alignment,question_number,matrix_group_name,matrix_ranking,field_annotation\nrecord_id,roster,,text,\&quot;Record ID\&quot;,,,,,,,,,,,,,\nuniform_number,roster,,text,\&quot;Uniform Number\&quot;,,,,,,,,,,,,,\nfirstname,roster,,text,\&quot;First name\&quot;,,,,,,y,,y,,,,,\nlastname,roster,,text,\&quot;Last name\&quot;,,,,,,y,,y,,,,,\nhof,roster,,yesno,\&quot;Hall of Famer\&quot;,,\&quot;As of Spring 2019\&quot;,,,,,,,RH,,,,\nnationality,roster,,text,Nationality,,,,,,,,,,,,,\nposition,roster,,dropdown,Position,\&quot;0, Goal | 1, Left Wing | 2, Right Wing | 3, Center | 4, Defence\&quot;,,,,,,,,,,,,\nbirthdate,roster,,text,Birthdate,,\&quot;Format: M-D-Y\&quot;,date_mdy,,,y,,,,,,,\nheight,roster,,text,Height,,\&quot;in inches\&quot;,integer,60,84,,,,,,,,\nweight,roster,,text,Weight,,\&quot;in lbs\&quot;,integer,100,300,,,,,,,,\nshoots,roster,,dropdown,Shoots,\&quot;0, Left | 1, Right\&quot;,,,,,,\&quot;[position] != 0\&quot;,,,,,,\ncatches,roster,,dropdown,Catches,\&quot;0, Left | 1, Right\&quot;,,,,,,\&quot;[position] = 0\&quot;,,,,,,\nexperience,roster,,text,Experience,,\&quot;years in the league; 0 for rookie year\&quot;,integer,0,30,,,,,,,,\ngp,regular_season_scoring,,text,\&quot;Games played\&quot;,,,integer,0,82,,,,,,,,\ngoals,regular_season_scoring,,text,Goals,,,integer,0,70,,,,,,,,\nassists,regular_season_scoring,,text,Assists,,,integer,0,100,,,,,,,,\npoints,regular_season_scoring,,calc,Points,[goals]+[assists],,,,,,,,,,,,\nplusmn,regular_season_scoring,,text,Plus/Minus,,,integer,,,,,,,,,,\npimi,regular_season_scoring,,text,PIM,,\&quot;penalty minutes\&quot;,integer,,,,,,,,,,\ngoals_ev,regular_season_scoring,\&quot;Goal Scoring\&quot;,text,\&quot;Even Strength Goals\&quot;,,,integer,,,,,,,,,,\ngoals_pp,regular_season_scoring,,text,\&quot;Power Play Goals\&quot;,,,integer,0,,,,,,,,,\ngoals_sh,regular_season_scoring,,text,\&quot;Short Handed Goals\&quot;,,,integer,0,,,,,,,,,\ngoals_gw,regular_season_scoring,,text,\&quot;Game Winning Goals\&quot;,,,integer,0,,,,,,,,,\nassists_ev,regular_season_scoring,Assists,text,\&quot;Even Strength Assistis\&quot;,,,integer,0,,,,,,,,,\nassists_pp,regular_season_scoring,,text,\&quot;Power Play Assists\&quot;,,,integer,0,,,,,,,,,\nassists_sh,regular_season_scoring,,text,\&quot;Short Handed Assists\&quot;,,,integer,0,,,,,,,,,\nshots,regular_season_scoring,Shooting,text,\&quot;Shots on Goal\&quot;,,,integer,0,,,,,,,,,\nshooting_percentage,regular_season_scoring,,calc,\&quot;Shooting percentage\&quot;,\&quot;[goals] / [shots] * 100\&quot;,,,,,,,,,,,,\ntoi,regular_season_scoring,\&quot;Ice Time\&quot;,text,\&quot;Total Time on Ice\&quot;,,,integer,0,,,,,,,,,\natoi,regular_season_scoring,,text,\&quot;Average Ice Time\&quot;,,,time_mm_ss,00:00,59:59,,,,,,,,\nwins,regular_season_goalies,,text,Wins,,,integer,0,82,,\&quot;[position] = 0\&quot;,,,,,,\nlosses,regular_season_goalies,,text,Losses,,,integer,0,82,,\&quot;[position] = 0\&quot;,,,,,,\nties_otl,regular_season_goalies,,text,\&quot;Ties / Overtime losses\&quot;,,,integer,0,82,,\&quot;[position] = 0\&quot;,,,,,,\ngoals_against,regular_season_goalies,,text,\&quot;Goals Against\&quot;,,,integer,0,,,\&quot;[position] = 0\&quot;,,,,,,\nshots_against,regular_season_goalies,,text,\&quot;Shots Against\&quot;,,,integer,0,,,\&quot;[position] = 0\&quot;,,,,,,\nsaves,regular_season_goalies,,text,Saves,,,integer,0,,,\&quot;[position] = 0\&quot;,,,,,,\nsave_percentage,regular_season_goalies,,calc,\&quot;Save percentage\&quot;,\&quot;[saves] / [shots_against]\&quot;,,,,,,\&quot;[position] = 0\&quot;,,,,,,\ngaa,regular_season_goalies,,text,\&quot;Goals Allowed Average\&quot;,,,number,0,,,\&quot;[position] = 0\&quot;,,,,,,\nso,regular_season_goalies,,text,\&quot;Shut outs\&quot;,,,integer,0,,,\&quot;[position] = 0\&quot;,,,,,,\ngp_postseason,post_season_scoring,,text,\&quot;Games played\&quot;,,,integer,0,23,,,y,,,,,\ngoals_postseason,post_season_scoring,,text,Goals,,,integer,0,70,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nassists_postseason,post_season_scoring,,text,Assists,,,integer,0,100,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\npoints_postseason,post_season_scoring,,calc,Points,[goals_postseason]+[assists_postseason],,,,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nplusmn_postseason,post_season_scoring,,text,Plus/Minus,,,integer,,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\npimi_postseason,post_season_scoring,,text,PIM,,\&quot;penalty minutes\&quot;,integer,,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\ngoals_ev_postseason,post_season_scoring,\&quot;Goal Scoring\&quot;,text,\&quot;Even Strength Goals\&quot;,,,integer,,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\ngoals_pp_postseason,post_season_scoring,,text,\&quot;Power Play Goals\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\ngoals_sh_postseason,post_season_scoring,,text,\&quot;Short Handed Goals\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\ngoals_gw_postseason,post_season_scoring,,text,\&quot;Game Winning Goals\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nassists_ev_postseason,post_season_scoring,Assists,text,\&quot;Even Strength Assistis\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nassists_pp_postseason,post_season_scoring,,text,\&quot;Power Play Assists\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nassists_sh_postseason,post_season_scoring,,text,\&quot;Short Handed Assists\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nshots_postseason,post_season_scoring,Shooting,text,\&quot;Shots on Goal\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nshooting_percentage_postseason,post_season_scoring,,calc,\&quot;Shooting percentage\&quot;,\&quot;[goals_postseason] / [shots_postseason] * 100\&quot;,,,,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\ntoi_postseason,post_season_scoring,\&quot;Ice Time\&quot;,text,\&quot;Total Time on Ice\&quot;,,,integer,0,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\natoi_postseason,post_season_scoring,,text,\&quot;Average Ice Time\&quot;,,,time_mm_ss,00:00,,,\&quot;[gp_postseason] &gt;0\&quot;,,,,,,\nwins_postseason,post_season_goalies_2,,text,Wins,,,integer,0,23,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\nlosses_postseason,post_season_goalies_2,,text,Losses,,,integer,0,23,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\nties_otl_postseason,post_season_goalies_2,,text,\&quot;Ties / Overtime losses\&quot;,,,integer,0,23,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\ngoals_allowed_postseason,post_season_goalies_2,,text,\&quot;Goals Allowed\&quot;,,,integer,0,,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\nsaves_postseason,post_season_goalies_2,,text,Saves,,,integer,0,,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\nsave_percentage_postseason,post_season_goalies_2,,text,\&quot;Save percentage\&quot;,,,number,0,,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\ngaa_postseason,post_season_goalies_2,,text,\&quot;Goals Allowed Average\&quot;,,,number,0,,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\nso_postseason,post_season_goalies_2,,text,\&quot;Shut outs\&quot;,,,integer,0,,,\&quot;[position] = '0' and [gp_postseason] &gt; 0\&quot;,,,,,,\n&quot;
-## attr(,&quot;Content-Type&quot;)
-##               charset 
-## &quot;text/csv&quot;    &quot;utf-8&quot; 
-## attr(,&quot;accessed&quot;)
-## [1] &quot;2019-12-13 12:05:45 MST&quot;
-## attr(,&quot;class&quot;)
-## [1] &quot;rcer_raw_metadata&quot; &quot;character&quot;
 
 avs_raw_record   &lt;-<span class="st"> </span><span class="kw">export_content</span>(<span class="dt">content =</span> <span class="st">&quot;record&quot;</span>)
-avs_raw_record
-## [1] &quot;record_id,uniform_number,firstname,lastname,hof,nationality,position,birthdate,height,weight,shoots,catches,experience,roster_complete,gp,goals,assists,points,plusmn,pimi,goals_ev,goals_pp,goals_sh,goals_gw,assists_ev,assists_pp,assists_sh,shots,shooting_percentage,toi,atoi,regular_season_scoring_complete,wins,losses,ties_otl,goals_against,shots_against,saves,save_percentage,gaa,so,regular_season_goalies_complete,gp_postseason,goals_postseason,assists_postseason,points_postseason,plusmn_postseason,pimi_postseason,goals_ev_postseason,goals_pp_postseason,goals_sh_postseason,goals_gw_postseason,assists_ev_postseason,assists_pp_postseason,assists_sh_postseason,shots_postseason,shooting_percentage_postseason,toi_postseason,atoi_postseason,post_season_scoring_complete,wins_postseason,losses_postseason,ties_otl_postseason,goals_allowed_postseason,saves_postseason,save_percentage_postseason,gaa_postseason,so_postseason,post_season_goalies_2_complete\n1,1,David,Aebischer,0,Swiss,0,1978-02-07,73,185,,0,0,2,26,0,1,1,0,0,0,0,0,0,,,,0,0,1393,53:34,2,12,7,3,52,538,486,0.9033457249070632,2.24,3,2,1,0,0,0,0,0,0,0,0,0,,,,0,,1,00:32,2,0,0,,0,0,0,0,0,2\n2,46,Yuri,Babenko,0,USSR,3,1978-01-02,73,200,0,,0,2,3,0,0,0,0,0,0,0,0,0,0,0,0,2,0,32,10:34,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n3,45,Rick,Berry,0,Canada,4,1978-11-04,74,210,0,,0,2,19,0,4,4,5,38,0,0,0,0,4,0,0,10,0,231,12:08,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n4,4,Rob,Blake,1,Canada,4,1969-12-10,76,220,1,,11,2,13,2,8,10,11,8,1,1,0,1,6,2,0,44,4.545454545454546,339,26:03,2,,,,,,,,,,2,23,6,13,19,6,16,3,3,0,0,,,,83,7.228915662650602,677,29:26,2,,,,,,,,,2\n5,77,Ray,Bourque,1,Canada,4,1960-12-28,71,219,0,,21,2,80,7,52,59,25,48,3,2,2,0,21,31,0,216,3.2407407407407405,2088,26:06,2,,,,,,,,,,2,21,4,6,10,9,12,1,3,0,1,,,,49,8.16326530612245,599,28:32,2,,,,,,,,,2\n6,7,Greg,\&quot;de Vries\&quot;,0,Canada,4,1973-01-04,74,205,0,,5,2,79,5,12,17,23,51,5,0,0,0,11,0,1,76,6.578947368421052,1351,17:06,2,,,,,,,,,,2,23,0,1,1,5,20,0,0,0,0,,,,20,0,328,14:17,2,,,,,,,,,2\n7,18,Adam,Deadmarsh,0,Canada,2,1975-05-10,72,205,1,,6,2,39,13,13,26,-2,59,6,7,0,2,7,6,0,86,15.11627906976744,687,17:38,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n8,11,Chris,Dingman,0,Canada,1,1976-07-06,76,235,0,,3,2,41,1,1,2,-3,108,1,0,0,0,1,0,0,33,3.0303030303030303,264,06:26,2,,,,,,,,,,2,16,0,4,4,3,14,0,0,0,0,,,,8,0,101,06:18,2,,,,,,,,,2\n9,37,Chris,Drury,0,USA,1,1976-08-20,70,191,1,,2,2,71,24,41,65,6,47,13,11,0,5,22,18,0,204,11.76470588235294,1281,18:03,2,,,,,,,,,,2,23,11,5,16,5,4,9,2,0,2,,,,62,17.741935483870968,439,19:06,2,,,,,,,,,2\n10,52,Adam,Foote,0,Canada,4,1971-07-10,74,220,1,,9,2,35,3,12,15,6,42,1,1,1,1,7,5,0,59,5.084745762711865,888,25:22,2,,,,,,,,,,2,23,3,4,7,5,47,2,1,0,1,,,,28,10.714285714285714,652,28:22,2,,,,,,,,,2\n11,21,Peter,Forsberg,1,Sweeden,3,1973-07-20,72,205,0,,6,2,73,27,62,89,23,54,12,12,2,5,34,24,4,178,15.168539325842698,1518,20:48,2,,,,,,,,,,2,11,4,10,14,5,6,3,1,0,2,,,,23,17.391304347826086,241,21:55,2,,,,,,,,,2\n12,5,Alex,Gusarov,0,USSR,4,1964-07-08,75,185,0,,10,2,9,0,1,1,2,6,0,0,0,0,1,0,0,4,0,135,14:59,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n13,23,Milan,Hejduk,0,Czechoslovakia,2,1976-02-14,72,190,1,,2,2,80,41,38,79,32,36,28,12,1,9,21,15,2,213,19.248826291079812,1589,19:52,2,,,,,,,,,,2,23,7,16,23,8,6,3,4,0,1,,,,51,13.725490196078432,496,21:33,2,,,,,,,,,2\n14,13,Dan,Hinote,0,USA,3,1977-01-30,72,187,1,,1,2,76,5,10,15,1,51,4,1,0,1,8,2,0,69,7.246376811594203,787,10:21,2,,,,,,,,,,2,23,2,4,6,4,21,2,0,0,0,,,,16,12.5,192,08:22,2,,,,,,,,,2\n15,24,Jon,Klemm,0,Canada,4,1970-01-08,74,205,1,,8,2,78,4,11,15,22,54,2,2,0,2,6,3,2,97,4.123711340206185,1554,19:56,2,,,,,,,,,,2,22,1,2,3,7,16,1,0,0,1,,,,14,7.142857142857142,357,16:15,2,,,,,,,,,2\n16,9,Brad,Larsen,0,Canada,1,1977-06-28,72,210,0,,1,2,9,0,0,0,1,0,0,0,0,0,0,0,0,3,0,84,09:17,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n17,29,Eric,Messier,0,Canada,1,1973-10-29,74,195,0,,4,2,64,5,7,12,-3,26,5,0,0,1,7,0,0,60,8.333333333333332,786,12:16,2,,,,,,,,,,2,23,2,2,4,0,14,2,0,0,0,,,,20,10,374,16:16,2,,,,,,,,,0\n18,3,Aaron,Miller,0,USA,4,1971-08-11,75,210,1,,7,2,56,4,9,13,19,29,4,0,0,0,8,0,1,49,8.16326530612245,1032,18:25,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n19,2,Bryan,Muir,0,Canada,4,1973-06-08,75,224,0,,4,2,8,0,0,0,0,4,0,0,0,0,0,0,0,3,0,66,08:14,2,,,,,,,,,,2,3,0,0,0,0,0,0,0,0,0,,,,0,,10,03:15,2,,,,,,,,,2\n20,39,Ville,Nieminen,0,Finland,1,1977-04-06,71,200,0,,1,2,50,14,8,22,8,38,12,2,0,3,5,3,0,68,20.588235294117645,622,12:26,2,,,,,,,,,,2,23,4,6,10,-1,20,1,3,0,1,,,,39,10.256410256410255,326,14:10,2,,,,,,,,,2\n21,27,Scott,Parker,0,USA,2,1978-01-29,77,240,1,,10,2,69,2,3,5,-2,155,2,0,0,1,3,0,0,35,5.714285714285714,394,05:42,2,,,,,,,,,,2,4,0,0,0,0,2,0,0,0,0,,,,0,,9,02:12,2,,,,,,,,,2\n22,25,Shjon,Podein,0,USA,2,1968-03-05,74,200,0,,8,2,82,15,17,32,7,68,15,0,0,3,17,0,0,137,10.948905109489052,1180,14:23,2,,,,,,,,,,2,23,2,3,5,3,14,2,0,0,1,,,,16,12.5,345,14:59,2,,,,,,,,,2\n23,4-44,Nolan,Pratt,0,Canda,4,1975-08-14,75,207,0,,4,2,46,1,2,3,2,40,1,0,0,1,2,0,0,26,3.8461538461538463,452,09:50,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n24,63,Joel,Prpic,0,Canada,3,1974-09-25,78,225,0,,2,2,3,0,0,0,0,2,0,0,0,0,0,0,0,0,,29,09:47,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n25,14,Dave,Reid,0,Canada,2,1964-05-15,73,217,0,,17,2,73,1,9,10,1,21,1,0,0,0,8,0,1,66,1.5151515151515151,721,09:53,2,,,,,,,,,,2,18,0,4,4,2,6,0,0,0,0,,,,8,0,164,09:08,2,,,,,,,,,2\n26,28,Steve,Reinprecht,0,Canada,3,1976-05-07,72,195,0,,1,2,21,3,4,7,-1,2,3,0,0,0,3,0,1,28,10.714285714285714,328,15:38,2,,,,,,,,,,2,22,2,3,5,0,2,2,0,0,0,,,,14,14.285714285714285,267,12:09,2,,,,,,,,,2\n27,33,Patrick,Roy,1,Canada,0,1965-10-05,74,185,,0,16,2,62,0,5,5,0,10,0,0,0,0,,,,0,,3565,57:30,2,40,13,7,132,1513,1281,0.8466622604097819,2.22,4,2,23,0,1,1,0,0,0,0,0,0,,,,0,,1451,,0,16,7,,41,622,0.934,1.7,4,2\n28,19,Joe,Sakic,1,Canada,3,1969-07-07,71,195,0,,12,2,82,54,64,118,45,30,32,19,3,12,34,27,3,332,16.265060240963855,1887,23:01,2,,,,,,,,,,2,21,13,13,26,6,6,8,5,0,3,,,,79,16.455696202531644,452,21:33,2,,,,,,,,,2\n29,44,Rob,Shearer,0,Canada,3,1976-10-19,70,190,1,,0,2,2,0,0,0,-2,0,0,0,0,0,0,0,0,0,,14,06:45,2,,,,,,,,,,2,0,,,,,,,,,,,,,,,,,2,,,,,,,,,2\n30,41,Martin,Skoula,0,Czechoslovakia,4,1979-10-28,75,226,0,,11,2,82,8,17,25,8,38,5,3,0,2,11,6,0,108,7.4074074074074066,1697,20:41,2,,,,,,,,,,2,23,1,4,5,1,8,1,0,0,0,,,,14,7.142857142857142,276,11:59,2,,,,,,,,,2\n31,40,Alex,Tanguay,0,Canada,1,1979-11-21,73,194,0,,1,2,82,27,50,77,35,37,19,7,1,3,39,11,0,135,20,1464,17:51,2,,,,,,,,,,2,23,6,15,21,13,8,5,1,0,2,,,,37,16.216216216216218,444,19:18,2,,,,,,,,,2\n32,26,Stephane,Yelle,0,Canada,3,1974-05-09,74,182,0,,5,2,50,4,10,14,-3,20,3,0,1,0,10,0,0,54,7.4074074074074066,723,14:28,2,,,,,,,,,,2,23,1,2,3,2,8,1,0,0,1,,,,23,4.3478260869565215,319,13:52,2,,,,,,,,,2\n&quot;
-## attr(,&quot;Content-Type&quot;)
-##               charset 
-## &quot;text/csv&quot;    &quot;utf-8&quot; 
-## attr(,&quot;accessed&quot;)
-## [1] &quot;2019-12-13 12:05:46 MST&quot;
-## attr(,&quot;class&quot;)
-## [1] &quot;rcer_raw_record&quot; &quot;character&quot;</code></pre></div>
+avs_raw_record</code></pre></div>
 <p>There are <code>as.data.frame</code> and <code>as.data.table</code> methods for translating the raw export to the noted class.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">avs_metadata &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(avs_raw_metadata)
-avs_record   &lt;-<span class="st"> </span><span class="kw">as.data.table</span>(avs_raw_record)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">avs_metadata &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(avs_raw_metadata)
+avs_record   &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(avs_raw_record)</code></pre></div>
 <p>The initial mapping to a data frame treats all columns as character.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">sapply</span>(avs_metadata, mode) <span class="op">==</span><span class="st"> &quot;character&quot;</span>)
-## [1] TRUE
-<span class="kw">all</span>(<span class="kw">sapply</span>(avs_record, mode) <span class="op">==</span><span class="st"> &quot;character&quot;</span>)
-## [1] TRUE</code></pre></div>
+<span class="kw">all</span>(<span class="kw">sapply</span>(avs_record, mode) <span class="op">==</span><span class="st"> &quot;character&quot;</span>)</code></pre></div>
 <p>To create a data frame with useful data storage modes in each column you can use <code>format_record</code> . The easiest option is to pass the record and metadata to <code>format_record</code> as shown below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp1 &lt;-<span class="st"> </span><span class="kw">format_record</span>(<span class="dt">record =</span> avs_record, <span class="dt">metadata =</span> avs_raw_metadata)
-<span class="kw">str</span>(temp1[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])
-## 'data.frame':    32 obs. of  10 variables:
-##  $ record_id     : chr  &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
-##  $ uniform_number: chr  &quot;1&quot; &quot;46&quot; &quot;45&quot; &quot;4&quot; ...
-##  $ firstname     : chr  &quot;David&quot; &quot;Yuri&quot; &quot;Rick&quot; &quot;Rob&quot; ...
-##  $ lastname      : chr  &quot;Aebischer&quot; &quot;Babenko&quot; &quot;Berry&quot; &quot;Blake&quot; ...
-##  $ hof           : int  0 0 0 1 1 0 0 0 0 0 ...
-##  $ nationality   : chr  &quot;Swiss&quot; &quot;USSR&quot; &quot;Canada&quot; &quot;Canada&quot; ...
-##  $ position      : Factor w/ 5 levels &quot;Goal&quot;,&quot;Left Wing&quot;,..: 1 4 5 5 5 5 3 2 2 5 ...
-##  $ birthdate     : Date, format: &quot;1978-02-07&quot; &quot;1978-01-02&quot; ...
-##  $ height        : int  73 73 74 76 71 74 72 76 70 74 ...
-##  $ weight        : int  185 200 210 220 219 205 205 235 191 220 ...</code></pre></div>
+<span class="kw">str</span>(temp1[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])</code></pre></div>
 <p>The mode for each column is defined by the function call <code>col_type</code> . The default modes are set via the metadata:</p>
 <p>NOTES:</p>
 <ul>
@@ -363,53 +253,12 @@ ct<span class="op">$</span>hof &lt;-<span class="st"> </span><span class="kw">ex
 ct<span class="op">$</span>height &lt;-<span class="st"> </span><span class="kw">expression</span>(<span class="fl">0.0254</span> <span class="op">*</span><span class="st"> </span><span class="kw">as.numeric</span>(height))
 
 temp2 &lt;-<span class="st"> </span><span class="kw">format_record</span>(avs_raw_record, <span class="dt">col_type =</span> ct)
-<span class="kw">str</span>(temp2[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])
-## 'data.frame':    32 obs. of  10 variables:
-##  $ record_id     : chr  &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
-##  $ uniform_number: chr  &quot;1&quot; &quot;46&quot; &quot;45&quot; &quot;4&quot; ...
-##  $ firstname     : chr  &quot;David&quot; &quot;Yuri&quot; &quot;Rick&quot; &quot;Rob&quot; ...
-##  $ lastname      : chr  &quot;Aebischer&quot; &quot;Babenko&quot; &quot;Berry&quot; &quot;Blake&quot; ...
-##  $ hof           : logi  FALSE FALSE FALSE TRUE TRUE FALSE ...
-##  $ nationality   : chr  &quot;Swiss&quot; &quot;USSR&quot; &quot;Canada&quot; &quot;Canada&quot; ...
-##  $ position      : Factor w/ 5 levels &quot;Goal&quot;,&quot;Left Wing&quot;,..: 1 4 5 5 5 5 3 2 2 5 ...
-##  $ birthdate     : Date, format: &quot;1978-02-07&quot; &quot;1978-01-02&quot; ...
-##  $ height        : num  1.85 1.85 1.88 1.93 1.8 ...
-##  $ weight        : int  185 200 210 220 219 205 205 235 191 220 ...</code></pre></div>
+<span class="kw">str</span>(temp2[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])</code></pre></div>
 </div>
 </div>
 <div id="session-info" class="section level1">
 <h1><span class="header-section-number">4</span> Session Info</h1>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">sessionInfo</span>(), <span class="dt">local =</span> <span class="ot">FALSE</span>)
-## R version 3.6.1 (2019-07-05)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 18.04.3 LTS
-## 
-## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
-## LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-## [1] rcd14465_2019.12.13.12.05 qwraps2_0.4.2            
-## [3] secret_1.0.0              magrittr_1.5             
-## [5] data.table_1.12.8         REDCapExporter_0.0.3     
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.3        compiler_3.6.1    remotes_2.1.0     prettyunits_1.0.2
-##  [5] bitops_1.0-6      tools_3.6.1       testthat_2.3.1    pkgload_1.0.2    
-##  [9] digest_0.6.23     pkgbuild_1.0.6    jsonlite_1.6      lubridate_1.7.4  
-## [13] evaluate_0.14     memoise_1.1.0     rlang_0.4.2       rstudioapi_0.10  
-## [17] cli_2.0.0         curl_4.3          yaml_2.2.0        xopen_1.0.0      
-## [21] xfun_0.11         xml2_1.2.2        roxygen2_7.0.2    withr_2.1.2      
-## [25] stringr_1.4.0     knitr_1.26        fs_1.3.1          desc_1.2.0       
-## [29] askpass_1.1       devtools_2.2.1    rprojroot_1.3-2   glue_1.3.1       
-## [33] R6_2.4.1          processx_3.4.1    fansi_0.4.0       rcmdcheck_1.3.3  
-## [37] rmarkdown_1.18    sessioninfo_1.1.1 purrr_0.3.3       callr_3.4.0      
-## [41] usethis_1.5.1     backports_1.1.5   ps_1.3.0          htmltools_0.4.0  
-## [45] ellipsis_0.3.0    assertthat_0.2.1  stringi_1.4.3     RCurl_1.95-4.12  
-## [49] openssl_1.4.1     crayon_1.3.4
 <span class="co">#</span></code></pre></div>
 </div>
 
