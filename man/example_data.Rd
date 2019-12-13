@@ -19,6 +19,38 @@ avs_raw_user
 avs_raw_record
 }
 \description{
-Raw Exports From an Example REDCap Project
+These data sets are the results of calling \code{\link{export_content}}.  An API token is required to reproduce these calls. No such token will be provided publically, so these data sets are provided so end users can run examples for other tools provided in the REDCapExporter package.
+}
+\details{
+\code{avs_raw_project_info} provides meta data about the project itself.
+
+\code{avs_raw_metadata} is the data dictionary for the REDCap Project.  This information can be used with \code{\link{format_record}} to build a \code{data.frame} that is ready for analysis.
+
+\code{avs_raw_user} REDCap Project user table.
+
+\code{avs_raw_record} REDCap Project records, i.e., 'the data.'
+}
+\examples{
+\dontrun{
+avs_raw_project_info <- export_content(content = "project",  format = "csv")
+avs_raw_metadata     <- export_content(content = "metadata", format = "csv")
+avs_raw_user         <- export_content(content = "user",     format = "csv")
+avs_raw_record       <- export_content(content = "record",   format = "csv")
+}
+
+data(avs_raw_project_info)
+data(avs_raw_user)
+data(avs_raw_metadata)
+data(avs_raw_record)
+
+str(avs_raw_project_info)
+str(avs_raw_user)
+str(avs_raw_metadata)
+str(avs_raw_record)
+
+avs <- format_record(avs_raw_record, avs_raw_metadata)
+str(avs)
+
+
 }
 \keyword{datasets}

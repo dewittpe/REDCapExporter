@@ -11,6 +11,15 @@
 #'
 #' @return A \code{data.frame}
 #'
+#' @examples
+#'
+#' data("avs_raw_metadata")
+#' data("avs_raw_record")
+#'
+#' avs <- format_record(avs_raw_record, avs_raw_metadata)
+#'
+#' str(avs)
+#'
 #' @export
 format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
 
