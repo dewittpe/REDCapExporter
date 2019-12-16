@@ -1,6 +1,6 @@
-#' Export REDCap Project
+#' Build R Data Package
 #'
-#' Using the REDCap API, export parts of the project
+#' Build a R Data Package from the core conents of a REDCap Project.
 #'
 #' To export the data from a REDCap project you will need to have an API Token.
 #' Remember, the token is the equivalent of a username and password.  As such
@@ -25,27 +25,28 @@
 #'
 #' @examples
 #' ## Please read the vignette for examples:
-#' ## vignette(topic = "export", package = "REDCapExporteR")
+#' ## vignette(topic = "export", package = "REDCapExporter")
+#'
+#' library(REDCapExporter)
+#' # avs_raw_core <- export_core()
+#' data(avs_raw_core)
+#' tmppth <- tempdir()
+#' build_r_data_package(avs_raw_core, tmppth, author_roles = list(dewittp = c("cre", "aut")))
+#' fs::dir_tree(tmppth)
+#'
 #' @export
-export_redcap_project <- function(uri = NULL, token = NULL, path = NULL, author_roles = NULL, verbose = TRUE) {
-  if (verbose) message("Getting Project Info")
-  project_raw <- export_content(uri = uri, token = token, content = "project")
+build_r_data_package <- function(x, ...) {
+  UseMethod("build_r_data_package")
+}
 
-  if (verbose) message("Getting project metadata")
-  metadata_raw     <- export_content(uri = uri, token = token, content = "metadata")
-
-  if (verbose) message("Getting user data")
-  user_raw         <- export_content(uri = uri, token = token, content = "user")
-
-  if (verbose) message("Getting project record")
-  record_raw      <- export_content(uri = uri, token = token, content = "record")
-
+#' @export
+build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL, verbose = TRUE, ...) {
   access_time  <- Sys.time()
 
-  project  <- as.data.frame(project_raw)
-  user     <- as.data.frame(user_raw)
-  metadata <- as.data.frame(metadata_raw)
-  record   <- format_record(record_raw, metadata_raw)
+  project  <- as.data.frame(x$project_raw)
+  user     <- as.data.frame(x$user_raw)
+  metadata <- as.data.frame(x$metadata_raw)
+  record   <- format_record(x$record_raw, x$metadata_raw)
 
   if (is.null(path)) {
     path <- "."
@@ -69,10 +70,10 @@ export_redcap_project <- function(uri = NULL, token = NULL, path = NULL, author_
 
   # Write Raw Data
   dir.create(paste(path, "inst", "raw-data", sep = "/"), showWarnings = FALSE, recursive = TRUE)
-  saveRDS(project_raw,  file = paste(path, "inst", "raw-data", "project.rds",  sep = "/"))
-  saveRDS(metadata_raw, file = paste(path, "inst", "raw-data", "metadata.rds", sep = "/"))
-  saveRDS(user_raw,     file = paste(path, "inst", "raw-data", "user.rds",     sep = "/"))
-  saveRDS(record_raw,   file = paste(path, "inst", "raw-data", "record.rds",   sep = "/"))
+  saveRDS(x$project_raw,  file = paste(path, "inst", "raw-data", "project.rds",  sep = "/"))
+  saveRDS(x$metadata_raw, file = paste(path, "inst", "raw-data", "metadata.rds", sep = "/"))
+  saveRDS(x$user_raw,     file = paste(path, "inst", "raw-data", "user.rds",     sep = "/"))
+  saveRDS(x$record_raw,   file = paste(path, "inst", "raw-data", "record.rds",   sep = "/"))
 
   # Write Data
   dir.create(paste(path, "data", sep = "/"), showWarnings = FALSE, recursive = TRUE)
@@ -132,6 +133,12 @@ export_redcap_project <- function(uri = NULL, token = NULL, path = NULL, author_
   devtools::document(path)
 
   invisible(TRUE)
+}
+
+#' @export
+build_r_data_package.default <- function(uri = NULL, token = NULL, format = NULL, path = NULL, author_roles = NULL, verbose = TRUE, ...) {
+  core <- export_core(uri = uri, token = token, format = format, verbose = verbose, ...)
+  build_r_data_package(core, path, author_roles, verbose, ...)
 }
 
 #' Export Content
@@ -226,16 +233,16 @@ export_content <- function(content, uri = NULL, token = NULL, format = NULL, ...
 #' @export
 export_core <- function(uri = NULL, token = NULL, format = NULL, verbose = TRUE, ...) {
   if (verbose) message("Getting Project Info")
-  project_raw <- export_content(uri = uri, token = token, content = "project")
+  project_raw <- export_content(uri = uri, token = token, content = "project", format = format)
 
   if (verbose) message("Getting project metadata")
-  metadata_raw <- export_content(uri = uri, token = token, content = "metadata")
+  metadata_raw <- export_content(uri = uri, token = token, content = "metadata", format = format)
 
   if (verbose) message("Getting user data")
-  user_raw <- export_content(uri = uri, token = token, content = "user")
+  user_raw <- export_content(uri = uri, token = token, content = "user", format = format)
 
   if (verbose) message("Getting project record")
-  record_raw <- export_content(uri = uri, token = token, content = "record")
+  record_raw <- export_content(uri = uri, token = token, content = "record", format = format)
 
   x <- list(project_raw = project_raw,
             metadata_raw = metadata_raw,
