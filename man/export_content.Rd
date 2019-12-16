@@ -4,17 +4,17 @@
 \alias{export_content}
 \title{Export Content}
 \usage{
-export_content(uri = NULL, token = NULL, content, format = NULL, ...)
+export_content(content, uri = NULL, token = NULL, format = NULL, ...)
 }
 \arguments{
+\item{content}{The element to export, see Details.}
+
 \item{uri}{The URI for the REDCap API.  If \code{NULL} (default) the value
 \code{Sys.getenv("REDCap_API_URI")} is used.}
 
 \item{token}{The API token for the projedct you want to export from. If
 \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
 used.}
-
-\item{content}{The element to export, see Details.}
 
 \item{format}{The format to return. If \code{NULL} (default) the value
 \code{Sys.getenv("REDCap_API_format")} is used.}
