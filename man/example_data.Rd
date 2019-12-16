@@ -7,6 +7,7 @@
 \alias{avs_raw_metadata}
 \alias{avs_raw_user}
 \alias{avs_raw_record}
+\alias{avs_raw_core}
 \title{Raw Exports From an Example REDCap Project}
 \format{An object of class \code{rcer_raw_project} (inherits from \code{character}) of length 1.}
 \usage{
@@ -17,6 +18,8 @@ avs_raw_metadata
 avs_raw_user
 
 avs_raw_record
+
+avs_raw_core
 }
 \description{
 These data sets are the results of calling \code{\link{export_content}}.  An API token is required to reproduce these calls. No such token will be provided publically, so these data sets are provided so end users can run examples for other tools provided in the REDCapExporter package.
@@ -36,17 +39,20 @@ avs_raw_project_info <- export_content(content = "project",  format = "csv")
 avs_raw_metadata     <- export_content(content = "metadata", format = "csv")
 avs_raw_user         <- export_content(content = "user",     format = "csv")
 avs_raw_record       <- export_content(content = "record",   format = "csv")
+avs_raw_core         <- export_core(format = "csv")
 }
 
 data(avs_raw_project_info)
 data(avs_raw_user)
 data(avs_raw_metadata)
 data(avs_raw_record)
+data(avs_raw_core)
 
 str(avs_raw_project_info)
 str(avs_raw_user)
 str(avs_raw_metadata)
 str(avs_raw_record)
+str(avs_raw_core)
 
 avs <- format_record(avs_raw_record, avs_raw_metadata)
 str(avs)

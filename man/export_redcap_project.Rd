@@ -5,8 +5,8 @@
 \title{Export REDCap Project}
 \usage{
 export_redcap_project(
-  uri,
-  token,
+  uri = NULL,
+  token = NULL,
   path = NULL,
   author_roles = NULL,
   verbose = TRUE

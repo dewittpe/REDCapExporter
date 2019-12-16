@@ -17,17 +17,20 @@
 #' avs_raw_metadata     <- export_content(content = "metadata", format = "csv")
 #' avs_raw_user         <- export_content(content = "user",     format = "csv")
 #' avs_raw_record       <- export_content(content = "record",   format = "csv")
+#' avs_raw_core         <- export_core(format = "csv")
 #' }
 #'
 #' data(avs_raw_project_info)
 #' data(avs_raw_user)
 #' data(avs_raw_metadata)
 #' data(avs_raw_record)
+#' data(avs_raw_core)
 #'
 #' str(avs_raw_project_info)
 #' str(avs_raw_user)
 #' str(avs_raw_metadata)
 #' str(avs_raw_record)
+#' str(avs_raw_core)
 #'
 #' avs <- format_record(avs_raw_record, avs_raw_metadata)
 #' str(avs)
@@ -47,3 +50,6 @@ NULL
 
 #' @rdname example_data
 "avs_raw_record"
+
+#' @rdname example_data
+"avs_raw_core"

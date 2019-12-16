@@ -27,7 +27,7 @@
 #' ## Please read the vignette for examples:
 #' ## vignette(topic = "export", package = "REDCapExporteR")
 #' @export
-export_redcap_project <- function(uri, token, path = NULL, author_roles = NULL, verbose = TRUE) {
+export_redcap_project <- function(uri = NULL, token = NULL, path = NULL, author_roles = NULL, verbose = TRUE) {
   if (verbose) message("Getting Project Info")
   project_raw <- export_content(uri = uri, token = token, content = "project")
 
@@ -195,4 +195,52 @@ export_content <- function(content, uri = NULL, token = NULL, format = NULL, ...
   x
 }
 
+#' Export Core
+#'
+#' Export Core Conents of a REDCap Project.
+#'
+#' @param uri The URI for the REDCap API.  If \code{NULL} (default) the value
+#' \code{Sys.getenv("REDCap_API_URI")} is used.
+#' @param token The API token for the projedct you want to export from. If
+#' \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
+#' used.
+#' @param format The format to return. If \code{NULL} (default) the value
+#' \code{Sys.getenv("REDCap_API_format")} is used.
+#' @param verbose provide messages to tell the user what is happening
+#' @param ... not currently used
+#'
+#' @return A \code{rcer_rccore} object: a list with the project info, metadata,
+#' user table, and records, all in a "raw" format direct from the API.
+#'
+#' @examples
+#'
+#' # A reproducible example would require a REDCap project, accessable via an
+#' # API token.  An example of the return from these calls are provided as data
+#' # with this package.
+#'
+#' # avs_raw_core <- export_core()
+#'
+#' data(avs_raw_core)
+#' str(avs_raw_core)
+#'
+#' @export
+export_core <- function(uri = NULL, token = NULL, format = NULL, verbose = TRUE, ...) {
+  if (verbose) message("Getting Project Info")
+  project_raw <- export_content(uri = uri, token = token, content = "project")
 
+  if (verbose) message("Getting project metadata")
+  metadata_raw <- export_content(uri = uri, token = token, content = "metadata")
+
+  if (verbose) message("Getting user data")
+  user_raw <- export_content(uri = uri, token = token, content = "user")
+
+  if (verbose) message("Getting project record")
+  record_raw <- export_content(uri = uri, token = token, content = "record")
+
+  x <- list(project_raw = project_raw,
+            metadata_raw = metadata_raw,
+            user_raw = user_raw,
+            record_raw = record_raw)
+  class(x) <- c("rcer_rccore")
+  x
+}
