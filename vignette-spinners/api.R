@@ -1,6 +1,6 @@
-# /* Header and Set up {{{ */
 #'---
-#'title: "REDCap Exporter: Interaction with the REDCap API"
+#'title: "REDCapExporter"
+#'subtitle: "Interaction with the REDCap API"
 #'author: "Peter DeWitt"
 #'output:
 #'  rmarkdown::html_vignette:
@@ -16,9 +16,8 @@
 # By default, chunks will not be evaluated.  This way the API token will not be
 # required to build this vignette.
 knitr::opts_chunk$set(collapse = TRUE, eval = FALSE)
-loadNamespace("REDCapExporter")
+library("REDCapExporter")
 
-# /* }}} */
 #'
 #' The purpose of this vignette is to show examples of exporting elements of a
 #' REDCap project via the REDCap (Research Electronic Data Capture) API.  The
@@ -35,9 +34,22 @@ loadNamespace("REDCapExporter")
 #' transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html}
 #' into a REDCap Project hosed at the University of Colorado Denver.
 #'
+#' This vignette is focused on the API and the general export functions.  To
+#' learn more about automated building of a R data package from the exported
+#' contents of a REDCap project please see
+#'
+#+ eval = FALSE
+# /*
+if (FALSE) {
+# */
+vignette(topic = "export2package", package = "REDCapExporter")
+# /*
+}
+# */
+#'
 #' # REDCap API Tokens
 #'
-#' You will need to have API Export rights for the REDCap project you are
+#' You will need to have API export rights for the REDCap project you are
 #' looking to export into an R data package.  Contact the project owner, system
 #' admin, or go through your institution's REDCap webpage to acquire an API token.
 #'
@@ -80,14 +92,11 @@ Sys.getenv("REDCap_API_format")
 #+ label = "namespace", eval = TRUE
 library(REDCapExporter)
 #'
-#' There are two methods in the
-{{ qwraps2::CRANpkg(REDCapExporter) }}
-#' package which will call REDCap API
+#' Methods which will call REDCap API are
 {{ qwraps2::backtick(export_content) }}
 #' and
-{{ paste0(qwraps2::backtick(export_redcap_project), ".") }}
-#' The latter calls the former when building an R data package from a REDCap
-#' project.
+{{ paste0(qwraps2::backtick(export_core), ".") }}
+#'
 #'
 #' The specific behavior and results of these functions will depended on your
 #' institution's REDCap instance and the user access permissions associated with
@@ -118,14 +127,17 @@ args(export_content)
 #'
 #'     * content = "user" exports the list of users for a project, including their user privileges and also email address, first name, and last name.  Note: if the user ahs been assigned to a user role, it will return the user with the role's defined privileges.
 #'
-#' Check the API documentation for your host for specific additonal options.
-#' The likly uri is redcap.<institution>/api/help/.
+#' Check the API documentation for your host for specific additional options.
+#' The likely uri is redcap.<institution>/api/help/.
 #'
 #' An example: the metadata, i.e., data dictionary, for the 2000-2001 Colorado
-#' Avalanche data set can be retrived via
+#' Avalanche data set could be retrieved via
 avs_raw_metadata <- export_content(content = "metadata")
 #'
-#' An example of the return is:
+#' Since the reader does not have the API token needed to actively evaluate the
+#' above code, the
+{{ qwraps2::backtick(avs_raw_metadata) }}
+#' object is available as a data set.
 #'
 #+ label = "example_raw_metadata", eval = TRUE
 ls()
@@ -140,14 +152,17 @@ avs_metadata <- as.data.frame(avs_raw_metadata)
 str(avs_metadata)
 
 #'
-#' ## Export Project
+#' ## Export Core
 #'
 #' With one call to
-{{ qwraps2::backtick(export_redcap_project) }}
-#' an R Data package will be created to make it easy to archive and/or
-#' distribute the data associated with a REDCap Project.  A detailed vignette
-#' has been provided for this topic, please see
-{{ qwraps2::backtick(vignette(topic = "export", package = "REDCapExporter")) }}
+{{ qwraps2::backtick(export_core) }}
+#' Will call the API several times and download several elements of a REDCap
+#' project.  The return is a list and is the expected object class to be used
+#' as the basis for building a R data package.  An example of the return from
+#' this method below.  It is a list of several rcer_raw_* objects.
+#+ eval = TRUE
+data(avs_raw_core)
+lapply(avs_raw_core, class)
 #'
 #' # Session Info
 #'

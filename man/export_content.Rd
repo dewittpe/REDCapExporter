@@ -12,7 +12,7 @@ export_content(content, uri = NULL, token = NULL, format = NULL, ...)
 \item{uri}{The URI for the REDCap API.  If \code{NULL} (default) the value
 \code{Sys.getenv("REDCap_API_URI")} is used.}
 
-\item{token}{The API token for the projedct you want to export from. If
+\item{token}{The API token for the project you want to export from. If
 \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
 used.}
 
@@ -26,10 +26,10 @@ The raw return from the REDCap API with the class
 \code{rcer_raw_<content>}.
 }
 \description{
-Export specific data elemetns from REDCap
+Export specific data elements from REDCap
 }
 \details{
-The \code{content} and \code{format} arguements are used to control the
+The \code{content} and \code{format} arguments are used to control the
 specific items to be exported, and in what format.  **Review the API
 documentation**
 

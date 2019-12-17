@@ -1,8 +1,8 @@
 #' Export Content
 #'
-#' Export specific data elemetns from REDCap
+#' Export specific data elements from REDCap
 #'
-#' The \code{content} and \code{format} arguements are used to control the
+#' The \code{content} and \code{format} arguments are used to control the
 #' specific items to be exported, and in what format.  **Review the API
 #' documentation**
 #'
@@ -16,7 +16,7 @@
 #' @param content The element to export, see Details.
 #' @param uri The URI for the REDCap API.  If \code{NULL} (default) the value
 #' \code{Sys.getenv("REDCap_API_URI")} is used.
-#' @param token The API token for the projedct you want to export from. If
+#' @param token The API token for the project you want to export from. If
 #' \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
 #' used.
 #' @param format The format to return. If \code{NULL} (default) the value
