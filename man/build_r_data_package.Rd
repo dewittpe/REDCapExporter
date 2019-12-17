@@ -2,15 +2,29 @@
 % Please edit documentation in R/export_redcap_project.R
 \name{build_r_data_package}
 \alias{build_r_data_package}
+\alias{build_r_data_package.rcer_rccore}
+\alias{build_r_data_package.default}
 \title{Build R Data Package}
 \usage{
 build_r_data_package(x, ...)
+
+\method{build_r_data_package}{rcer_rccore}(x, path = NULL, author_roles = NULL, verbose = TRUE, ...)
+
+\method{build_r_data_package}{default}(
+  x,
+  uri = NULL,
+  token = NULL,
+  format = NULL,
+  path = NULL,
+  author_roles = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
-\item{uri}{The URI for the REDCap API.  This is passed to
-\code{\link[RCurl]{postForm}}.}
+\item{x}{a \code{rcer_rccore} object}
 
-\item{token}{The API token for a REDCap project.}
+\item{...}{arguments passed to other methods}
 
 \item{path}{Path where the exported project source will be
 created/overwritten.}
@@ -20,6 +34,16 @@ the user table from an exported project.  By default all users with be
 contributers ('ctb').  You will need to define a author/creater.}
 
 \item{verbose}{provide messages to tell the user what is happening}
+
+\item{uri}{The URI for the REDCap API.  If \code{NULL} (default) the value
+\code{Sys.getenv("REDCap_API_URI")} is used.}
+
+\item{token}{The API token for the projedct you want to export from. If
+\code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
+used.}
+
+\item{format}{The format to return. If \code{NULL} (default) the value
+\code{Sys.getenv("REDCap_API_format")} is used.}
 }
 \description{
 Build a R Data Package from the core conents of a REDCap Project.

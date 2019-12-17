@@ -13,15 +13,8 @@
 #' The initial export will consist of four pieces of data, the user data,
 #' metadata, proejct info, and records.
 #'
-#' @param uri The URI for the REDCap API.  This is passed to
-#' \code{\link[RCurl]{postForm}}.
-#' @param token The API token for a REDCap project.
-#' @param path Path where the exported project source will be
-#' created/overwritten.
-#' @param author_roles a list naming specific roles for each user id found in
-#' the user table from an exported project.  By default all users with be
-#' contributers ('ctb').  You will need to define a author/creater.
-#' @param verbose provide messages to tell the user what is happening
+#' @param x a \code{rcer_rccore} object
+#' @param ... arguments passed to other methods
 #'
 #' @examples
 #' ## Please read the vignette for examples:
@@ -39,6 +32,13 @@ build_r_data_package <- function(x, ...) {
   UseMethod("build_r_data_package")
 }
 
+#' @param path Path where the exported project source will be
+#' created/overwritten.
+#' @param author_roles a list naming specific roles for each user id found in
+#' the user table from an exported project.  By default all users with be
+#' contributers ('ctb').  You will need to define a author/creater.
+#' @param verbose provide messages to tell the user what is happening
+#' @rdname build_r_data_package
 #' @export
 build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL, verbose = TRUE, ...) {
   access_time  <- Sys.time()
@@ -135,8 +135,14 @@ build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL
   invisible(TRUE)
 }
 
+# @param uri The URI for the REDCap API.  This is passed to
+# \code{\link[RCurl]{postForm}}.
+# @param token The API token for a REDCap project.
+
+#' @inheritParams export_core
+#' @rdname build_r_data_package
 #' @export
-build_r_data_package.default <- function(uri = NULL, token = NULL, format = NULL, path = NULL, author_roles = NULL, verbose = TRUE, ...) {
+build_r_data_package.default <- function(x, uri = NULL, token = NULL, format = NULL, path = NULL, author_roles = NULL, verbose = TRUE, ...) {
   core <- export_core(uri = uri, token = token, format = format, verbose = verbose, ...)
   build_r_data_package(core, path, author_roles, verbose, ...)
 }
