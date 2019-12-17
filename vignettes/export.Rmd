@@ -120,15 +120,6 @@ The data directory has data.table versions of the data sets.
 The R/datasets.R file provides the documentation for the data sets which can
 be accessed in an interactive R session.
 
-## Check the R Data Package
-
-The generated R data package should pass the basic R CMD check.
-
-```{r warning = FALSE}
-check <- devtools::check(pkg = prj_dir, quiet = TRUE, cran = FALSE)
-check
-```
-
 
 ## Using the Exported Package
 
