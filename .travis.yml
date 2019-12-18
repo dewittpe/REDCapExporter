@@ -9,4 +9,4 @@ install:
 script:
   - R CMD build .
   - R CMD check --as-cran *.tar.gz
-  - cat REDCapExporter_*.Rcheck/00check.log
+  - cat REDCapExporter.Rcheck/00check.log
