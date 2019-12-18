@@ -120,9 +120,10 @@ check
 #' ## Using the Exported Package
 #'
 #' Let's install the package and explore the contents.
+tar_ball <- devtools::build(pkg = prj_dir)
+tar_ball
 
-install.packages(grep("*.tar.gz", list.files(path = prj_dir, recursive = TRUE, full.names = TRUE), value = TRUE),
-                 lib = temppath)
+install.packages(pkgs = tar_ball, lib = temppath)
 
 #+ eval = FALSE
 library(rcd14465, lib.loc = temppath)
