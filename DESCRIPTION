@@ -1,9 +1,9 @@
 Package: REDCapExporter
 Title: Automated Construction of R Data Packages from REDCap Projects
-Version: 0.0.3
+Version: 0.1.0
 Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"))
 Description: Export all data, including metadata, from a REDCap (Research
-    Electronic Data CAPture) Project via the REDCap API
+    Electronic Data Capture) Project via the REDCap API
     <https://projectredcap.org/wp-content/resources/REDCapTechnicalOverview.pdf>.
     The exported (meta)data will be processed and formatted into a stand alone R
     data package which can be installed and shared between researchers.  Several
