@@ -112,7 +112,7 @@ library(REDCapExporter)
 #+ label = "args_of_export_content", eval = TRUE
 args(export_content)
 #'
-#' * The uri, token, and format arguements are set to NULL by default.  If the
+#' * The uri, token, and format arguments are set to NULL by default.  If the
 #' value is NULL then the system environmental variable values are used.  The
 #' end user need only define the content argument.  Additional arguments, if
 #' needed, are passed to RCurl::postForm via the ellipsis.
@@ -125,7 +125,7 @@ args(export_content)
 #'
 #'     * content = "project" exports some of the basic attributes of the given REDCap project, such as the project's title, if it is longitudinal, if surveys are enabled, the time the project was created and moved to production, etc.
 #'
-#'     * content = "user" exports the list of users for a project, including their user privileges and also email address, first name, and last name.  Note: if the user ahs been assigned to a user role, it will return the user with the role's defined privileges.
+#'     * content = "user" exports the list of users for a project, including their user privileges and also email address, first name, and last name.  Note: if the user has been assigned to a user role, it will return the user with the role's defined privileges.
 #'
 #' Check the API documentation for your host for specific additional options.
 #' The likely uri is redcap.<institution>/api/help/.
@@ -146,7 +146,7 @@ ls()
 str(avs_raw_metadata)
 #'
 #' Using the as.data.frame methods will help you get the return from REDCap into
-#' a useable form:
+#' a usable form:
 #+ label = "as_data_frame", eval = TRUE
 avs_metadata <- as.data.frame(avs_raw_metadata)
 str(avs_metadata)

@@ -38,7 +38,7 @@ The \code{uri}, \code{token}, and \code{format} arguments are set to
 \code{Sys.getenv("REDCap_API_URI")},
 \code{Sys.getenv("REDCap_API_TOKEN")}, and
 \code{Sys.getenv("REDCap_API_format")}, respectively, to define the values if
-not explictly done so by the end user.
+not explicitly done so by the end user.
 }
 \examples{
 

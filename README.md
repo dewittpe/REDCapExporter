@@ -9,7 +9,7 @@ project and package the data into a useful R data package.
 
 While REDCap (*R*esearch *E*lectronic *D*ata *Cap*ture) is a fantastic tool for
 data capture, the dissemination of the collected data in a format that multiple
-data analysis can easily access and share can be improved.  The REDCapExporteR
+data analysis can easily access and share can be improved.  The REDCapExporter
 is a tool that will collect the data and generate a source R data package.  With
 continued use, analysts will gain the following:
 
@@ -24,7 +24,7 @@ continued use, analysts will gain the following:
 If you are familiar with REDCap then you know that exporting the data from the
 web interface is straight forward, easy to use, and powerful.  However, there is
 a fair amount of (meta) data that could be valuable to data analysis which is
-not included in the export.  The REDCapDataPkgR aims to report and cross link
+not included in the export.  The REDCapExporter aims to report and cross link
 the meta data, collected data, and (expanded) documentation in one location.
 The resulting `.tar.gz` data package is easy to disseminate.
 

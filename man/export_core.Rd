@@ -10,7 +10,7 @@ export_core(uri = NULL, token = NULL, format = NULL, verbose = TRUE, ...)
 \item{uri}{The URI for the REDCap API.  If \code{NULL} (default) the value
 \code{Sys.getenv("REDCap_API_URI")} is used.}
 
-\item{token}{The API token for the projedct you want to export from. If
+\item{token}{The API token for the project you want to export from. If
 \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
 used.}
 
@@ -26,7 +26,7 @@ A \code{rcer_rccore} object: a list with the project info, metadata,
 user table, and records, all in a "raw" format direct from the API.
 }
 \description{
-Export Core Conents of a REDCap Project.
+Export Core Contents of a REDCap Project.
 }
 \examples{
 

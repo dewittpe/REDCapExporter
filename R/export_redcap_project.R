@@ -11,7 +11,7 @@
 #' \code{Sys.getenv("REDCap_API_URI")},
 #' \code{Sys.getenv("REDCap_API_TOKEN")}, and
 #' \code{Sys.getenv("REDCap_API_format")}, respectively, to define the values if
-#' not explictly done so by the end user.
+#' not explicitly done so by the end user.
 #'
 #' @param content The element to export, see Details.
 #' @param uri The URI for the REDCap API.  If \code{NULL} (default) the value
@@ -61,11 +61,11 @@ export_content <- function(content, uri = NULL, token = NULL, format = NULL, ...
 
 #' Export Core
 #'
-#' Export Core Conents of a REDCap Project.
+#' Export Core Contents of a REDCap Project.
 #'
 #' @param uri The URI for the REDCap API.  If \code{NULL} (default) the value
 #' \code{Sys.getenv("REDCap_API_URI")} is used.
-#' @param token The API token for the projedct you want to export from. If
+#' @param token The API token for the project you want to export from. If
 #' \code{NULL} (default) the value \code{Sys.getenv("REDCap_API_TOKEN")} is
 #' used.
 #' @param format The format to return. If \code{NULL} (default) the value

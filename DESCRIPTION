@@ -11,6 +11,7 @@ Description: Export all data, including metadata, from a REDCap (Research
 License: GPL-2
 Encoding: UTF-8
 URL: https://github.com/dewittpe/REDCapExporter
+Language: en-us
 LazyData: true
 Depends:
     R (>= 3.5.0)
