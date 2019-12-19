@@ -1,11 +1,48 @@
-# Version 0.0.3
+# Version 0.1.0
 - Initial submission 3 December 2019
 - First resubmission 3 December 2019
-- Second resubmission 10 December 2019
+- Second resubmission 18 December 2019
+
+Due to the extended documentation and some redesign of the code base to support
+examples which can be evaluated in interactive sessions by the end users I have
+bumped the version number form the initial submission of 0.0.3 to the submitted
+0.1.0.
 
 ## Testing Environments
 
+* Travis CI: Ubuntu 16.04 (xenial)
+  * R 3.5.3
+  * R 3.6.1
+  * R Under Development (unstable) (2019-12-18 r77599)
+
+* win-builder.r-project.org
+  * R 3.6.1
+  * R Under development (unstable) (2019-12-17 r77592)
+
+* Local (Ubuntu 18.04.3 LTS)
+  * R 3.5.3
+  * R 3.6.2
+  * R Under Development (unstable) (2019-12-17 r77592)
+
 ## R CMD check results
+
+* Travis CI -- all version of R
+
+    Status OK 
+
+* win-builder -- all version of R
+
+    New submission
+
+    Possibly mis-spelled words in DESCRIPTION:
+      REDCap (2:55, 5:58, 6:46)
+
+REDCap is the correct style for the acronym Research Electronic Data Capture.  I
+see this note on win-builder but not on the linux builds.
+
+* Local
+
+    Note: new submission
 
 ## Downstream dependencies
 - none
@@ -16,10 +53,10 @@
 >   Possibly mis-spelled words in DESCRIPTION:
 >     formated (6:57)
 >
->Please fix and resubmit.
+> Please fix and resubmit.
 >
->Please also add a web reference to the API in the form <[https://....]https://....> to
->the Description field.
+> Please also add a web reference to the API in the form <[https://....]https://....> to
+> the Description field.
 
 I have corrected a spelling error in the DESCRIPTION file and added a web
 reference for the API as requested.
@@ -31,8 +68,8 @@ reference for the API as requested.
 I have changed the title of the package.
 
 
->Please add missing .Rd documentation for all functions, e..g.
->write_descritption_file() in write.R
+> Please add missing .Rd documentation for all functions, e..g.
+> write_descritption_file() in write.R
 
 The missing documentation was for intentionally non-exported functions.
 Documentation has been created for the non-exported functions:
@@ -43,14 +80,19 @@ Documentation has been created for the non-exported functions:
 * `as.data.table`
 * `read_text`
 
->I also suggest renaming this function to write_description_file().
+> I also suggest renaming this function to write_description_file().
 
 Done.  Thank you for identifying the spelling error.
 
->Please add small executable examples in your Rd-files to illustrate the
->use of the exported function but also enable automatic testing.
+> Please add small executable examples in your Rd-files to illustrate the
+> use of the exported function but also enable automatic testing.
 
->Please fix and resubmit, and document what was changed in the submission
->comments.
+I have added several data sets and redesigned some of the functions in the
+package to allow for examples.  The original design required calls to an
+external API.  The redesign uses snapshots of exapected returns from the API to
+be used in the examples and vignettes.
+
+> Please fix and resubmit, and document what was changed in the submission
+> comments.
 
 
