@@ -2,7 +2,6 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^CONTRIBUTING.md$
-^NEWS.md$
 ^README.md$
 ^.*\.Rout$
 ^.*\.Rproj$
@@ -13,3 +12,4 @@ inst/vault/*
 vignette-spinners/*
 ^cran-comments\.md$
 ^data-raw/*
+^CRAN-RELEASE$
