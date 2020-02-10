@@ -4,7 +4,13 @@
 \alias{format_record}
 \title{Format Record}
 \usage{
-format_record(record, metadata = NULL, col_type = NULL, ...)
+format_record(
+  record,
+  metadata = NULL,
+  col_type = NULL,
+  class = "data.table",
+  ...
+)
 }
 \arguments{
 \item{record}{a \code{rcer_raw_record} object.}
@@ -14,10 +20,12 @@ Will be ignored if \code{col_type} is defined.}
 
 \item{col_type}{a \code{rcer_col_type} object.}
 
+\item{class}{return either a \code{data.frame} or \code{data.table}}
+
 \item{...}{other arguments passed to \code{\link{col_type}}}
 }
 \value{
-A \code{data.frame}
+A \code{data.frame} or \code{data.table}
 }
 \description{
 Use REDCap project metadata to build a well formatted \code{data.frame} for
@@ -29,7 +37,5 @@ data("avs_raw_metadata")
 data("avs_raw_record")
 
 avs <- format_record(avs_raw_record, avs_raw_metadata)
-
-str(avs)
 
 }

@@ -135,8 +135,21 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
            },
     nm = x$field_name[x$field_type %in% "yesno"])
 
+  # tools for showing that a form is compelte
+  complete_fields <-
+    Map(function(nm) {
+          cl <- list()
+          cl[[1]] <- quote(factor)
+          cl[[2]] <- as.name(nm)
+          cl[['levels']] <- c(0, 1, 2)
+          cl[['labels']] <- c("Incomplete", "Unverified", "Complete")
+          as.call(cl)
+    },
+    nm = paste(unique(x$form_name), "complete", sep = "_")
+    )
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
+  out <- c(out, complete_fields)
   class(out) <- c("rcer_col_type", class(out))
   out
 }

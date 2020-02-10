@@ -7,9 +7,10 @@
 #' @param metadata a \code{rcer_metadata} or \code{rcer_raw_metadata} object.
 #' Will be ignored if \code{col_type} is defined.
 #' @param col_type a \code{rcer_col_type} object.
+#' @param class return either a \code{data.frame} or \code{data.table}
 #' @param ... other arguments passed to \code{\link{col_type}}
 #'
-#' @return A \code{data.frame}
+#' @return A \code{data.frame} or \code{data.table}
 #'
 #' @examples
 #'
@@ -18,10 +19,8 @@
 #'
 #' avs <- format_record(avs_raw_record, avs_raw_metadata)
 #'
-#' str(avs)
-#'
 #' @export
-format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
+format_record <- function(record, metadata = NULL, col_type = NULL, class = "data.table", ...) {
 
   if (!is.null(metadata) & !is.null(col_type)) {
     message("Ignoring metadata, using col_type")
@@ -53,7 +52,13 @@ format_record <- function(record, metadata = NULL, col_type = NULL, ...) {
     ct <- col_type
   }
 
-  as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
+  out <- as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
+
+  if (inherits(record, "data.table") | class == "data.table") {
+    out <- as.data.table(out)
+  }
+
+  out
 }
 
 
