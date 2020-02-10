@@ -62,7 +62,7 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
   #   true - false
   #   silder / visual analog scale
   #   file upload
-  #   descriptive text
+  #   descriptive text   <<<<< Omit these from the col_type return
 
 
   ## Text Fields
@@ -90,14 +90,13 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
   ## Multiple Choice
   mc_fields <-
     Map(function(nm, choices) {
-          sp <- strsplit(choices, split = " \\| ")
-          sp <- lapply(sp, strsplit, split = ", ")
-          sp <- lapply(sp, function(xx) do.call(rbind, xx))
-          sp <- lapply(sp, function(xx) list(lvls = xx[, 1], lbls = xx[, 2]))
+          sp <- strsplit(choices, split = " \\| ")[[1]]
+          lvls <- sub("^(\\d),\\s.+$", "\\1", sp)
+          lbls <- sub("^\\d,\\s(.+)$", "\\1", sp)
           cl <- list(quote(factor),
                      x = as.name(nm),
-                     levels = sp[[1]]$lvls,
-                     labels = sp[[1]]$lbls)
+                     levels = lvls,#sp[[1]]$lvls,
+                     labels = lbls)#sp[[1]]$lbls)
           as.call(cl)
         },
         nm = x$field_name[x$field_type %in% c("radio", "dropdown")],
@@ -148,7 +147,10 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
     nm = paste(unique(x$form_name), "complete", sep = "_")
     )
 
-  out <- c(text_fields, mc_fields, calc_fields, yn_fields)[x$field_name]
+  # set the order of the types to match the order of the field names
+  rdr <- x$field_name[x$field_type != "descriptive"]
+
+  out <- c(text_fields, mc_fields, calc_fields, yn_fields)[rdr]
   out <- c(out, complete_fields)
   class(out) <- c("rcer_col_type", class(out))
   out
