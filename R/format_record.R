@@ -52,13 +52,21 @@ format_record <- function(record, metadata = NULL, col_type = NULL, class = "dat
     ct <- col_type
   }
 
-  out <- as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
+  # qwraps2::set_diff(names(ct), names(record))
 
-  if (inherits(record, "data.table") | class == "data.table") {
-    out <- as.data.table(out)
+  # out <- as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
+
+  for (n in names(ct)) {
+    if (n %in% names(record)) {
+      record[[n]] <- eval(ct[[n]], envir = record)
+    }
   }
 
-  out
+  if (inherits(record, "data.table") | class == "data.table") {
+    record <- as.data.table(record)
+  }
+
+  record
 }
 
 
