@@ -52,15 +52,19 @@ format_record <- function(record, metadata = NULL, col_type = NULL, class = "dat
     ct <- col_type
   }
 
-  # qwraps2::set_diff(names(ct), names(record))
-
-  # out <- as.data.frame(lapply(ct, function(x) {eval(x, envir = record)}), stringsAsFactors = FALSE)
-
   for (n in names(ct)) {
     if (n %in% names(record)) {
       record[[n]] <- eval(ct[[n]], envir = record)
     }
   }
+
+  # set the columns in the record corresponding to checkboxes as integer values
+  for (n in metadata$field_name[metadata$field_type == "checkbox"]) {
+    for(nn in grep(paste0(n, "___\\d+"), names(record))) {
+      record[[nn]] <- as.integer(record[[nn]])
+    }
+  }
+
 
   if (inherits(record, "data.table") | class == "data.table") {
     record <- as.data.table(record)

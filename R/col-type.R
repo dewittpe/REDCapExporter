@@ -81,8 +81,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
           cl[[2]] <- as.name(nm)
           cl
           },
-        nm = x$field_name[x$field_type == "text"],
-        tp = x$text_validation_type_or_show_slider_number[x$field_type == "text"])
+        nm = x$field_name[x$field_type %in% c("notes", "text")],
+        tp = x$text_validation_type_or_show_slider_number[x$field_type %in% c("notes", "text")])
 
   text_fields <- lapply(text_fields, as.call)
 
@@ -148,7 +148,10 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
     )
 
   # set the order of the types to match the order of the field names
-  rdr <- x$field_name[x$field_type != "descriptive"]
+  # checkboxes are ommited as well as there is likely more than one column in
+  # the records object.  See `format_record`
+  rdr <- x$field_name[!(x$field_type %in% c("checkbox", "descriptive"))]
+
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields)[rdr]
   out <- c(out, complete_fields)
