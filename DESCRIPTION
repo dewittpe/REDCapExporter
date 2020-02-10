@@ -27,6 +27,7 @@ Suggests:
     qwraps2 (> 0.4.1),
     rmarkdown,
     rjson,
-    secret
+    secret,
+    testthat
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
