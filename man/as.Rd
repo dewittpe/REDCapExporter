@@ -6,6 +6,10 @@
 \alias{as.data.frame.rcer_raw_record}
 \alias{as.data.frame.rcer_raw_project}
 \alias{as.data.frame.rcer_raw_user}
+\alias{as.data.table.rcer_raw_metadata}
+\alias{as.data.table.rcer_raw_record}
+\alias{as.data.table.rcer_raw_project}
+\alias{as.data.table.rcer_raw_user}
 \title{as.*}
 \usage{
 \method{as.data.frame}{rcer_raw_metadata}(x, ...)
@@ -15,6 +19,14 @@
 \method{as.data.frame}{rcer_raw_project}(x, ...)
 
 \method{as.data.frame}{rcer_raw_user}(x, ...)
+
+\method{as.data.table}{rcer_raw_metadata}(x, ...)
+
+\method{as.data.table}{rcer_raw_record}(x, ...)
+
+\method{as.data.table}{rcer_raw_project}(x, ...)
+
+\method{as.data.table}{rcer_raw_user}(x, ...)
 }
 \arguments{
 \item{x}{any \R object.}

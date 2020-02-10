@@ -16,10 +16,10 @@ LazyData: true
 Depends:
     R (>= 3.5.0)
 Imports:
+    data.table,
     lubridate,
     RCurl
 Suggests:
-    data.table,
     devtools,
     fs,
     knitr,

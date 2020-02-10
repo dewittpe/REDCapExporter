@@ -6,7 +6,6 @@
 #' exports from the REDCap API.
 #'
 #' @inheritParams base::as.data.frame
-#' @inheritParams data.table::as.data.table
 #'
 #' @examples
 #'
@@ -99,7 +98,7 @@ as.data.table.rcer_raw_user <- function(x, ...) {
 #' user.  Used by the \code{as.data.frame} methods.
 #'
 #' @param x the raw return from the API call to REDCap
-#' @param class \code{data.frame} (default) or \code{data.table}
+#' @param class \code{"data.frame"} (default) or \code{"data.table"}
 #' @return a \code{data.frame}
 #'
 read_text <- function(x, class = "data.frame") {
