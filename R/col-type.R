@@ -76,7 +76,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
                    date_mdy = quote(lubridate::ymd), # **WHY?** It appears exported dates are ymd format?  Verify
                    date_dmy = quote(lubridate::ymd), # **WHY?** It appears exported dates are ymd format?  Verify
                    date_ymd = quote(lubridate::ymd), # **WHY?** It appears exported dates are ymd format?  Verify
-                              quote(as.character) #sprintf("as.character(%s)", nm)
+                   datetime_mdy = quote(lubridate::ymd_hm),
+                   quote(as.character) #sprintf("as.character(%s)", nm)
                    )
           cl[[2]] <- as.name(nm)
           cl
