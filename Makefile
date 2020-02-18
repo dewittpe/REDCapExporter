@@ -1,44 +1,55 @@
-ifeq ($(OS), Windows_NT)
-	RM ?= del
-else
-  RM ?= /bin/rm
-endif
-
 PKG_ROOT    = .
 PKG_VERSION = $(shell gawk '/^Version:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 PKG_NAME    = $(shell gawk '/^Package:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 
 CRAN = "https://cran.rstudio.com"
-BIOC = "https://bioconductor.org/packages/3.4/bioc"
 
+# Dependencies
 SRC       = $(wildcard $(PKG_ROOT)/src/*.cpp)
 RFILES    = $(wildcard $(PKG_ROOT)/R/*.R)
 EXAMPLES  = $(wildcard $(PKG_ROOT)/examples/*.R)
 TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
-VIGNETTES = $(wildcard $(PKG_ROOT)/vignette-spinners/*.R)
-RAWDATAR  = $(wildcard $(PKG_ROOT)/data-raw/*.R)
+
+# Targets
+VIGNETTES    = $(PKG_ROOT)/vignettes/export.Rmd
+VIGNETTES   += $(PKG_ROOT)/vignettes/api.Rmd
+
+DATATARGETS  = $(PKG_ROOT)/data/avs_raw_project_info.rda
+DATATARGETS += $(PKG_ROOT)/data/avs_raw_metadata.rda
+DATATARGETS += $(PKG_ROOT)/data/avs_raw_user.rda
+DATATARGETS += $(PKG_ROOT)/data/avs_raw_record.rda
+DATATARGETS += $(PKG_ROOT)/data/avs_raw_core.rda
+DATATARGETS += $(PKG_ROOT)/R/datasets.R
 
 .PHONY: all check install clean
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 .install_dev_deps.Rout : $(PKG_ROOT)/DESCRIPTION
-	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)', '$(BIOC)'))" \
+	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)'))" \
 		-e "options(warn = 2)" \
-		-e "devtools::install_dev_deps()" \
-		-e "invisible(file.create('$(PKG_ROOT)/$@', showWarnings = FALSE))"
+		-e "devtools::install_dev_deps()"
+	touch $@
 
-.document.Rout: $(RFILES) $(SRC) $(EXAMPLES) $(RAWDATAR) $(VIGNETTES) $(PKG_ROOT)/DESCRIPTION
-	if [ -e "$(PKG_ROOT)/data-raw/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/data-raw/; else echo "Nothing to do"; fi
-	Rscript --vanilla --quiet -e "options(repo = c('$(CRAN)', '$(BIOC)'))" \
-		-e "options(warn = 2)" \
-		-e "devtools::document('$(PKG_ROOT)')" \
-		-e "invisible(file.create('$(PKG_ROOT)/$@', showWarnings = FALSE))"
+.document.Rout: $(SRC) $(RFILES) $(DATATARGETS) $(EXAMPLES) $(VIGNETTES) $(PKG_ROOT)/DESCRIPTION
+	Rscript --vanilla --quiet -e "options(warn = 2)" \
+		-e "devtools::document('$(PKG_ROOT)')"
+	touch $@
+
+$(DATATARGETS) : $(PKG_ROOT)/data-raw/avs-exports.Rout
+	@if test -f $@; then :; else\
+		$(RM) $<; \
+		$(MAKE) $<; \
+	fi
+
+$(PKG_ROOT)/data-raw/avs-exports.Rout : $(PKG_ROOT)/data-raw/avs-exports.R
+	R CMD BATCH --vanilla $< $@
+
+$(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
+	R --vanilla -e "knitr::spin(hair = '$<', knit = FALSE)"
+	mv $(basename $<).Rmd $@
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(TESTS)
-	#	R CMD build --no-build-vignettes --no-resave-data --md5 $(build-options) $(PKG_ROOT)
-	#	R CMD INSTALL $@
-	if [ -e "$(PKG_ROOT)/vignette-spinners/makefile" ]; then $(MAKE) -C $(PKG_ROOT)/vignette-spinners/; else echo "Nothing to do"; fi
 	R CMD build --md5 $(build-options) $(PKG_ROOT)
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
