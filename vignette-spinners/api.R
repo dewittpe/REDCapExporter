@@ -42,13 +42,34 @@ library("REDCapExporter")
 # /*
 if (FALSE) {
 # */
-vignette(topic = "export2package", package = "REDCapExporter")
+vignette(topic = "export", package = "REDCapExporter")
 # /*
 }
 # */
 #'
-#' # REDCap API Tokens
+#' # System Environment Variables
 #'
+{{ qwraps2::CRANpkg(REDCapExporter) }}
+#' can use three system variables to simplify the user's interaction with the
+#' REDCap API.  The first variable is the URI for your institution's REDCap
+#' instance.  Set this once at the beginning of scripts, in a .Rprofile, and
+#' this will be the default uri used in any function call with a uri argument.
+#'
+Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
+
+#'
+#' An environmental variable can be used to specify is the format for data to be
+#' returned in from the API.
+#' Possible values for the API are 'csv', 'xml', or 'json'.   However, within
+#' the
+{{ qwraps2::CRANpkg(REDCapExporter) }}
+#' package methods have been built to support csv or json; xml is not yet
+#' supported.  csv is the default format and this is set when the namespace is
+#' loaded.
+Sys.getenv("REDCap_API_format")
+
+#'
+#' Lastly, but the most important with respect to security, is the API token.
 #' You will need to have API export rights for the REDCap project you are
 #' looking to export into an R data package.  Contact the project owner, system
 #' admin, or go through your institution's REDCap webpage to acquire an API token.
@@ -58,33 +79,81 @@ vignette(topic = "export2package", package = "REDCapExporter")
 #' security you would treat any username/password combination.  **DO NOT PUT THE
 #' TOKEN IN PLAIN TEXT!**
 #'
-#' We suggest the reader set up a vault with their API token as a secret.
+#' There are many ways for you to store, set, and use your API token, some
+#' suggestions follow.  Consider the implications of each method carefully and
+#' use your best judgement and care.
+#'
+Sys.setenv(REDCap_API_TOKEN = "YOURTOKENHERE")
+
+#'
+#'
+#' # REDCap API Tokens
+#'
+#' There are several methods to work with the token securely.  Here are some
+#' suggestions:
+#'
+#' ## getPass
+#'
+#' The
+{{ qwraps2::CRANpkg(getPass) }}
+#' package would let you input your token, interactively, e.g.
+Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
+
+#'
+#' The downside of this approach is that you will have to re-enter the token
+#' every time you open the project.
+#'
+#' ## secret
+#'
+#' The reader could set up a vault with their API token as a secret.
 #' via the
 {{ qwraps2::CRANpkg(secret) }}
-#' package.  We encourage the reader to read the "secrets" vignette in R via:
+#' package.  This package allows the user to set up a vault of secrets
+#' encrypted via ssh keys.
+#' We encourage the reader to read the "secrets" vignette in R via:
 {{ qwraps2::backtick(vignette(topic = "secrets", package = "secret")) }}
 #' for details on the use of the secret package.
 #'
+#' Pros of this approach: the API key can be encrypted and stored within the
+#' version control repository for the project you are working on.  This will
+#' make it easy move the project form machine to machine where the same private
+#' ssh key exists.
 #'
-# /* Set the private key needed to access the vault, if needed.
-Sys.setenv(USER_KEY = "~/.ssh/vaults")
-# */
+#' Downsides to this approach: if your ssh key has a passphrase you'll need to
+#' enter it when accessing the token.  That may make non-interactive builds
+#' difficult.  Having a specific key without a passphrase can make this approach
+#' easier, but will require explicit setting of the ssh key (see below).  Also,
+#' when multiple people are contributing to the project different users will
+#' need to have specific secrets for their token(s) which will complicate the
+#' code base.
 #'
-#' There are two system environment variables we recommend setting to make
-#' the API calls simple.
+Sys.setenv(USER_KEY = "~/.ssh/vaults")  # ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.
+Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 #'
-#+ label = "REDCap_sysvar"
-Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
+#' Setting the environmental variable could be done via:
+#'
+#+ label = "REDCap_API_sysvar"
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 
 #'
-#' A third environmental variables is the format for data to be returned in.
-#' Possible values for the API are 'csv', 'xml', or 'json'.   However, within
-#' the
-{{ qwraps2::CRANpkg(REDCapExporter) }}
-#' package methods have been built to support csv or json; xml is not yet
-#' supported.  csv is the default format.
-Sys.getenv("REDCap_API_format")
+#' ## Keyring
+#'
+#' The
+{{ qwraps2::CRANpkg("keyring") }}
+#' package can set up and access a system or custom credential store from R.
+#'
+#' A major benifit of this approach is that one keyring could be set up for all
+#' the API tokens you may have for dozens of individual REDCap projects.
+#' Compared to the
+{{ qwraps2::CRANpkg(secret) }}
+#' package approach where a project vault will be needed for each project and
+#' *might* make collaboration difficult, the keyring approach, with a little
+#' configuration, will allow multiple users to all securly store and access
+#' their API tokens with the same code base.
+#'
+#' For example
+
+
 #'
 #' # Exporting a REDCap Project
 #'
