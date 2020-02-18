@@ -6,7 +6,7 @@
 ^.*\.Rout$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^.*makefile$
+^Makefile$
 ^.*\.tar\.gz$
 inst/vault/*
 vignette-spinners/*
