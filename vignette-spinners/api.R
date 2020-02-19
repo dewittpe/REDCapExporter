@@ -16,8 +16,10 @@
 # By default, chunks will not be evaluated.  This way the API token will not be
 # required to build this vignette.
 knitr::opts_chunk$set(collapse = TRUE, eval = FALSE)
-library("REDCapExporter")
 
+#'
+#+ label = "namespace", eval = TRUE
+library(REDCapExporter)
 #'
 #' The purpose of this vignette is to show examples of exporting elements of a
 #' REDCap project via the REDCap (Research Electronic Data Capture) API.  The
@@ -97,7 +99,13 @@ Sys.setenv(REDCap_API_TOKEN = "YOURTOKENHERE")
 #' The
 {{ qwraps2::CRANpkg(getPass) }}
 #' package would let you input your token, interactively, e.g.
+# /*
+if (FALSE) {
+# */
 Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
+# /*
+}
+# */
 
 #'
 #' The downside of this approach is that you will have to re-enter the token
@@ -151,15 +159,34 @@ Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 #' configuration, will allow multiple users to all securly store and access
 #' their API tokens with the same code base.
 #'
-#' For example
+#' For example, the
+{{ qwraps2::CRANpkg(REDCapExporter) }}
+#' package provides a few functions to help set up a keyring, define tokens, and
+#' access them.  In the following chunk a filebased keyring called
+#' "REDCapExporter" will be created, if needed.  The user will be prompted to
+#' add a token for "Project1" and for "Project2."  The last line would access
+#' the token needed for the given project.
+#'
+# /*
+if (FALSE) {
+# */
+REDCapExporter_keyring_check()
+REDCapExporter_add_api_token("Project1")
+REDCapExporter_add_api_token("Project2")
+Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
+# /*
+}
+# */
 
-
+#'
+#' After setting up the keyring and adding the token(s) you will only need to
+#' use the last line setting the system environmental varaible in the specific
+#' scripts.  If the above chunk is evaluated by all collaborators on the project
+#' with REDCap API tokens then no other modifications of the code base is needed
+#' for the collaborators to work together.
+#'
 #'
 #' # Exporting a REDCap Project
-#'
-#' First, let's load and attach the REDCapExporter namespace
-#+ label = "namespace", eval = TRUE
-library(REDCapExporter)
 #'
 #' Methods which will call REDCap API are
 {{ qwraps2::backtick(export_content) }}
