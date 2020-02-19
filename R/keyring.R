@@ -37,8 +37,9 @@ REDCapExporter_keyring_check <- function(keyring = "REDCapExporter", password = 
   if (!(keyring %in% kr$keyring_list()$keyring)) {
     kr$.__enclos_env__$private$keyring_create_direct(keyring = keyring, password = password)
     message(sprintf("File based keyring %s has been created", keyring))
+  } else {
+    message(sprintf("File based keyring %s exists", keyring))
   }
-  message(sprintf("File based keyring %s exists", keyring))
   invisible(TRUE)
 }
 
