@@ -38,6 +38,13 @@ empty password.}
 
 \item{overwrite}{logical, if \code{TRUE} overwrite the existing token.}
 }
+\value{
+\code{REDCapExporter_keyring_check} returns \code{TRUE}, invisibly,
+as does \code{REDCapExporter_add_api_token}.
+\code{REDCapExporter_get_api_token} returns the token invisibly as not to
+print the value to the console by default.  Still, be careful with your
+token.
+}
 \description{
 Tools for checking for, and setting up, a file based keyring for storing
 REDCap API tokens.

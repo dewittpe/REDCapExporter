@@ -14,6 +14,12 @@
 #'
 #' @seealso \code{vignette(topic = "api", package = "REDCapExporter")}
 #'
+#' @return \code{REDCapExporter_keyring_check} returns \code{TRUE}, invisibly,
+#' as does \code{REDCapExporter_add_api_token}.
+#' \code{REDCapExporter_get_api_token} returns the token invisibly as not to
+#' print the value to the console by default.  Still, be careful with your
+#' token.
+#'
 #' @examples
 #' \dontrun{
 #' REDCapExporter_keyring_check()
