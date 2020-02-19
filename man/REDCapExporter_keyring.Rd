@@ -3,13 +3,13 @@
 \name{REDCapExporter_keyring}
 \alias{REDCapExporter_keyring}
 \alias{REDCapExporter_keyring_check}
-\alias{add_api_token}
+\alias{REDCapExporter_add_api_token}
 \alias{REDCapExporter_get_api_token}
 \title{Set up and use of a Keyring for REDCap API Tokens}
 \usage{
 REDCapExporter_keyring_check(keyring = "REDCapExporter", password = NULL)
 
-add_api_token(
+REDCapExporter_add_api_token(
   project,
   keyring = "REDCapExporter",
   user = NULL,
@@ -41,4 +41,15 @@ empty password.}
 \description{
 Tools for checking for, and setting up, a file based keyring for storing
 REDCap API tokens.
+}
+\examples{
+\dontrun{
+REDCapExporter_keyring_check()
+REDCapExporter_add_api_token("Project1")
+Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
+}
+
+}
+\seealso{
+\code{vignette(topic = "api", package = "REDCapExporter")}
 }

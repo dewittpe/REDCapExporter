@@ -12,6 +12,15 @@
 #' \code{Sys.info()[["user"]]}.
 #' @param overwrite logical, if \code{TRUE} overwrite the existing token.
 #'
+#' @seealso \code{vignette(topic = "api", package = "REDCapExporter")}
+#'
+#' @examples
+#' \dontrun{
+#' REDCapExporter_keyring_check()
+#' REDCapExporter_add_api_token("Project1")
+#' Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
+#' }
+#'
 #' @name REDCapExporter_keyring
 NULL
 
@@ -35,7 +44,7 @@ REDCapExporter_keyring_check <- function(keyring = "REDCapExporter", password = 
 
 #' @rdname REDCapExporter_keyring
 #' @export
-add_api_token <- function(project, keyring = "REDCapExporter", user = NULL, password = NULL, overwrite = FALSE) {
+REDCapExporter_add_api_token <- function(project, keyring = "REDCapExporter", user = NULL, password = NULL, overwrite = FALSE) {
   if (is.null(password)) {
     password <- ""
   }
