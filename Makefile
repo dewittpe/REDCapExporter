@@ -46,18 +46,14 @@ $(PKG_ROOT)/data-raw/avs-exports.Rout : $(PKG_ROOT)/data-raw/avs-exports.R
 	R CMD BATCH --vanilla $< $@
 
 $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
-	R --vanilla -e "knitr::spin(hair = '$<', knit = FALSE)"
+	R --vanilla --quiet -e "knitr::spin(hair = '$<', knit = FALSE)"
 	mv $(basename $<).Rmd $@
 
 $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(TESTS)
 	R CMD build --md5 $(build-options) $(PKG_ROOT)
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R --vanilla --quiet -e 'checks <- devtools::check(document = FALSE, args = "--no-tests")'\
-		-e 'if(!identical(checks[["errors"]], character(0))) stop("Check with Errors")'\
-		-e 'if(!identical(checks[["warnings"]], character(0))) stop("Check with Warnings")'\
-		-e 'if(!identical(checks[["notes"]], character(0))) stop("Check with Notes")'\
-		-e 'devtools::test()'
+	R --vanilla --quiet -e 'rcmdcheck::rcmdcheck("$<", error_on = "note")'
 
 check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz
