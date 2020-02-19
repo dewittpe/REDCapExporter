@@ -4,6 +4,7 @@ r:
   - release
   - devel
 install:
+  - apt install -y libsodium-dev
   - Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com")'
   - Rscript -e 'devtools::install_dev_deps()'
 script:
