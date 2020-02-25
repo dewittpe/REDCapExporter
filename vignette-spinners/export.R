@@ -112,7 +112,7 @@ cat(readLines(paste(prj_dir[1], "LICENSE", sep = "/")), sep = "\n")
 #'
 #' The generated R data package should pass the basic R CMD check.
 #+ warning = FALSE
-check <- devtools::check(pkg = prj_dir, quiet = TRUE, cran = FALSE)
+check <- rcmdcheck::rcmdcheck(path = prj_dir, quiet = TRUE)
 check
 # */
 
