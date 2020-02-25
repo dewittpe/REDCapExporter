@@ -13,3 +13,4 @@ vignette-spinners/*
 ^cran-comments\.md$
 ^data-raw/*
 ^CRAN-RELEASE$
+inst/WORDLIST

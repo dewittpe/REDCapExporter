@@ -58,7 +58,7 @@ str(avs_raw_core)
 #' package will be written, and some some information about
 #' the users. In this context, users are the persons who have, or had, access to the
 #' REDCap project and are listed under the UserRights section of the REDCap
-#' proejct.  The user data from REDCap is used to construct the Author section
+#' project.  The user data from REDCap is used to construct the Author section
 #' of the DESCRIPTION file for the R data package to be constructed.  By default,
 #' all users are listed as 'contributors'.  Modification of the roles can be
 #' provide by a named list object.  In the example below, the user dewittp is

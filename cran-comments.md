@@ -1,3 +1,35 @@
+# Version 0.2.0
+- Initial submission 25 February 2020
+
+## Testing Environments
+
+* Travis CI: Ubuntu 16.04 (xenial)
+  * R 3.5.3
+  * R 3.6.1
+  * R Under Development (unstable) (2019-12-18 r77599)
+
+* win-builder.r-project.org
+
+* Local (macOS Catalina 10.15.3)
+  * R 3.6.2
+
+## R CMD check results
+
+* Travis CI -- all version of R
+
+    Status OK
+
+* win-builder.r-project.org -- all version of R
+
+    Status OK
+
+* Local
+
+    Status OK
+
+## Downstream dependencies
+- none
+
 # Version 0.1.0
 - Initial submission 3 December 2019
 - First resubmission 3 December 2019
@@ -28,7 +60,7 @@ bumped the version number form the initial submission of 0.0.3 to the submitted
 
 * Travis CI -- all version of R
 
-    Status OK 
+    Status OK
 
 * win-builder -- all version of R
 

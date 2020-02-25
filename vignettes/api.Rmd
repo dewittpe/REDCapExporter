@@ -82,7 +82,7 @@ Sys.getenv("REDCap_API_format")
 Lastly, but the most important with respect to security, is the API token.
 You will need to have API export rights for the REDCap project you are
 looking to export into an R data package.  Contact the project owner, system
-admin, or go through your institution's REDCap webpage to acquire an API token.
+admin, or go through your institution's REDCap web page to acquire an API token.
 
 Remember, your API token is the equivalent of a username/password
 combination.  Thus, you must treat the token with the same, or more, level of
@@ -164,19 +164,19 @@ The
 `r  qwraps2::CRANpkg("keyring")  `
 package can set up and access a system or custom credential store from R.
 
-A major benifit of this approach is that one keyring could be set up for all
+A major benefit of this approach is that one keyring could be set up for all
 the API tokens you may have for dozens of individual REDCap projects.
 Compared to the
 `r  qwraps2::CRANpkg(secret)  `
 package approach where a project vault will be needed for each project and
 *might* make collaboration difficult, the keyring approach, with a little
-configuration, will allow multiple users to all securly store and access
+configuration, will allow multiple users to all securely store and access
 their API tokens with the same code base.
 
 For example, the
 `r  qwraps2::CRANpkg(REDCapExporter)  `
 package provides a few functions to help set up a keyring, define tokens, and
-access them.  In the following chunk a filebased keyring called
+access them.  In the following chunk a file based keyring called
 "REDCapExporter" will be created, if needed.  The user will be prompted to
 add a token for "Project1" and for "Project2."  The last line would access
 the token needed for the given project.
@@ -191,7 +191,7 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 
 
 After setting up the keyring and adding the token(s) you will only need to
-use the last line setting the system environmental varaible in the specific
+use the last line setting the system environmental variable in the specific
 scripts.  If the above chunk is evaluated by all collaborators on the project
 with REDCap API tokens then no other modifications of the code base is needed
 for the collaborators to work together.

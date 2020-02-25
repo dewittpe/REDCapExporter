@@ -4,7 +4,7 @@
 #' the metadata for the project.
 #'
 #' @param x a \code{rcer_metadata} or \code{rcer_raw_metadata} object
-#' @param factors If \code{TRUE} (default) then variables inputed via drop-down
+#' @param factors If \code{TRUE} (default) then variables reported via drop-down
 #' lists and radio buttons are set up to be \code{factor}s.  If \code{FALSE},
 #' then the column type will be \code{character}.
 #' @param ... not currently used

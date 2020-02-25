@@ -9,7 +9,7 @@ col_type(x, factors = TRUE, ...)
 \arguments{
 \item{x}{a \code{rcer_metadata} or \code{rcer_raw_metadata} object}
 
-\item{factors}{If \code{TRUE} (default) then variables inputed via drop-down
+\item{factors}{If \code{TRUE} (default) then variables reported via drop-down
 lists and radio buttons are set up to be \code{factor}s.  If \code{FALSE},
 then the column type will be \code{character}.}
 

@@ -10,11 +10,11 @@ project and package the data into a useful R data package.
 
 ## Project Goals
 
-While REDCap (*R*esearch *E*lectronic *D*ata *Cap*ture) is a fantastic tool for
-data capture, the dissemination of the collected data in a format that multiple
-data analysis can easily access and share can be improved.  The REDCapExporter
-is a tool that will collect the data and generate a source R data package.  With
-continued use, analysts will gain the following:
+While REDCap (**R**esearch **E**lectronic **D**ata **Cap**ture) is a fantastic
+tool for data capture, the dissemination of the collected data in a format that
+multiple data analysis can easily access and share can be improved.  The
+REDCapExporter is a tool that will collect the data and generate a source R data
+package.  With continued use, analysts will gain the following:
 
 * A consistent documentation format for the collected data
 
@@ -49,6 +49,4 @@ in an `if()` statement.  If `FALSE`, `stop()` call can be used to stop the
 scripts and let the analyst know the package (data) version is not as expected.
 
     # TODO, example of pkg_check, once it has been built
-
-
 
