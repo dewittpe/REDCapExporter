@@ -21,7 +21,7 @@
 #' used.
 #' @param format The format to return. If \code{NULL} (default) the value
 #' \code{Sys.getenv("REDCap_API_format")} is used.
-#' @param ... additional arguments passed to \code{\link[RCurl]{postForm}}.
+#' @param ... additional arguments passed to \code{\link[curl]{handle_setform}}.
 #'
 #' @return The raw return from the REDCap API with the class
 #' \code{rcer_raw_<content>}.
@@ -51,7 +51,19 @@ export_content <- function(content, uri = NULL, token = NULL, format = NULL, ...
     format <- Sys.getenv("REDCap_API_format")
   }
 
-  x <- RCurl::postForm(uri = uri, token = token, content = content, format = format, ...)
+  h <- curl::new_handle()
+  h <- curl::handle_setform(h,
+                            token = token,
+                            content = content,
+                            format = format,
+                            ...)
+  f <- curl::curl_fetch_memory(uri, handle = h)
+
+  x <- rawToChar(f$content)
+  attr(x, "url") <- f$url
+  attr(x, "status_code") <- f$status_code
+  attr(x, "times") <- f$times
+  attr(x, "Content-Type") <- f$type
 
   attr(x, "accessed") <- Sys.time()
   class(x)            <- c(paste0("rcer_raw_", content), class(x))

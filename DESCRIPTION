@@ -1,6 +1,6 @@
 Package: REDCapExporter
 Title: Automated Construction of R Data Packages from REDCap Projects
-Version: 0.2.0
+Version: 0.2.0.9000
 Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"))
 Description: Export all data, including metadata, from a REDCap (Research
     Electronic Data Capture) Project via the REDCap API
@@ -16,10 +16,10 @@ LazyData: true
 Depends:
     R (>= 3.5.0)
 Imports:
+    curl,
     data.table,
     keyring,
-    lubridate,
-    RCurl
+    lubridate
 Suggests:
     devtools,
     fs,
@@ -31,4 +31,4 @@ Suggests:
     secret,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

@@ -9,7 +9,17 @@
 \alias{avs_raw_record}
 \alias{avs_raw_core}
 \title{Raw Exports From an Example REDCap Project}
-\format{An object of class \code{rcer_raw_project} (inherits from \code{character}) of length 1.}
+\format{
+An object of class \code{rcer_raw_project} (inherits from \code{character}) of length 1.
+
+An object of class \code{rcer_raw_metadata} (inherits from \code{character}) of length 1.
+
+An object of class \code{rcer_raw_user} (inherits from \code{character}) of length 1.
+
+An object of class \code{rcer_raw_record} (inherits from \code{character}) of length 1.
+
+An object of class \code{rcer_rccore} of length 4.
+}
 \usage{
 avs_raw_project_info
 

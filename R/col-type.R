@@ -106,7 +106,7 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
            },
     nm = x$field_name[x$field_type %in% c("yesno", "truefalse")])
 
-  # tools for showing that a form is compelte
+  # tools for showing that a form is complete
   complete_fields <-
     Map(function(nm) {
           cl <- list()
@@ -120,7 +120,7 @@ col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
     )
 
   # set the order of the types to match the order of the field names
-  # checkboxes are ommited as well as there is likely more than one column in
+  # check boxes are omitted as well as there is likely more than one column in
   # the records object.  See `format_record`
   rdr <- x$field_name[!(x$field_type %in% c("checkbox", "descriptive", "file"))]
 

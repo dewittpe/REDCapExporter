@@ -19,7 +19,7 @@ used.}
 \item{format}{The format to return. If \code{NULL} (default) the value
 \code{Sys.getenv("REDCap_API_format")} is used.}
 
-\item{...}{additional arguments passed to \code{\link[RCurl]{postForm}}.}
+\item{...}{additional arguments passed to \code{\link[curl]{handle_setform}}.}
 }
 \value{
 The raw return from the REDCap API with the class
