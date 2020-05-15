@@ -1,3 +1,18 @@
+# Version 0.2.1
+
+## Testing Environments
+
+* Travis CI: Ubuntu 16.04
+  * R 3.6.3
+  * R 4.0.0
+  * R Under development (unstable) (2020-05-07 r78383)
+
+* win-builder.r-project.org
+* Local (macOS Catalina 10.15.4)
+
+## R CMD Check results
+
+
 # Version 0.2.0
 - Initial submission 25 February 2020
 

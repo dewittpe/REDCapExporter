@@ -1,3 +1,10 @@
+# Version 0.2.1
+
+## Bug Fixes
+
+* The dependence on the RCurl package resulted in SSL errors on Windows.  The
+  package no longer imports RCurl and uses curl instead.  (#16)
+
 # Version 0.2.0
 
 ## Bug Fixes and Extensions
