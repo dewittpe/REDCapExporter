@@ -1,3 +1,10 @@
+# Version 0.2.1.9000
+
+## Bug Fixes
+
+* improved the internal `read_text` function's checking of the Content-Type from
+  the raw data.
+
 # Version 0.2.1
 
 ## Bug Fixes
