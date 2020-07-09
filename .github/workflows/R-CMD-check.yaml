@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: R-CMD-check
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macOS-latest,   r: 'devel'}
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: '4.0'}
+          - {os: ubuntu-16.04,   r: '4.0'}
+          - {os: ubuntu-16.04,   r: '3.6'}
+          - {os: ubuntu-16.04,   r: '3.5'}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-R@v1
+        with:
+          r-version: ${{ matrix.config.r }}
+      - name: Install Dependencies
+        run: |
+          install.packages("remotes")
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+      - name: Check
+        run: make check
+        shell: bash
