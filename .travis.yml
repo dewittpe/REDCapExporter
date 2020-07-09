@@ -16,4 +16,4 @@ script:
   - R CMD check --as-cran *.tar.gz
   - cat REDCapExporter.Rcheck/00check.log
 after_success:
-  - Rscript -e 'covr::codecov(type = c("tests", "examples"), commentDontrun = FALSE, commentDonttest = FALSE)'
+  - Rscript -e 'covr::codecov(type = "all", commentDontrun = FALSE, commentDonttest = FALSE)'
