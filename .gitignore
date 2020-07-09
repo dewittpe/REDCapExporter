@@ -4,3 +4,5 @@
 *.tar.gz
 *.Rcheck/
 *.Rout
+codecover.html
+lib/*

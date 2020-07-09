@@ -21,7 +21,7 @@ DATATARGETS += $(PKG_ROOT)/data/avs_raw_record.rda
 DATATARGETS += $(PKG_ROOT)/data/avs_raw_core.rda
 DATATARGETS += $(PKG_ROOT)/R/datasets.R
 
-.PHONY: all check install clean
+.PHONY: all check install clean codecov
 
 all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
@@ -61,8 +61,12 @@ check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
+codecov :
+	R --vanilla --quiet -e 'covr::report(file = "codecover.html")'
+
 clean:
 	$(RM) -f  $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	$(RM) -f  codecover.html
 	$(RM) -rf $(PKG_NAME).Rcheck
 	$(RM) -f .document.Rout
 	$(RM) -f .install_dev_deps.Rout

@@ -17,3 +17,5 @@ inst/WORDLIST
 
 ^\.github$
 ^\.github/workflows/R-CMD-check\.yaml$
+^codecover\.html$
+^lib/.*$
