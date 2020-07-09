@@ -42,7 +42,7 @@ $(DATATARGETS) : $(PKG_ROOT)/data-raw/avs-exports.Rout
 		$(MAKE) $<; \
 	fi
 
-$(PKG_ROOT)/data-raw/avs-exports.Rout : $(PKG_ROOT)/data-raw/avs-exports.R
+$(PKG_ROOT)/data-raw/avs-exports.Rout : $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R
 	R CMD BATCH --vanilla $< $@
 
 $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R

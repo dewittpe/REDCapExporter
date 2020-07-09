@@ -5,11 +5,17 @@
 # Purpose: extract example REDCap data via the REDCap API and save the data in
 # the package for use in examples and vignettes.
 #
-library(secret)
-Sys.setenv(USER_KEY = "~/.ssh/vaults")
-Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
-Sys.setenv(REDCap_API_TOKEN = get_secret("2000_2001_Avalanche"))
+# library(secret)
+# Sys.setenv(USER_KEY = "~/.ssh/vaults")
 source("./R/export_redcap_project.R")
+source("./R/keyring.R")
+
+REDCapExporter_keyring_check()
+REDCapExporter_add_api_token("2000_2001_Avalanche")
+REDCapExporter_get_api_token("2000_2001_Avalanche")
+
+Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
+Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("2000_2001_Avalanche"))
 
 avs_raw_project_info <- export_content(content = "project",  format = "csv")
 avs_raw_metadata     <- export_content(content = "metadata", format = "csv")
