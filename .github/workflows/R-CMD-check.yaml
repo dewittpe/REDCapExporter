@@ -26,7 +26,7 @@ jobs:
       - name: Install Dependencies
         run: |
           Rscript -e "install.packages('remotes', repo = 'https://cran.rstudio.com')"
-          Rscript -e "remotes::install_deps()"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
       - name: R CMD build
         run: R CMD build .
       - name: R CMD check
