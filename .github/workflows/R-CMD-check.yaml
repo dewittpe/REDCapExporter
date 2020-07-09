@@ -26,17 +26,9 @@ jobs:
           - {os: ubuntu-16.04,   r: '3.5'}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@master
       - name: Setup R
         uses: r-lib/actions/setup-R@v1
         with:
-          r-version: ${{ matrix.config.r }}
-      - name: Install Dependencies
-        run: |
-          install.packages("remotes")
-          remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
-      - name: Check
-        run: make check
-        shell: bash
+          r-version: ${{ matrix.R }}
+      - run: Rscript -e 'print("hello")'
