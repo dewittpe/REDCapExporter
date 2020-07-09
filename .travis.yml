@@ -1,6 +1,4 @@
 language: r
-env:
-  - CODECOV_TOKEN="88e7fdc4-b2fb-4262-ae46-a02683f753d2"
 r:
   - oldrel
   - release
