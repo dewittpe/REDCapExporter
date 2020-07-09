@@ -17,6 +17,8 @@ jobs:
     name: R ${{ matrix.R }} sample
     steps:
       - uses: actions/checkout@master
+      - name: System Dependencies
+        run: sudo apt install -y libcurl4-openssl-dev
       - name: Setup R
         uses: r-lib/actions/setup-r@v1
         with:
