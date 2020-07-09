@@ -14,14 +14,13 @@ project and package the data into a useful R data package.
 While REDCap (**R**esearch **E**lectronic **D**ata **Cap**ture) is a fantastic
 tool for data capture, the dissemination of the collected data in a format that
 multiple data analysis can easily access and share can be improved.  The
-REDCapExporter is a tool that will collect the data and generate a source R data
-package.  With continued use, analysts will gain the following:
+REDCapExporter package provides a set of tools to provide easy access to REDCap
+data via the REDCap API with two aims:
 
-* A consistent documentation format for the collected data
-
-* A consistent format/storage mode for REDCap data
-
-* A set of tools to help easily clean collected data.
+1. Scripting functions to allow for easy access to, and formatting of, a data
+   set within a REDCap project.
+2. Produce a skeleton R data package to house, document, archive, and
+   disseminate a data set.
 
 ### Why is this tool needed?
 
@@ -39,15 +38,4 @@ repositories will consume a lot of disk space unnecessarily  and there are issue
 arising from sensitive data being versioned and while using public repository
 hosts.  A R data package will provide an implicit versioning of data while
 keeping only one copy of the data on the local disk.
-
-For example, in a R analysis script, the analysis can verify the version of
-any package via the following:
-
-    packageVersion("<pkg_name>", lib.loc = "<path>") <= "2.1"
-
-The above will return `TRUE` or `FALSE`.  As such, the above can be the argument
-in an `if()` statement.  If `FALSE`, `stop()` call can be used to stop the
-scripts and let the analyst know the package (data) version is not as expected.
-
-    # TODO, example of pkg_check, once it has been built
 
