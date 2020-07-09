@@ -5,6 +5,15 @@
 * improved the internal `read_text` function's checking of the Content-Type from
   the raw data.
 
+## Extensions
+
+* made `format_record` a S3 generic.
+  * Allows for a similar API as prior version
+    * __USER VISIBLE CHANGE__  the functional argument `record` no longer
+      exists, use the generic argument `x`
+  * Allows for easier use by taking in a `rcer_rccore` object so the `metadata`
+    or the `col_type` does not need to be explicitly defined.
+
 # Version 0.2.1
 
 ## Bug Fixes

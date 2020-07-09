@@ -4,16 +4,10 @@
 \alias{format_record}
 \title{Format Record}
 \usage{
-format_record(
-  record,
-  metadata = NULL,
-  col_type = NULL,
-  class = "data.table",
-  ...
-)
+format_record(x, metadata = NULL, col_type = NULL, class = "data.table", ...)
 }
 \arguments{
-\item{record}{a \code{rcer_raw_record} object.}
+\item{x}{a \code{rcer_rccore}, \code{rcer_raw_record}, or \code{rcer_record} object.}
 
 \item{metadata}{a \code{rcer_metadata} or \code{rcer_raw_metadata} object.
 Will be ignored if \code{col_type} is defined.}
@@ -36,6 +30,22 @@ the record.
 data("avs_raw_metadata")
 data("avs_raw_record")
 
-avs <- format_record(avs_raw_record, avs_raw_metadata)
+avs <- format_record(avs_raw_record, avs_raw_metadata, class = "data.frame")
+avs
 
+avs <- format_record(avs_raw_core, class = "data.frame")
+head(avs)
+
+avs <- format_record(avs_raw_core, class = "data.table")
+avs$atoi
+as.numeric(avs$atoi)
+avs[, `:=`(atoi_seconds = as.numeric(atoi),
+           atoi_seconds_postseason = as.numeric(atoi_postseason),
+           atoi = as.character(atoi),
+           atoi_postseason = as.character(atoi_postseason))]
+avs[, .SD, .SDcols = patterns("atoi")]
+
+}
+\seealso{
+\link{export_core}
 }
