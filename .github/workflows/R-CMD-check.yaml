@@ -21,4 +21,7 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.R }}
-      - run: Rscript -e 'print("hello")'
+      - name: R CMD build
+        run: R CMD build .
+      - name: R CMD check
+        run: R CMD check --as-cran *.tar.gz
