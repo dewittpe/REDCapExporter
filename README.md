@@ -1,6 +1,7 @@
 # REDCapExporter
 
 [![Build Status](https://travis-ci.com/dewittpe/REDCapExporter.svg?branch=master)](https://travis-ci.com/dewittpe/REDCapExporter)
+[![codecov](https://codecov.io/gh/dewittpe/REDCapExporter/branch/master/graph/badge.svg)](https://codecov.io/gh/dewittpe/REDCapExporter)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/REDCapExporter)](https://cran.r-project.org/package=REDCapExporter)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
