@@ -21,6 +21,10 @@ jobs:
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.R }}
+      - name: Install Dependencies
+        run: |
+          Rscript -e "install.packages('remotes', repo = 'https://cran.rstudio.com')"
+          Rscript -e "remotes::install_dep()"
       - name: R CMD build
         run: R CMD build .
       - name: R CMD check
