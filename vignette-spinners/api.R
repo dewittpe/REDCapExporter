@@ -20,6 +20,7 @@ knitr::opts_chunk$set(collapse = TRUE, eval = FALSE)
 #'
 #+ label = "namespace", eval = TRUE
 library(REDCapExporter)
+
 #'
 #' The purpose of this vignette is to show examples of exporting elements of a
 #' REDCap project via the REDCap (Research Electronic Data Capture) API.  The
@@ -167,6 +168,7 @@ Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 #' add a token for "Project1" and for "Project2."  The last line would access
 #' the token needed for the given project.
 #'
+#+ eval = FALSE
 # /*
 if (FALSE) {
 # */
@@ -193,14 +195,25 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 #' and
 {{ paste0(qwraps2::backtick(export_core), ".") }}
 #'
-#'
 #' The specific behavior and results of these functions will depended on your
 #' institution's REDCap instance and the user access permissions associated with
 #' the token used to access the project.
 #'
 #' The next subsections provide details on these methods.
 #'
-#' ## Export Contents of a REDCap Project
+#' ## Export Core
+#'
+#' With one call to
+{{ qwraps2::backtick(export_core) }}
+#' Will call the API several times and download several elements of a REDCap
+#' project.  The return is a list and is the expected object class to be used
+#' as the basis for building a R data package.  An example of the return from
+#' this method below.  It is a list of several rcer_raw_* objects.
+#+ eval = TRUE
+data(avs_raw_core)
+lapply(avs_raw_core, class)
+#'
+#' ## Export Specific Content of a REDCap Project
 #'
 #' The
 {{ qwraps2::backtick(export_content) }}
@@ -247,18 +260,6 @@ str(avs_raw_metadata)
 avs_metadata <- as.data.frame(avs_raw_metadata)
 str(avs_metadata)
 
-#'
-#' ## Export Core
-#'
-#' With one call to
-{{ qwraps2::backtick(export_core) }}
-#' Will call the API several times and download several elements of a REDCap
-#' project.  The return is a list and is the expected object class to be used
-#' as the basis for building a R data package.  An example of the return from
-#' this method below.  It is a list of several rcer_raw_* objects.
-#+ eval = TRUE
-data(avs_raw_core)
-lapply(avs_raw_core, class)
 #'
 #' # Session Info
 #'
