@@ -1,3 +1,34 @@
+# Version 0.2.2
+- Initial submission 2 Feb 2021
+
+## Testing Environments
+
+* Github Workflow
+  * R 3.6.3
+  * R 4.0.3
+  * R Under development (unstable) (2021-01-25 r79883)
+
+* win-builder.r-project.org
+  * R Under development (unstable) (2021-01-31 r79912)
+
+* Local (macOS Catalina)
+  * R 4.0.2
+
+## R CMD Check results
+
+* Github Workflow
+
+    Status OK
+
+* win-builder.r-project.org
+
+    Status OK
+
+* Local
+
+    Status OK
+
+
 # Version 0.2.1
 - Initial submission 15 May 2020
 
