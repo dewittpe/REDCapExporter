@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        R: [ '3.5.3', '3.6.1' ]
+        R: [ 'oldrel', 'release', 'devel' ]
     name: R ${{ matrix.R }} sample
     steps:
       - uses: actions/checkout@master
