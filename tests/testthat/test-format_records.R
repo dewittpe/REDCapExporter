@@ -14,8 +14,15 @@ test_that("format_record is same dim as unformated data.frame",
             expect_equal(
                          dim(as.data.frame(avs_raw_record))
                          ,
-                         dim(format_record(avs_raw_record, avs_raw_metadata))
+                         dim(format_record(avs_raw_record, avs_raw_metadata, class = "data.frame"))
             )
+          })
+
+test_that("S4 classes in data.table returns a warning",
+          {
+            expect_warning(format_record(avs_raw_core, class = "data.table"))
+            expect_warning(format_record(avs_raw_record, avs_raw_metadata, class = "data.table"))
+            expect_warning(format_record(as.data.table(avs_raw_record), avs_raw_metadata))
           })
 
 test_that("format_record builds the expected data.frame from rcer_rccore object",

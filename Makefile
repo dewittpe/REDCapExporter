@@ -62,7 +62,7 @@ install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD INSTALL $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 codecov :
-	R --vanilla --quiet -e 'covr::report(file = "codecover.html")'
+	R --vanilla --quiet -e 'covr::report(x = covr::package_coverage(type = "all"), file = "codecover.html")'
 
 clean:
 	$(RM) -f  $(PKG_NAME)_$(PKG_VERSION).tar.gz
