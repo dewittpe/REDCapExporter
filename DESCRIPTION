@@ -1,7 +1,9 @@
 Package: REDCapExporter
 Title: Automated Construction of R Data Packages from REDCap Projects
 Version: 0.2.2
-Authors@R: person("Peter", "DeWitt", email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"))
+Authors@R: c(
+    person(given = "Peter", family = "DeWitt",  email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6391-0795"))
+    )
 Description: Export all data, including metadata, from a REDCap (Research
     Electronic Data Capture) Project via the REDCap API
     <https://projectredcap.org/wp-content/resources/REDCapTechnicalOverview.pdf>.
