@@ -1,3 +1,7 @@
+# Version 0.2.2.9000
+
+* updated source code to address deprecated roxygen2 documentaion tags
+
 # Version 0.2.2
 
 ## Bug Fixes
