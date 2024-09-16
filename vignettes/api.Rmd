@@ -7,7 +7,7 @@ output:
    toc: true
    number_sections: true
 vignette: >
- %\VignetteIndexEntry{api}
+ %\VignetteIndexEntry{REDCapExporter}
  %\VignetteEngine{knitr::rmarkdown}
  %\VignetteEncoding{UTF-8}
 ---
@@ -60,7 +60,7 @@ instance.  Set this once at the beginning of scripts, in a .Rprofile, and
 this will be the default uri used in any function call with a uri argument.
 
 
-```{r }
+```{r}
 Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
 ```
 
@@ -74,7 +74,7 @@ package methods have been built to support csv or json; xml is not yet
 supported.  csv is the default format and this is set when the namespace is
 loaded.
 
-```{r }
+```{r}
 Sys.getenv("REDCap_API_format")
 ```
 
@@ -94,7 +94,7 @@ suggestions follow.  Consider the implications of each method carefully and
 use your best judgement and care.
 
 
-```{r }
+```{r}
 Sys.setenv(REDCap_API_TOKEN = "YOURTOKENHERE")
 ```
 
@@ -111,7 +111,7 @@ The
 `r  qwraps2::CRANpkg(getPass)  `
 package would let you input your token, interactively, e.g.
 
-```{r }
+```{r}
 Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 ```
 
@@ -144,7 +144,7 @@ need to have specific secrets for their token(s) which will complicate the
 code base.
 
 
-```{r }
+```{r}
 Sys.setenv(USER_KEY = "~/.ssh/vaults")  # ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 ```
@@ -257,7 +257,7 @@ The likely uri is redcap.<institution>/api/help/.
 An example: the metadata, i.e., data dictionary, for the 2000-2001 Colorado
 Avalanche data set could be retrieved via
 
-```{r }
+```{r}
 avs_raw_metadata <- export_content(content = "metadata")
 ```
 
@@ -288,7 +288,7 @@ str(avs_metadata)
 # Session Info
 
 
-```{r }
+```{r}
 print(sessionInfo(), local = FALSE)
 ```
 

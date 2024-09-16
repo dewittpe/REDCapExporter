@@ -59,7 +59,6 @@ format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, c
     x <- as.data.frame(x)
   }
 
-
   if (is.null(col_type)) {
     if (!(inherits(metadata, "rcer_metadata") | inherits(metadata, "rcer_raw_metadata"))) {
       stop("format_record expects the `metadata` argument to be a `rcer_raw_metadata` or `rcer_metadata` object.")

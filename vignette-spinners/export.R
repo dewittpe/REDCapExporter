@@ -13,6 +13,9 @@
 #'---
 #'
 #+ label = "setup", include = FALSE
+#/*
+devtools::load_all() # load the dev version while editing
+#*/
 knitr::opts_chunk$set(collapse = TRUE)
 library(REDCapExporter)
 
@@ -69,7 +72,6 @@ temppath <- tempdir()
 build_r_data_package(x = avs_raw_core,
                      path = temppath,
                      author_roles = list(dewittp = c("cre", "aut")))
-
 #'
 #' The resulting directory is:
 fs::dir_tree(temppath)

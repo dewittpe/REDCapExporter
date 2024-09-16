@@ -7,7 +7,7 @@
 #'    toc: true
 #'    number_sections: true
 #'vignette: >
-#'  %\VignetteIndexEntry{api}
+#'  %\VignetteIndexEntry{REDCapExporter}
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteEncoding{UTF-8}
 #'---
@@ -136,13 +136,25 @@ Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 #' need to have specific secrets for their token(s) which will complicate the
 #' code base.
 #'
+# /*
+while(FALSE) {
+# */
 Sys.setenv(USER_KEY = "~/.ssh/vaults")  # ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
+# /*
+}
+# */
 #'
 #' Setting the environmental variable could be done via:
 #'
 #+ label = "REDCap_API_sysvar"
+# /*
+while(FALSE) {
+# */
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
+# /*
+}
+# */
 
 #'
 #' ## Keyring
@@ -253,6 +265,7 @@ ls()
 data(avs_raw_metadata)
 ls()
 str(avs_raw_metadata)
+
 #'
 #' Using the as.data.frame methods will help you get the return from REDCap into
 #' a usable form:

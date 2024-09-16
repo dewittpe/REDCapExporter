@@ -3,10 +3,30 @@
 #' Define a type for each column of the records for a REDCap project based on
 #' the metadata for the project.
 #'
+#' REDCap text fields for dates and times are formated via lubridate
+#'
+#' \tabular{ll}{
+#'   REDCap type           \tab lubridate parsing function \cr
+#'   --------------------- \tab -------------------------- \cr
+#'   date_mdy              \tab \code{\link[lubridate]{mdy}} \cr
+#'   date_dmy              \tab \code{\link[lubridate]{dmy}} \cr
+#'   date_ymd              \tab \code{\link[lubridate]{ymd}} \cr
+#'   datetime_dmy          \tab \code{\link[lubridate]{dmy_hm}} \cr
+#'   datetime_mdy          \tab \code{\link[lubridate]{mdy_hm}} \cr
+#'   datetime_ymd          \tab \code{\link[lubridate]{ymd_hm}} \cr
+#'   datetime_seconds_dmy  \tab \code{\link[lubridate]{dmy_hms}} \cr
+#'   datetime_seconds_mdy  \tab \code{\link[lubridate]{mdy_hms}} \cr
+#'   datetime_seconds_ymd  \tab \code{\link[lubridate]{ymd_hms}} \cr
+#'   time                  \tab \code{\link[lubridate]{hm}} \cr
+#'   time_mm_ss            \tab \code{\link[lubridate]{ms}} \cr
+#' }
+#'
 #' @param x a \code{rcer_metadata} or \code{rcer_raw_metadata} object
 #' @param factors If \code{TRUE} (default) then variables reported via drop-down
 #' lists and radio buttons are set up to be \code{factor}s.  If \code{FALSE},
 #' then the column type will be \code{character}.
+#' @param lubridate_args a list of arguments passed to the date and time parsing
+#' calls.  See Details.
 #' @param ... not currently used
 #'
 #' @return a \code{rcer_col_type} object
@@ -17,39 +37,53 @@
 #' col_type(avs_raw_metadata)
 #'
 #' @export
-col_type <- function(x, factors = TRUE, ...) {
+col_type <- function(x, factors = TRUE, lubridate_args = list(quiet = TRUE, tz = NULL, locale = Sys.getlocale("LC_TIME"), truncated = 0), ...) {
   UseMethod("col_type")
 }
 
 #' @export
-col_type.rcer_raw_metadata <- function(x, factors = TRUE, ...) {
-  col_type(as.data.frame(x), factors = factors, ...)
+col_type.rcer_raw_metadata <- function(x, factors = TRUE, lubridate_args = list(quiet = TRUE, tz = NULL, locale = Sys.getlocale("LC_TIME"), truncated = 0), ...) {
+  col_type(as.data.frame(x), factors = factors, lubridate_args = lubridate_args, ...)
 }
 
 #' @export
-col_type.rcer_metadata <- function(x, factors = TRUE, ...) {
+col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quiet = TRUE, tz = NULL, locale = Sys.getlocale("LC_TIME"), truncated = 0), ...) {
+
+  if (is.null(lubridate_args$quiet)) {
+    lubridate_args$quiet <- TRUE
+  }
+  if (is.null(lubridate_args$locale)) {
+    lubridate_args$locale <- Sys.getlocale("LC_TIME")
+  }
+  if (is.null(lubridate_args$truncated)) {
+    lubridate_args$truncated <- 0
+  }
 
   ## Text Fields
   text_fields <-
     Map(function(nm, tp) {
           cl <-
             switch(tp,
-                   number               = substitute(as.numeric(xx),                       list(xx = as.name(nm))),
-                   number_1dp           = substitute(as.numeric(xx),                       list(xx = as.name(nm))),
-                   number_2dp           = substitute(as.numeric(xx),                       list(xx = as.name(nm))),
-                   integer              = substitute(as.integer(xx),                       list(xx = as.name(nm))),
-                   date_mdy             = substitute(lubridate::ymd(xx,     quiet = TRUE), list(xx = as.name(nm))),
-                   date_dmy             = substitute(lubridate::ymd(xx,     quiet = TRUE), list(xx = as.name(nm))),
-                   date_ymd             = substitute(lubridate::ymd(xx,     quiet = TRUE), list(xx = as.name(nm))),
-                   datetime_dmy         = substitute(lubridate::ymd_hm(xx,  quiet = TRUE), list(xx = as.name(nm))),
-                   datetime_mdy         = substitute(lubridate::ymd_hm(xx,  quiet = TRUE), list(xx = as.name(nm))),
-                   datetime_ymd         = substitute(lubridate::ymd_hm(xx,  quiet = TRUE), list(xx = as.name(nm))),
-                   datetime_seconds_dmy = substitute(lubridate::ymd_hms(xx, quiet = TRUE), list(xx = as.name(nm))),
-                   datetime_seconds_mdy = substitute(lubridate::ymd_hms(xx, quiet = TRUE), list(xx = as.name(nm))),
-                   datetime_seconds_ymd = substitute(lubridate::ymd_hms(xx, quiet = TRUE), list(xx = as.name(nm))),
-                   time                 = substitute(lubridate::hm(xx,      quiet = TRUE), list(xx = as.name(nm))),
-                   time_mm_ss           = substitute(lubridate::ms(xx,      quiet = TRUE), list(xx = as.name(nm))),
-                                          substitute(as.character(xx),                     list(xx = as.name(nm)))
+                   number               = substitute(as.numeric(xx), list(xx = as.name(nm))),
+                   number_1dp           = substitute(as.numeric(xx), list(xx = as.name(nm))),
+                   number_2dp           = substitute(as.numeric(xx), list(xx = as.name(nm))),
+                   integer              = substitute(as.integer(xx), list(xx = as.name(nm))),
+
+                   date_mdy             = substitute(lubridate::mdy(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   date_dmy             = substitute(lubridate::dmy(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   date_ymd             = substitute(lubridate::ymd(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+
+                   datetime_mdy         = substitute(lubridate::mdy_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_dmy         = substitute(lubridate::dmy_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_ymd         = substitute(lubridate::ymd_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+
+                   datetime_seconds_mdy = substitute(lubridate::mdy_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_seconds_dmy = substitute(lubridate::dmy_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_seconds_ymd = substitute(lubridate::ymd_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+
+                   time                 = substitute(lubridate::hm(xx), list(xx = as.name(nm))),
+                   time_mm_ss           = substitute(lubridate::ms(xx), list(xx = as.name(nm))),
+                                          substitute(as.character(xx), list(xx = as.name(nm)))
             )
           cl
           },

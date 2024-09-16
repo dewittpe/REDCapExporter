@@ -31,7 +31,7 @@ project.  This vignette will assume you are able to call
 `r  qwraps2::backtick(export_core)  `
 successfully.  For the purpose of this vignette, the data set
 
-```{r }
+```{r}
 data(avs_raw_core, package = "REDCapExporter")
 str(avs_raw_core)
 ```
@@ -68,7 +68,7 @@ going to assigned the creator and author role.  To be a valid R package, at
 least one user will need to have the creator role assigned.
 
 
-```{r }
+```{r}
 temppath <- tempdir()
 build_r_data_package(x = avs_raw_core,
                      path = temppath,
@@ -78,7 +78,7 @@ build_r_data_package(x = avs_raw_core,
 
 The resulting directory is:
 
-```{r }
+```{r}
 fs::dir_tree(temppath)
 ```
 
@@ -92,7 +92,7 @@ DESCRIPTION file.
 
 The DESCRIPTION file is
 
-```{r }
+```{r}
 prj_dir <- list.dirs(temppath)
 prj_dir <- prj_dir[grepl("/rcd\\d+$", prj_dir)]
 t(read.dcf(paste(prj_dir, "DESCRIPTION", sep = "/")))
@@ -107,7 +107,7 @@ The LICENSE file notes that the package is proprietary and should not be
 installed or distributed to others who are not authorized to have access to
 the data.
 
-```{r }
+```{r}
 cat(readLines(paste(prj_dir[1], "LICENSE", sep = "/")), sep = "\n")
 ```
 
@@ -125,7 +125,7 @@ be accessed in an interactive R session.
 
 Let's install the package and explore the contents.
 
-```{r }
+```{r}
 tar_ball <- devtools::build(pkg = prj_dir)
 tar_ball
 
@@ -143,14 +143,14 @@ do.call(library, args = list(package = "rcd14465", character.only = TRUE, lib.lo
 
 The available data sets:
 
-```{r }
+```{r}
 data(package = "rcd14465")$results
 ```
 
 
 A simple data analysis question: how many goals were scored by position?
 
-```{r }
+```{r}
 library(data.table)
 as.data.table(record)[, sum(goals), by = position]
 ```
@@ -160,7 +160,7 @@ as.data.table(record)[, sum(goals), by = position]
 # Session Info
 
 
-```{r }
+```{r}
 print(sessionInfo(), local = FALSE)
 ```
 
