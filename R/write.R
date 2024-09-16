@@ -1,9 +1,9 @@
-#' Write Description File
+#' Write DESCRIPTION File from REDCap Metadata
 #'
 #' Create the DESCRIPTION file for the R Data package based on an Exported
 #' REDCap Project
 #'
-#' These is a non-exported function and is not expected to be called by the end
+#' This is a non-exported function and is not expected to be called by the end
 #' user.
 #'
 #' \code{write_description_file} creates the DESCRIPTION file for the
@@ -19,6 +19,7 @@
 #' These roles have no relationship to REDCap roles.
 #' @param project_info project metadata
 #' @param path path to the root for the generated R data package.
+#'
 write_description_file <- function(access_time, user, roles, project_info, path) {
 
   pkg_version <-
@@ -50,10 +51,12 @@ write_authors <- function(user, roles = NULL) {
   UseMethod("write_authors")
 }
 
+#' @export
 write_authors.rcer_raw_user <- function(user, roles = NULL) {
   write_authors(as.data.frame(user))
 }
 
+#' @export
 write_authors.rcer_user <- function(user, roles = NULL) {
   if (is.null(roles)) {
     if (nrow(user) == 1L) {
@@ -84,5 +87,4 @@ write_authors.rcer_user <- function(user, roles = NULL) {
                sprintf("person(given = \"%s\", family = \"%s\", email = \"%s\", role = %s)",
                        forDESCRIPTION$given, forDESCRIPTION$family, forDESCRIPTION$email, forDESCRIPTION$role),
                collapse = ",\n             "), ")")
-
 }
