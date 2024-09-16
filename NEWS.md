@@ -1,6 +1,8 @@
 # Version 0.2.2.9000
 
 * updated source code to address deprecated roxygen2 documentaion tags
+* Extend the col_types to use lubridate arguments for working with dates and
+  datetimes
 
 # Version 0.2.2
 
