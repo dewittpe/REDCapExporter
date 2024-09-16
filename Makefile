@@ -53,7 +53,7 @@ $(PKG_NAME)_$(PKG_VERSION).tar.gz: .install_dev_deps.Rout .document.Rout $(TESTS
 	R CMD build --md5 $(build-options) $(PKG_ROOT)
 
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	R --vanilla --quiet -e 'rcmdcheck::rcmdcheck("$<", error_on = "note")'
+	R CMD check $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 check-as-cran: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	R CMD check --as-cran $(PKG_NAME)_$(PKG_VERSION).tar.gz

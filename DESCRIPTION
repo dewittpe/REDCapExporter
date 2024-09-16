@@ -30,7 +30,6 @@ Suggests:
     qwraps2 (> 0.4.1),
     rmarkdown,
     rjson,
-    secret,
-    testthat
+    secret
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
