@@ -4,7 +4,13 @@
 \alias{col_type}
 \title{Column Types}
 \usage{
-col_type(x, factors = TRUE, ...)
+col_type(
+  x,
+  factors = TRUE,
+  lubridate_args = list(quiet = TRUE, tz = NULL, locale = Sys.getlocale("LC_TIME"),
+    truncated = 0),
+  ...
+)
 }
 \arguments{
 \item{x}{a \code{rcer_metadata} or \code{rcer_raw_metadata} object}
@@ -12,6 +18,9 @@ col_type(x, factors = TRUE, ...)
 \item{factors}{If \code{TRUE} (default) then variables reported via drop-down
 lists and radio buttons are set up to be \code{factor}s.  If \code{FALSE},
 then the column type will be \code{character}.}
+
+\item{lubridate_args}{a list of arguments passed to the date and time parsing
+calls.  See Details.}
 
 \item{...}{not currently used}
 }
@@ -21,6 +30,25 @@ a \code{rcer_col_type} object
 \description{
 Define a type for each column of the records for a REDCap project based on
 the metadata for the project.
+}
+\details{
+REDCap text fields for dates and times are formated via lubridate
+
+\tabular{ll}{
+  REDCap type           \tab lubridate parsing function \cr
+  --------------------- \tab -------------------------- \cr
+  date_mdy              \tab \code{\link[lubridate]{mdy}} \cr
+  date_dmy              \tab \code{\link[lubridate]{dmy}} \cr
+  date_ymd              \tab \code{\link[lubridate]{ymd}} \cr
+  datetime_dmy          \tab \code{\link[lubridate]{dmy_hm}} \cr
+  datetime_mdy          \tab \code{\link[lubridate]{mdy_hm}} \cr
+  datetime_ymd          \tab \code{\link[lubridate]{ymd_hm}} \cr
+  datetime_seconds_dmy  \tab \code{\link[lubridate]{dmy_hms}} \cr
+  datetime_seconds_mdy  \tab \code{\link[lubridate]{mdy_hms}} \cr
+  datetime_seconds_ymd  \tab \code{\link[lubridate]{ymd_hms}} \cr
+  time                  \tab \code{\link[lubridate]{hm}} \cr
+  time_mm_ss            \tab \code{\link[lubridate]{ms}} \cr
+}
 }
 \examples{
 

@@ -3,7 +3,7 @@
 \name{write_description_file}
 \alias{write_description_file}
 \alias{write_authors}
-\title{Write Description File}
+\title{Write DESCRIPTION File from REDCap Metadata}
 \usage{
 write_description_file(access_time, user, roles, project_info, path)
 
@@ -28,7 +28,7 @@ Create the DESCRIPTION file for the R Data package based on an Exported
 REDCap Project
 }
 \details{
-These is a non-exported function and is not expected to be called by the end
+This is a non-exported function and is not expected to be called by the end
 user.
 
 \code{write_description_file} creates the DESCRIPTION file for the
