@@ -1,7 +1,7 @@
 # REDCapExporter
 
 ![R-CMD-check](https://github.com/dewittpe/REDCapExporter/workflows/R-CMD-check/badge.svg)
-[![codecov](https://codecov.io/gh/dewittpe/REDCapExporter/branch/master/graph/badge.svg)](https://codecov.io/gh/dewittpe/REDCapExporter)
+[![Codecov test coverage](https://codecov.io/gh/dewittpe/REDCapExporter/graph/badge.svg)](https://app.codecov.io/gh/dewittpe/REDCapExporter)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/REDCapExporter)](https://cran.r-project.org/package=REDCapExporter)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
