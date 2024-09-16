@@ -3,13 +3,17 @@
 #'
 #' These data sets are the results of calling \code{\link{export_content}}.  An API token is required to reproduce these calls. No such token will be provided publicly, so these data sets are provided so end users can run examples for other tools provided in the REDCapExporter package.
 #'
-#' \code{avs_raw_project_info} provides meta data about the project itself.
+#' \code{avs_raw_project_info} provides meta data about the project itself in a csv format.
+#' \code{avs_raw_project_info_json} is the same information in json format.
 #'
-#' \code{avs_raw_metadata} is the data dictionary for the REDCap Project.  This information can be used with \code{\link{format_record}} to build a \code{data.frame} that is ready for analysis.
+#' \code{avs_raw_metadata} is the data dictionary for the REDCap Project in a csv format.  This information can be used with \code{\link{format_record}} to build a \code{data.frame} that is ready for analysis.
+#' \code{avs_raw_metadata_json} is the same metadata information in json format.
 #'
-#' \code{avs_raw_user} REDCap Project user table.
+#' \code{avs_raw_user} REDCap Project user table in csv format.
+#' \code{avs_raw_user_json} is the same information in json format.
 #'
-#' \code{avs_raw_record} REDCap Project records, i.e., 'the data.'
+#' \code{avs_raw_record} REDCap Project records, i.e., 'the data' in csv format.
+#' \code{avs_raw_record_json} is the same information in json format.
 #'
 #' @examples
 #' \dontrun{
@@ -53,3 +57,18 @@ NULL
 
 #' @rdname example_data
 "avs_raw_core"
+
+#' @rdname example_data
+"avs_raw_project_info_json"
+
+#' @rdname example_data
+"avs_raw_metadata_json"
+
+#' @rdname example_data
+"avs_raw_user_json"
+
+#' @rdname example_data
+"avs_raw_record_json"
+
+#' @rdname example_data
+"avs_raw_core_json"
