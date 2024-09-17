@@ -57,13 +57,18 @@ avs_raw_record_json
 avs_raw_core_json
 }
 \description{
-These data sets are the results of calling \code{\link{export_content}}.  An API token is required to reproduce these calls. No such token will be provided publicly, so these data sets are provided so end users can run examples for other tools provided in the REDCapExporter package.
+These data sets are the results of calling \code{\link{export_content}}.  An
+API token is required to reproduce these calls. No such token will be
+provided publicly, so these data sets are provided so end users can run
+examples for other tools provided in the REDCapExporter package.
 }
 \details{
 \code{avs_raw_project} provides meta data about the project itself in a csv format.
 \code{avs_raw_project_json} is the same information in json format.
 
-\code{avs_raw_metadata} is the data dictionary for the REDCap Project in a csv format.  This information can be used with \code{\link{format_record}} to build a \code{data.frame} that is ready for analysis.
+\code{avs_raw_metadata} is the data dictionary for the REDCap Project in a
+csv format.  This information can be used with \code{\link{format_record}} to
+build a \code{data.frame} that is ready for analysis.
 \code{avs_raw_metadata_json} is the same metadata information in json format.
 
 \code{avs_raw_user} REDCap Project user table in csv format.
@@ -95,7 +100,6 @@ str(avs_raw_core)
 
 avs <- format_record(avs_raw_record, avs_raw_metadata)
 str(avs)
-
 
 }
 \keyword{datasets}

@@ -23,8 +23,7 @@ DATATARGETS = $(PKG_ROOT)/data/avs_raw_project.rda\
 							$(PKG_ROOT)/data/avs_raw_metadata_json.rda\
 							$(PKG_ROOT)/data/avs_raw_user_json.rda\
 							$(PKG_ROOT)/data/avs_raw_record_json.rda\
-							$(PKG_ROOT)/data/avs_raw_core_json.rda\
-							$(PKG_ROOT)/R/datasets.R
+							$(PKG_ROOT)/data/avs_raw_core_json.rda
 
 .PHONY: all check install clean codecov
 
@@ -41,7 +40,7 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 		-e "devtools::document('$(PKG_ROOT)')"
 	touch $@
 
-$(DATATARGETS) &: $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R
+$(DATATARGETS) &: $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R $(PKG_ROOT)/R/keyring.R
 	R CMD BATCH --vanilla $<
 
 $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
