@@ -42,7 +42,7 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 	touch $@
 
 $(DATATARGETS) &: $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R
-	R CMD BATCH --vanilla $< $@
+	R CMD BATCH --vanilla $<
 
 $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
 	R --vanilla --quiet -e "knitr::spin(hair = '$<', knit = FALSE)"
