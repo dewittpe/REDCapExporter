@@ -69,20 +69,20 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
                    number_2dp           = substitute(as.numeric(xx), list(xx = as.name(nm))),
                    integer              = substitute(as.integer(xx), list(xx = as.name(nm))),
 
-                   date_mdy             = substitute(lubridate::mdy(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
-                   date_dmy             = substitute(lubridate::dmy(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   date_mdy             = substitute(lubridate::ymd(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   date_dmy             = substitute(lubridate::ymd(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
                    date_ymd             = substitute(lubridate::ymd(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
 
-                   datetime_mdy         = substitute(lubridate::mdy_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
-                   datetime_dmy         = substitute(lubridate::dmy_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_mdy         = substitute(lubridate::ymd_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_dmy         = substitute(lubridate::ymd_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
                    datetime_ymd         = substitute(lubridate::ymd_hm(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
 
-                   datetime_seconds_mdy = substitute(lubridate::mdy_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
-                   datetime_seconds_dmy = substitute(lubridate::dmy_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_seconds_mdy = substitute(lubridate::ymd_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
+                   datetime_seconds_dmy = substitute(lubridate::ymd_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
                    datetime_seconds_ymd = substitute(lubridate::ymd_hms(xx, quiet = LAQ, tz = LATZ, locale = LALOCALE, truncated = LATRUNCTATED), list(xx = as.name(nm), LAQ = lubridate_args$quiet, LALOCALE = lubridate_args$locale, LATZ = lubridate_args$tz, LATRUNCTATED = lubridate_args$truncated)),
 
-                   time                 = substitute(lubridate::hm(xx), list(xx = as.name(nm))),
-                   time_mm_ss           = substitute(lubridate::ms(xx), list(xx = as.name(nm))),
+                   time                 = substitute(lubridate::hm(ifelse(xx == "", NA_character_, xx)), list(xx = as.name(nm))),
+                   time_mm_ss           = substitute(lubridate::ms(ifelse(xx == "", NA_character_, xx)), list(xx = as.name(nm))),
                                           substitute(as.character(xx), list(xx = as.name(nm)))
             )
           cl
