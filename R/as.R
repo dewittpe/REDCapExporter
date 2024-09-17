@@ -105,9 +105,14 @@ read_text <- function(x, class = "data.frame") {
   if (grepl("text/csv", attr(x, "Content-Type")[1])) {
     out <- utils::read.csv(text = x, colClasses = "character")
   } else if (grepl("application/json", attr(x, "Content-Type")[1])) {
-    out <- rjson::fromJSON(json_str = x)
-    out <- lapply(out, as.data.frame, stringsAsFactors = FALSE)
-    out <- do.call(rbind, out)
+    out <- rjson::fromJSON(json_str = x, simplify = FALSE)
+    if (is.list(out[[1]])) {
+      out <- lapply(out, as.data.frame, stringsAsFactors = FALSE)
+      out <- do.call(rbind, out)
+    } else {
+      out <- lapply(out, as.character)
+      out <- as.data.frame(out, stringsAsFactors = FALSE)
+    }
   } else {
     stop(sprintf("Content-Type '%s' is not yet supported.",
                  attr(x, "Content-Type")[1]))
