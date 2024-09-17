@@ -11,15 +11,20 @@ EXAMPLES  = $(wildcard $(PKG_ROOT)/examples/*.R)
 TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
 
 # Targets
-VIGNETTES    = $(PKG_ROOT)/vignettes/export.Rmd
-VIGNETTES   += $(PKG_ROOT)/vignettes/api.Rmd
+VIGNETTES = $(PKG_ROOT)/vignettes/export.Rmd\
+						$(PKG_ROOT)/vignettes/api.Rmd
 
-DATATARGETS  = $(PKG_ROOT)/data/avs_raw_project_info.rda
-DATATARGETS += $(PKG_ROOT)/data/avs_raw_metadata.rda
-DATATARGETS += $(PKG_ROOT)/data/avs_raw_user.rda
-DATATARGETS += $(PKG_ROOT)/data/avs_raw_record.rda
-DATATARGETS += $(PKG_ROOT)/data/avs_raw_core.rda
-DATATARGETS += $(PKG_ROOT)/R/datasets.R
+DATATARGETS = $(PKG_ROOT)/data/avs_raw_project.rda\
+							$(PKG_ROOT)/data/avs_raw_metadata.rda\
+							$(PKG_ROOT)/data/avs_raw_user.rda\
+							$(PKG_ROOT)/data/avs_raw_record.rda\
+							$(PKG_ROOT)/data/avs_raw_core.rda\
+							$(PKG_ROOT)/data/avs_raw_project_json.rda\
+							$(PKG_ROOT)/data/avs_raw_metadata_json.rda\
+							$(PKG_ROOT)/data/avs_raw_user_json.rda\
+							$(PKG_ROOT)/data/avs_raw_record_json.rda\
+							$(PKG_ROOT)/data/avs_raw_core_json.rda\
+							$(PKG_ROOT)/R/datasets.R
 
 .PHONY: all check install clean codecov
 
@@ -36,13 +41,7 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 		-e "devtools::document('$(PKG_ROOT)')"
 	touch $@
 
-$(DATATARGETS) : $(PKG_ROOT)/data-raw/avs-exports.Rout
-	@if test -f $@; then :; else\
-		$(RM) $<; \
-		$(MAKE) $<; \
-	fi
-
-$(PKG_ROOT)/data-raw/avs-exports.Rout : $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R
+$(DATATARGETS) &: $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R
 	R CMD BATCH --vanilla $< $@
 
 $(PKG_ROOT)/vignettes/%.Rmd : $(PKG_ROOT)/vignette-spinners/%.R
