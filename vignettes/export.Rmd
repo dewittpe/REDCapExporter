@@ -1,13 +1,11 @@
 ---
-title: "REDCapExporter"
-subtitle: "Building R Data Packages from REDCap Projects"
-author: "Peter DeWitt"
+title: "REDCap Projects as R Data Packages"
 output:
  rmarkdown::html_vignette:
    toc: true
    number_sections: true
 vignette: >
- %\VignetteIndexEntry{export2package}
+ %\VignetteIndexEntry{redcap2package}
  %\VignetteEngine{knitr::rmarkdown}
  %\VignetteEncoding{UTF-8}
 ---
