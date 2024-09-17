@@ -1,0 +1,164 @@
+---
+title: "REDCap Projects as R Data Packages"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: true
+vignette: >
+ %\VignetteIndexEntry{REDCap Projects as R Data Packages}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+
+```{r label = "setup", include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(REDCapExporter)
+```
+
+
+The purpose of this vignette is to show how to export a REDCap project into a
+R data package.   Please read
+
+```{r eval = FALSE}
+vignette(topic = "api", package = "REDCapExporter")
+```
+
+for details on using the REDCap API to export the contents of a REDCap
+project.  This vignette will assume you are able to call
+`r  qwraps2::backtick(export_core)  `
+successfully.  For the purpose of this vignette, the data set
+
+```{r}
+data(avs_raw_core, package = "REDCapExporter")
+str(avs_raw_core)
+```
+
+
+is the result of calling
+`r  qwraps2::backtick(export_core)  `
+to export elements of a REDCap project containing data on the 2000-2001
+Stanley Cup Champion Colorado Avalanche.
+
+# Exporting a REDCap Project to a R Data Package
+
+Exporting a REDCap project to a R data package is done with a call to
+`r  paste0(qwraps2::backtick(build_r_data_package), ".")  `
+If the reader passes the uri for the API and an API token a call to
+`r  qwraps2::backtick(export_core)  `
+will be made.  If you prefer, or as in this case, need to have access to the
+core contents of the REDCap project available, then you may pass the
+`r  qwraps2::backtick(rcer_rccore)  `
+object to
+`r  qwraps2::backtick(build_r_data_package)  `
+to build the skeleton of a R data package.
+
+To build the skeleton of a R data package you will need to pass in the core
+export from the REDCap project, a path for were the source code for the data
+package will be written, and some some information about
+the users. In this context, users are the persons who have, or had, access to the
+REDCap project and are listed under the UserRights section of the REDCap
+project.  The user data from REDCap is used to construct the Author section
+of the DESCRIPTION file for the R data package to be constructed.  By default,
+all users are listed as 'contributors'.  Modification of the roles can be
+provide by a named list object.  In the example below, the user dewittp is
+going to assigned the creator and author role.  To be a valid R package, at
+least one user will need to have the creator role assigned.
+
+
+```{r}
+temppath <- tempdir()
+build_r_data_package(x = avs_raw_core,
+                     path = temppath,
+                     author_roles = list(dewittp = c("cre", "aut")))
+```
+
+
+The resulting directory is:
+
+```{r}
+fs::dir_tree(temppath)
+```
+
+
+## Details on exported Files
+
+First, the package directory name.  Exported packages from
+`r  qwraps2::Rpkg(REDCapExporter)  `
+will have the directory name rcd<package-id>.  This name is also used in the
+DESCRIPTION file.
+
+The DESCRIPTION file is
+
+```{r}
+prj_dir <- list.dirs(temppath)
+prj_dir <- prj_dir[grepl("/rcd\\d+$", prj_dir)]
+t(read.dcf(paste(prj_dir, "DESCRIPTION", sep = "/")))
+```
+
+
+The title comes from the project info recorded in REDCap.  The version number
+is set as the year.month.day.hour.minute of the export.  As noted above, the
+Author field is built from the user data stored in REDCap.
+
+The LICENSE file notes that the package is proprietary and should not be
+installed or distributed to others who are not authorized to have access to
+the data.
+
+```{r}
+cat(readLines(paste(prj_dir[1], "LICENSE", sep = "/")), sep = "\n")
+```
+
+
+The raw data exports are stored as .rds files under inst/raw-data so that
+these files will be available in R sessions after installing the package.
+
+The data directory has data.table versions of the data sets.
+
+The R/datasets.R file provides the documentation for the data sets which can
+be accessed in an interactive R session.
+
+
+## Using the Exported Package
+
+Let's install the package and explore the contents.
+
+```{r}
+tar_ball <- devtools::build(pkg = prj_dir)
+tar_ball
+
+install.packages(pkgs = tar_ball, lib = temppath)
+
+```
+```{r eval = FALSE}
+library(rcd14465, lib.loc = temppath)
+
+```
+```{r include = FALSE}
+do.call(library, args = list(package = "rcd14465", character.only = TRUE, lib.loc = temppath))
+```
+
+
+The available data sets:
+
+```{r}
+data(package = "rcd14465")$results
+```
+
+
+A simple data analysis question: how many goals were scored by position?
+
+```{r}
+library(data.table)
+as.data.table(record)[, sum(goals), by = position]
+```
+
+
+
+# Session Info
+
+
+```{r}
+print(sessionInfo(), local = FALSE)
+```
+

@@ -5,7 +5,7 @@
 #'    toc: true
 #'    number_sections: true
 #'vignette: >
-#'  %\VignetteIndexEntry{redcap2package}
+#'  %\VignetteIndexEntry{REDCap Projects as R Data Packages}
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteEncoding{UTF-8}
 #'---
