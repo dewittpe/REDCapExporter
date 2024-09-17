@@ -1,13 +1,11 @@
 #'---
-#'title: "REDCapExporter"
-#'subtitle: "Interaction with the REDCap API"
-#'author: "Peter DeWitt"
+#'title: "Export Data via the REDCap API"
 #'output:
 #'  rmarkdown::html_vignette:
 #'    toc: true
 #'    number_sections: true
 #'vignette: >
-#'  %\VignetteIndexEntry{REDCapExporter}
+#'  %\VignetteIndexEntry{Export Data via the REDCap API}
 #'  %\VignetteEngine{knitr::rmarkdown}
 #'  %\VignetteEncoding{UTF-8}
 #'---
@@ -34,21 +32,8 @@ library(REDCapExporter)
 #'
 #' The example data provided in this package are statistics from the 2000-2001
 #' National Hockey League Stanley Cup Champion Colorado Avalanche.  The data was
-#' transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html}
+#' transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html)
 #' into a REDCap Project hosed at the University of Colorado Denver.
-#'
-#' This vignette is focused on the API and the general export functions.  To
-#' learn more about automated building of a R data package from the exported
-#' contents of a REDCap project please see
-#'
-#+ eval = FALSE
-# /*
-if (FALSE) {
-# */
-vignette(topic = "export", package = "REDCapExporter")
-# /*
-}
-# */
 #'
 #' # System Environment Variables
 #'
@@ -134,7 +119,8 @@ Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 #' easier, but will require explicit setting of the ssh key (see below).  Also,
 #' when multiple people are contributing to the project different users will
 #' need to have specific secrets for their token(s) which will complicate the
-#' code base.
+#' code base.  Setting these system environmental variables in a common
+#' .Rprofile as part of a collaborative project can resolve these issues.
 #'
 # /*
 while(FALSE) {
@@ -198,7 +184,6 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 #' scripts.  If the above chunk is evaluated by all collaborators on the project
 #' with REDCap API tokens then no other modifications of the code base is needed
 #' for the collaborators to work together.
-#'
 #'
 #' # Exporting a REDCap Project
 #'
@@ -272,9 +257,4 @@ str(avs_raw_metadata)
 #+ label = "as_data_frame", eval = TRUE
 avs_metadata <- as.data.frame(avs_raw_metadata)
 str(avs_metadata)
-
-#'
-#' # Session Info
-#'
-print(sessionInfo(), local = FALSE)
 

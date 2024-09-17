@@ -19,42 +19,45 @@ library(REDCapExporter)
 
 #'
 #' The purpose of this vignette is to show how to export a REDCap project into a
-#' R data package.  Additional vignettes in for the
-{{ qwraps2::CRANpkg(REDCapExporter) }}
-#' package are:
-#+ eval = FALSE
-# /*
-if (FALSE) {
-# */
-vignette(package = "REDCapExporter")$results
-# /*
-}
-# */
-#' for details on using the REDCap API to export the contents of a REDCap
-#' project.  This vignette will assume you are able to call
+#' R data package.
+#'
+#' Possible use cases for this are:
+#'
+#' 1. You have data in a REDCap project that needs to be archived.
+#'
+#' 2. Snapshots of REDCap projects.
+#'
+#' 3. Sharing data with other analysts who have authority to see and work on the
+#'    data, but for some reason may not have access to REDCap.
+#'
+#' This vignette will assume you are able to call
 {{ qwraps2::backtick(export_core) }}
-#' successfully.  For the purpose of this vignette, the data set
+#' successfully.  Given that call requires access to REDCap, the example data
+#' set
+{{ qwraps2::backtick(avs_raw_core) }}
+#' is provided.
 data(avs_raw_core, package = "REDCapExporter")
 str(avs_raw_core)
 
 #'
+{{ qwraps2::backtick(avs_raw_core) }}
 #' is the result of calling
 {{ qwraps2::backtick(export_core) }}
-#' to export elements of a REDCap project containing data on the 2000-2001
-#' Stanley Cup Champion Colorado Avalanche.
+#' and contains data on the 2000-2001 Stanley Cup Champion Colorado Avalanche.
+#' The data was transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html) into a
+#' REDCap Project hosed at the University of Colorado Denver.
 #'
 #' # Exporting a REDCap Project to a R Data Package
 #'
 #' Exporting a REDCap project to a R data package is done with a call to
 {{ paste0(qwraps2::backtick(build_r_data_package), ".") }}
-#' If the reader passes the uri for the API and an API token a call to
+#' If the user passes the uri for the API and an API token a call to
 {{ qwraps2::backtick(export_core) }}
-#' will be made.  If you prefer, or as in this case, need to have access to the
-#' core contents of the REDCap project available, then you may pass the
-{{ qwraps2::backtick(rcer_rccore) }}
-#' object to
+#' will be made.  Alternatively,
 {{ qwraps2::backtick(build_r_data_package) }}
-#' to build the skeleton of a R data package.
+#' is an S3 method and can be applied to a
+{{ qwraps2::backtick(rcer_rccore) }}
+#' object.
 #'
 #' To build the skeleton of a R data package you will need to pass in the core
 #' export from the REDCap project, a path for were the source code for the data
@@ -71,14 +74,15 @@ str(avs_raw_core)
 temppath <- tempdir()
 
 build_r_data_package(
-  x = avs_raw_core,
-  path = temppath,
+  x            = avs_raw_core,
+  path         = temppath,
   author_roles = list(dewittp = c("cre", "aut")),
-  class = "data.frame"
+  class        = "data.frame"                      # format data as data.frames
 )
 
 #'
 #' The resulting directory is:
+#' echo = FALSE, results = "markup"
 fs::dir_tree(temppath)
 
 #'
@@ -108,7 +112,7 @@ cat(readLines(paste(prj_dir[1], "LICENSE", sep = "/")), sep = "\n")
 #' The raw data exports are stored as .rds files under inst/raw-data so that
 #' these files will be available in R sessions after installing the package.
 #'
-#' The data directory has data.table versions of the data sets.
+#' The data directory has data.frame versions of the data sets.
 #'
 #' The R/datasets.R file provides the documentation for the data sets which can
 #' be accessed in an interactive R session.
@@ -144,5 +148,4 @@ data(package = "rcd14465")$results
 
 #'
 #' A simple data analysis question: how many goals were scored by position?
-library(data.table)
-as.data.table(record)[, sum(goals), by = position]
+aggregate(goals ~ position, data = record, FUN = sum)
