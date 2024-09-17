@@ -14,7 +14,7 @@
 #' metadata, project info, and records.
 #'
 #' @param x a \code{rcer_rccore} object
-#' @param ... arguments passed to other methods
+#' @param ... arguments passed to \code{\link{format_record}}
 #'
 #' @examples
 #' ## Please read the vignette for examples:
@@ -46,7 +46,7 @@ build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL
   project  <- as.data.frame(x$project_raw)
   user     <- as.data.frame(x$user_raw)
   metadata <- as.data.frame(x$metadata_raw)
-  record   <- format_record(x$record_raw, x$metadata_raw)
+  record   <- format_record(x$record_raw, x$metadata_raw, ...)
 
   if (is.null(path)) {
     path <- "."

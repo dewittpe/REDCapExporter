@@ -18,10 +18,12 @@ library(REDCapExporter)
 
 
 The purpose of this vignette is to show how to export a REDCap project into a
-R data package.   Please read
+R data package.  Additional vignettes in for the
+`r  qwraps2::CRANpkg(REDCapExporter)  `
+package are:
 
 ```{r eval = FALSE}
-vignette(topic = "api", package = "REDCapExporter")
+vignette(package = "REDCapExporter")$results
 ```
 
 for details on using the REDCap API to export the contents of a REDCap
@@ -68,9 +70,13 @@ least one user will need to have the creator role assigned.
 
 ```{r}
 temppath <- tempdir()
-build_r_data_package(x = avs_raw_core,
-                     path = temppath,
-                     author_roles = list(dewittp = c("cre", "aut")))
+
+build_r_data_package(
+  x = avs_raw_core,
+  path = temppath,
+  author_roles = list(dewittp = c("cre", "aut")),
+  class = "data.frame"
+)
 ```
 
 
@@ -151,14 +157,5 @@ A simple data analysis question: how many goals were scored by position?
 ```{r}
 library(data.table)
 as.data.table(record)[, sum(goals), by = position]
-```
-
-
-
-# Session Info
-
-
-```{r}
-print(sessionInfo(), local = FALSE)
 ```
 

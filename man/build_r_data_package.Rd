@@ -24,7 +24,7 @@ build_r_data_package(x, ...)
 \arguments{
 \item{x}{a \code{rcer_rccore} object}
 
-\item{...}{arguments passed to other methods}
+\item{...}{arguments passed to \code{\link{format_record}}}
 
 \item{path}{Path where the exported project source will be
 created/overwritten.}
