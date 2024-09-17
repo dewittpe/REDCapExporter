@@ -53,3 +53,20 @@ stopifnot(
   all.equal(DF1, DT1, check.attributes = FALSE)
 )
 
+# Testing coercion of rcer_raw_user to data.frame and data.table
+rm(list = ls())
+DF0 <- as.data.frame(avs_raw_user)
+DF1 <- as.data.frame(avs_raw_user_json)
+DT0 <- as.data.table(avs_raw_user)
+DT1 <- as.data.table(avs_raw_user_json)
+
+stopifnot(
+  all.equal(DF0, DF1)
+  ,
+  all.equal(DT0, DT1)
+  ,
+  all.equal(DF0, DT0, check.attributes = FALSE)
+  ,
+  all.equal(DF1, DT1, check.attributes = FALSE)
+)
+

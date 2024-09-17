@@ -104,15 +104,40 @@ as.data.table.rcer_raw_user <- function(x, ...) {
 read_text <- function(x, class = "data.frame") {
   if (grepl("text/csv", attr(x, "Content-Type")[1])) {
     out <- utils::read.csv(text = x, colClasses = "character")
+
+    if ("forms_export" %in% names(out)) {
+
+      f <-
+        strsplit(out[["forms"]], ",") |>
+        lapply(strsplit, ":") |>
+        lapply(lapply, function(x) stats::setNames(data.frame(x[2]), x[1])) |>
+        lapply(as.data.frame) |>
+        do.call(rbind, args = _)
+      names(f) <- paste0("forms.", names(f))
+
+      fe <-
+        strsplit(out[["forms_export"]], ",") |>
+        lapply(strsplit, ":") |>
+        lapply(lapply, function(x) stats::setNames(data.frame(x[2]), x[1])) |>
+        lapply(as.data.frame) |>
+        do.call(rbind, args = _)
+      names(fe) <- paste0("forms_export.", names(fe))
+
+      out[["forms"]] <- NULL
+      out[["forms_export"]] <- NULL
+      out <- cbind(out, f, fe)
+
+    }
+
   } else if (grepl("application/json", attr(x, "Content-Type")[1])) {
     out <- rjson::fromJSON(json_str = x, simplify = FALSE)
     if (is.list(out[[1]])) {
       out <- lapply(out, as.data.frame, stringsAsFactors = FALSE)
       out <- do.call(rbind, out)
     } else {
-      out <- lapply(out, as.character)
       out <- as.data.frame(out, stringsAsFactors = FALSE)
     }
+    out <- as.data.frame(lapply(out, as.character))
   } else {
     stop(sprintf("Content-Type '%s' is not yet supported.",
                  attr(x, "Content-Type")[1]))
