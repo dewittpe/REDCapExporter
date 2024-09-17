@@ -41,7 +41,7 @@ as.data.frame.rcer_raw_record <- function(x, ...) {
 #' @method as.data.frame rcer_raw_project
 as.data.frame.rcer_raw_project <- function(x, ...) {
   out <- read_text(x, class = 'data.frame')
-  class(out) <- c("rcer_project_info", class(out))
+  class(out) <- c("rcer_project", class(out))
   out
 }
 
@@ -77,7 +77,7 @@ as.data.table.rcer_raw_record <- function(x, ...) {
 #' @method as.data.table rcer_raw_project
 as.data.table.rcer_raw_project <- function(x, ...) {
   out <- read_text(x, class = 'data.table')
-  class(out) <- c("rcer_project_info", class(out))
+  class(out) <- c("rcer_project", class(out))
   out
 }
 
@@ -109,7 +109,7 @@ read_text <- function(x, class = "data.frame") {
     out <- lapply(out, as.data.frame, stringsAsFactors = FALSE)
     out <- do.call(rbind, out)
   } else {
-    stop(sprintf("Content-Type %s is not yet supported.",
+    stop(sprintf("Content-Type '%s' is not yet supported.",
                  attr(x, "Content-Type")[1]))
   }
 
