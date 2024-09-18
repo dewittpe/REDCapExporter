@@ -13,6 +13,3 @@
 #' @keywords internal
 "_PACKAGE"
 
-#'
-#' @importFrom data.table as.data.table
-NULL

@@ -19,12 +19,12 @@ Depends:
     R (>= 3.5.0)
 Imports:
     curl,
-    data.table,
     keyring,
     lubridate
 Suggests:
     devtools,
     fs,
+    kableExtra,
     knitr,
     magrittr,
     qwraps2 (> 0.4.1),

@@ -1,7 +1,6 @@
 library(REDCapExporter)
-library(data.table)
 
-DF <- format_record(avs_raw_core, class = "data.frame")
+DF <- format_record(avs_raw_core)
 classes <-
   c(record_id = "character",
     uniform_number = "character",
@@ -73,7 +72,14 @@ classes <-
     save_percentage_postseason = "numeric",
     gaa_postseason = "numeric",
     so_postseason = "integer",
-    post_season_goalies_2_complete = "factor"
+    post_season_goalies_complete = "factor",
+    eg_checkbox___cb01 = "integer",
+    eg_checkbox___cb02 = "integer",
+    eg_checkbox___cb03 = "integer",
+    extras_complete = "factor"
   )
 
 stopifnot(identical(sapply(DF, class), classes))
+
+#(sapply(DF, class) == classes) |> all()
+#names(DF) == names(classes)

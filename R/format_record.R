@@ -9,29 +9,24 @@
 #' @param col_type a \code{rcer_col_type} object.
 #' @param ... other arguments passed to \code{\link{col_type}}
 #'
-#' @seealso \link{export_core}
+#' @seealso \code{\link{export_core}}, \code{\link{export_content}}, \code{vignette("formatting", package = "REDCapExporter")}
 #'
-#' @return A \code{data.frame} or \code{data.table}
+#' @return A \code{data.frame}
 #'
 #' @examples
 #'
 #' data("avs_raw_metadata")
 #' data("avs_raw_record")
 #'
+#' # Formatting the record can be called in different ways and the same result
+#' # will be generated
+#' identical(
+#'   format_record(avs_raw_record, avs_raw_metadata),
+#'   format_record(avs_raw_core)
+#' )
+#'
 #' avs <- format_record(avs_raw_record, avs_raw_metadata)
 #' avs
-#'
-#' avs <- format_record(avs_raw_core)
-#' head(avs)
-#'
-#' avs <- format_record(avs_raw_core)
-#' avs$atoi
-#' as.numeric(avs$atoi)
-#' avs[, `:=`(atoi_seconds = as.numeric(atoi),
-#'            atoi_seconds_postseason = as.numeric(atoi_postseason),
-#'            atoi = as.character(atoi),
-#'            atoi_postseason = as.character(atoi_postseason))]
-#' avs[, .SD, .SDcols = patterns("atoi")]
 #'
 #' @export
 format_record <- function(x, metadata = NULL, col_type = NULL, ...) {
@@ -88,4 +83,3 @@ format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, .
 
 #' @export
 format_record.rcer_record <- format_record.rcer_raw_record
-

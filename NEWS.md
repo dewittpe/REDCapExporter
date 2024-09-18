@@ -3,13 +3,23 @@
 * updated source code to address deprecated roxygen2 documentaion tags
 * Extend the col_types to use lubridate arguments for working with dates and
   datetimes
+* Add a vignette about formating
+* remove `as.data.table` only return data.frames.  End users can then coerce the
+  data.frame to a tibble or data.table if they prefer.
 
-# Version 0.2.2
+* add additional columns to the example data to test and demonstrate the use of
+  the package
 
 ## Bug Fixes
 
 * improved the internal `read_text` function's checking of the Content-Type from
   the raw data.
+
+* formatting of data from json
+
+* col_type handeling of checkboxes
+
+# Version 0.2.2
 
 ## Extensions
 

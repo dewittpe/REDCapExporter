@@ -4,12 +4,10 @@
 \alias{read_text}
 \title{Read Text}
 \usage{
-read_text(x, class = "data.frame")
+read_text(x)
 }
 \arguments{
 \item{x}{the raw return from the API call to REDCap}
-
-\item{class}{\code{"data.frame"} (default) or \code{"data.table"}}
 }
 \value{
 a \code{data.frame}

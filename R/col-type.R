@@ -172,7 +172,7 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
         )
 
   chbxnms <- unlist(lapply(checkboxes, names), recursive = TRUE, use.names = FALSE)
-  checkboxes <- setNames(unlist(checkboxes, recursive = FALSE), chbxnms)
+  checkboxes <- stats::setNames(unlist(checkboxes, recursive = FALSE), chbxnms)
 
   # set the order of the types to match the order of the field names
   # check boxes are omitted as well as there is likely more than one column in
