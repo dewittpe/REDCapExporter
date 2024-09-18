@@ -40,17 +40,18 @@ format_record.rcer_rccore <- function(x, metadata = NULL, col_type = NULL, ...) 
 
 #' @export
 format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, ...) {
+  format_record(as.data.frame(x), metadata = metadata, col_type = col_type, ...)
+}
+
+#' @export
+format_record.rcer_record <- function(x, metadata = NULL, col_type = NULL, ...) {
 
   if (!is.null(metadata) & !is.null(col_type)) {
     message("Ignoring metadata, using col_type")
   }
 
-  if (!(inherits(x, "rcer_record") | inherits(x, "rcer_raw_record"))) {
-    stop("format_record expects the `record` argument to be a `rcer_raw_record` or `rcer_record` object.")
-  }
-
-  if (inherits(x, "rcer_raw_record")) {
-    x <- as.data.frame(x)
+  if (is.null(metadata) & is.null(col_type)) {
+    stop("Either 'metadata' or 'col_type' need to be specified.")
   }
 
   if (is.null(col_type)) {
@@ -73,13 +74,10 @@ format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, .
 
   for (n in names(ct)) {
     if (n %in% names(x)) {
-      x[[n]] <-
-        eval(ct[[n]], envir = x)
+      x[[n]] <- eval(ct[[n]], envir = x)
     }
   }
 
   x
 }
 
-#' @export
-format_record.rcer_record <- format_record.rcer_raw_record
