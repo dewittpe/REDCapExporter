@@ -36,10 +36,14 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 		-e "devtools::install_dev_deps()"
 	touch $@
 
-.document.Rout: $(SRC) $(RFILES) $(DATATARGETS) $(EXAMPLES) $(VIGNETTES) $(PKG_ROOT)/DESCRIPTION
+.document.Rout: $(SRC) $(RFILES) $(DATATARGETS) $(EXAMPLES) $(VIGNETTES) $(PKG_ROOT)/DESCRIPTION $(PKG_ROOT)/README.md
 	Rscript --vanilla --quiet -e "options(warn = 2)" \
 		-e "devtools::document('$(PKG_ROOT)')"
 	touch $@
+
+$(PKG_ROOT)/README.md : $(PKG_ROOT)/README.Rmd
+	Rscript --vanilla --quiet -e "options(warn = 2)" \
+		-e "knitr::knit('$(PKG_ROOT)/README.Rmd', output = 'README.md')"
 
 $(DATATARGETS) &: $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R $(PKG_ROOT)/R/keyring.R
 	R CMD BATCH --vanilla $<

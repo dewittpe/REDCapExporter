@@ -4,7 +4,13 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
 
 # REDCapExporter
 
@@ -51,16 +57,14 @@ keeping only one copy of the data on the local disk.
 ## Installation
 
 Install the released version from CRAN:
-
-``` r
+```{r, eval = FALSE}
 install.packages("REDCapExporter", repos = "https://cran.rstudio.com")
 ```
 
 You can install the development version of REDCapExporter from
 [GitHub](https://github.com/) with:
 
-
-``` r
+```{r, eval = FALSE}
 # install.packages("pak")
 pak::pak("dewittpe/REDCapExporter")
 ```
@@ -75,8 +79,7 @@ allowing for data download.
 There are several ways to do this.  A simple way is based on the
 [keyring](https://keyring.r-lib.org/) package.
 
-
-``` r
+```{r, eval = FALSE}
 library(REDCapExporter)
 
 # Check if a file based keyring called "REDCapExporter" exists and create one if
@@ -94,8 +97,7 @@ To set the token to use for the current session,
 set an environmental variable and use
 `REDCapExporter_get_api_token` to retrive the token from the keyring.
 
-
-``` r
+```{r, eval = FALSE}
 Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("PROJECT1"))
 ```
 
@@ -105,20 +107,16 @@ You may set one more environmental variable, or specify it explicitly in the cal
 to `export_core`.  It is recommended to set the environmental variable for easy
 of use.
 
-
-``` r
+```{r, eval = FALSE}
 Sys.setenv(REDCap_API_URI = "https://<your-redcap-domain>/api/")
 ```
 
 Export the data from REDCap and format it, based on the metadata of the REDCap
 project via:
 
-
-``` r
+```{r}
 project1_redcap_core <- export_core()
-#> Error in export_core(): could not find function "export_core"
 project1 <- format_record(project1_redcap_core)
-#> Error in format_record(project1_redcap_core): could not find function "format_record"
 ```
 
 ### Example
@@ -129,31 +127,19 @@ transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2
 into a REDCap Project hosed at the University of Colorado Denver.
 
 The data set `avs_raw_core` was generated via
-
-``` r
+```{r}
 library(REDCapExporter)
 Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
 Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("2000_2001_Avalanche"))
 avs_raw_core <- export_core()
-#> Getting Project Info
-#> Getting project metadata
-#> Getting user data
-#> Getting project record
 avsDF <- format_record(avs_raw_core)
 ```
 
 A simple summary statistic from the data set: the number of goals scored by
 position:
 
-
-``` r
+```{r}
 aggregate(goals ~ position, data = avsDF, FUN = sum)
-#>     position goals
-#> 1       Goal     0
-#> 2  Left Wing    71
-#> 3 Right Wing    72
-#> 4     Center    93
-#> 5    Defence    34
 ```
 
 

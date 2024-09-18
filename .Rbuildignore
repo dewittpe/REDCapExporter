@@ -19,3 +19,4 @@ inst/WORDLIST
 ^\.github/workflows/R-CMD-check\.yaml$
 ^codecover\.html$
 ^lib/.*$
+^README\.Rmd$
