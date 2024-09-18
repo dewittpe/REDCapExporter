@@ -86,19 +86,19 @@ calls.  See Details.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>REDCap text fields for dates and times are formated via lubridate</p>
+    <p>REDCap text fields for dates and times are formatted via lubridate</p>
 <table class="table table"><tr><td>REDCap</td><td>lubridate parsing function</td></tr><tr><td>———————</td><td>————————–</td></tr><tr><td>date_mdy</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></code></td></tr><tr><td>date_dmy</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">dmy</a></code></td></tr><tr><td>date_ymd</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></code></td></tr><tr><td>datetime_dmy</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hm</a></code></td></tr><tr><td>datetime_mdy</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">mdy_hm</a></code></td></tr><tr><td>datetime_ymd</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hm</a></code></td></tr><tr><td>datetime_seconds_dmy</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">dmy_hms</a></code></td></tr><tr><td>datetime_seconds_mdy</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">mdy_hms</a></code></td></tr><tr><td>datetime_seconds_ymd</td><td><code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html" class="external-link">ymd_hms</a></code></td></tr><tr><td>time</td><td><code><a href="https://lubridate.tidyverse.org/reference/hms.html" class="external-link">hm</a></code></td></tr><tr><td>time_mm_ss</td><td><code><a href="https://lubridate.tidyverse.org/reference/hms.html" class="external-link">ms</a></code></td></tr></table><p>Other text files are coerced as</p><table class="table table"><tr><td>REDCap</td><td>R coercion</td></tr><tr><td>———————</td><td>————————–</td></tr><tr><td>number</td><td>as.numeric</td></tr><tr><td>number_1dp</td><td>as.numeric</td></tr><tr><td>number_2dp</td><td>as.numeric</td></tr><tr><td>integer</td><td>as.integer</td></tr><tr><td>..default..</td><td>as.character</td></tr></table><p>Variables inputted into REDCap via radio button or dropdown lists (multiple
 choice - pick one) are coerced to factors by default but can be returned as
-characters if the arguement <code>factors = FALSE</code> is set.</p>
+characters if the argument <code>factors = FALSE</code> is set.</p>
 <p>Calculated and slider (visual analog scale) variables are coerced via
 <code>as.numeric</code>.</p>
 <p>Yes/No and True/False variables are include as integer values 0 = No or
 False, and 1 for Yes or True.</p>
 <p>Checkboxes are the most difficult to work with between the metadata and
-records.  A checkbox field_name in the metadata could be, for examle,
+records.  A checkbox field_name in the metadata could be, for example,
 "eg_checkbox" and the columns in the records will be "eg_checkbox___&lt;code&gt;"
 were "code" could be numbers, or character strings.  REDCapExporter attempts
-to coerce the "eg_checkbox___&lt;code&gt;" columns to integer values, 0 = uncheck
+to coerce the "eg_checkbox___&lt;code&gt;" columns to integer values, 0 = unchecked
 and 1 = checked.</p>
     </div>
 

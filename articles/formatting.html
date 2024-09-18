@@ -67,10 +67,10 @@
 
     
     
-<p>This vignette covers different methods for formating the records from
-REDCap into an analysis ready data set. It is assumed that the reader is
-familiar with the process for exporting data from REDCap to R as
-discribed in
+<p>This vignette covers different methods for formatting the records
+from REDCap into an analysis ready data set. It is assumed that the
+reader is familiar with the process for exporting data from REDCap to R
+as described in
 <code><a href="../articles/api.html">vignette("api", package = "REDCapExporter")</a></code></p>
 <p>For the purposes of this vignette we will use the example data sets
 provided in the package from the 2000-2001 National Hockey League
@@ -78,13 +78,13 @@ Stanley Cup Champion Colorado Avalanche. The data was transcribed from
 <a href="https://www.hockey-reference.com/teams/COL/2001.html" class="external-link">Hockey
 Reference</a> into a REDCap Project hosed at the University of Colorado
 Denver.</p>
-<p>The thre data sets we will work with in this vignette are:</p>
+<p>The data sets we will work with in this vignette are:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/REDCapExporter" class="external-link">REDCapExporter</a></span><span class="op">)</span></span>
 <span><span class="va">avs_raw_core</span>      <span class="co"># object returned from export_core(format = "csv")</span></span>
-<span><span class="va">avs_raw_metadata</span>  <span class="co"># object retruned from export_content(content = "metadata", format = "csv")</span></span>
-<span><span class="va">avs_raw_record</span>    <span class="co"># object retruned from export_content(content = "record", format = "csv")</span></span></code></pre></div>
-<p>There are two conceputal formatting tools provied by
+<span><span class="va">avs_raw_metadata</span>  <span class="co"># object returned from export_content(content = "metadata", format = "csv")</span></span>
+<span><span class="va">avs_raw_record</span>    <span class="co"># object returned from export_content(content = "record", format = "csv")</span></span></code></pre></div>
+<p>There are two conceptual formatting tools provided by
 REDCapExporter:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>as.data.frame</code></p></li>
@@ -7901,7 +7901,7 @@ Lastly, the points are a calculated field and set to numeric.</p>
 <p>REDCapExporter attempts to make reasonable assumptions for the data
 types base on the metadata. For example, dates in REDCap can by entered
 and validated in Year-Month-Day, Month-Day-Year, and Day-Month-Year
-formats. The raw data is all in YMD format.</p>
+formats. The raw data is all in Year-Month-Day format.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; overflow-x: scroll; width:700px; ">
 <table class="table table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -7977,7 +7977,7 @@ date_ymd
 <p>The coercion that will be used when calling
 <code>format_record</code> is defined by an implicit call to
 <code>col_type</code> which uses the metadata, in raw or formatted form,
-to determine the coercions.</p>
+to determine the coercion.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="../reference/col_type.html">col_type</a></span><span class="op">(</span><span class="va">avs_raw_metadata</span><span class="op">)</span>, <span class="fu"><a href="../reference/col_type.html">col_type</a></span><span class="op">(</span><span class="va">avs_metadata_DF</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
@@ -7998,8 +7998,8 @@ character string by default.</p>
 <span><span class="va">avsDF2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/format_record.html">format_record</a></span><span class="op">(</span><span class="va">avs_raw_core</span>, col_type <span class="op">=</span> <span class="va">ct</span><span class="op">)</span></span>
 <span><span class="co">## Ignoring metadata, using col_type</span></span></code></pre></div>
 <p>Two notes to make here, first, we can see that the storage mode is
-different between
-avsDF<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>r</mi><msub><mi>d</mi><mi>i</mi></msub><mi>d</mi><mi>a</mi><mi>n</mi><mi>d</mi><mi>a</mi><mi>v</mi><mi>s</mi><mi>D</mi><mi>F</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">record_id and avsDF2</annotation></semantics></math>record_id</p>
+different between <code>avsDF$record_id</code> and
+<code>avsDF2$record_id</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">avsDF</span><span class="op">$</span><span class="va">record_id</span><span class="op">)</span></span>
 <span><span class="co">## [1] "character"</span></span>
@@ -8039,7 +8039,7 @@ instead of factors you can modify the call to <code>col_type</code></p>
 <span><span class="co">##     Center    Defence       Goal  Left Wing Right Wing </span></span>
 <span><span class="co">##          8         11          2          6          5</span></span></code></pre></div>
 <p>The default formatting is documented in the manual file The
-implimented code is within the S3 method:</p>
+implemented code is within the S3 method:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">col_type</span></span></code></pre></div>
 </div>

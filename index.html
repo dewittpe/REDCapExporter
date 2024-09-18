@@ -59,7 +59,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of REDCapExporter is to provide a simple and relativley secure way to downloading and formating data from a <a href="https://www.project-redcap.org/" class="external-link">REDCap</a> project.</p>
+<p>The goal of REDCapExporter is to provide a simple and relatively secure way to downloading and formatting data from a <a href="https://www.project-redcap.org/" class="external-link">REDCap</a> project.</p>
 <p>While REDCap (<strong>R</strong>esearch <strong>E</strong>lectronic <strong>D</strong>ata <strong>Cap</strong>ture) is a fantastic tool for data capture, the dissemination of the collected data in a format that multiple data analysis can easily access and share can be improved. The REDCapExporter package provides a set of tools to provide easy access to REDCap data via the REDCap API with two aims:</p>
 <ol style="list-style-type: decimal">
 <li>Scripting functions to allow for easy access to, and formatting of, a data set within a REDCap project.</li>
@@ -99,7 +99,7 @@
 <span></span>
 <span><span class="co"># Add, or verify existance of, an API token for PROJECT2</span></span>
 <span><span class="fu"><a href="reference/REDCapExporter_keyring.html">REDCapExporter_add_api_token</a></span><span class="op">(</span><span class="st">"PROJECT2"</span><span class="op">)</span></span></code></pre></div>
-<p>To set the token to use for the current session, set an environmental variable and use <code>REDCapExporter_get_api_token</code> to retrive the token from the keyring.</p>
+<p>To set the token to use for the current session, set an environmental variable and use <code>REDCapExporter_get_api_token</code> to retrieve the token from the keyring.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>REDCap_API_TOKEN <span class="op">=</span> <span class="fu"><a href="reference/REDCapExporter_keyring.html">REDCapExporter_get_api_token</a></span><span class="op">(</span><span class="st">"PROJECT1"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
