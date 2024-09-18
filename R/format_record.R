@@ -7,7 +7,6 @@
 #' @param metadata a \code{rcer_metadata} or \code{rcer_raw_metadata} object.
 #' Will be ignored if \code{col_type} is defined.
 #' @param col_type a \code{rcer_col_type} object.
-#' @param class return either a \code{data.frame} or \code{data.table}
 #' @param ... other arguments passed to \code{\link{col_type}}
 #'
 #' @seealso \link{export_core}
@@ -19,13 +18,13 @@
 #' data("avs_raw_metadata")
 #' data("avs_raw_record")
 #'
-#' avs <- format_record(avs_raw_record, avs_raw_metadata, class = "data.frame")
+#' avs <- format_record(avs_raw_record, avs_raw_metadata)
 #' avs
 #'
-#' avs <- format_record(avs_raw_core, class = "data.frame")
+#' avs <- format_record(avs_raw_core)
 #' head(avs)
 #'
-#' avs <- format_record(avs_raw_core, class = "data.table")
+#' avs <- format_record(avs_raw_core)
 #' avs$atoi
 #' as.numeric(avs$atoi)
 #' avs[, `:=`(atoi_seconds = as.numeric(atoi),
@@ -35,17 +34,17 @@
 #' avs[, .SD, .SDcols = patterns("atoi")]
 #'
 #' @export
-format_record <- function(x, metadata = NULL, col_type = NULL, class = "data.table", ...) {
+format_record <- function(x, metadata = NULL, col_type = NULL, ...) {
   UseMethod("format_record")
 }
 
 #' @export
-format_record.rcer_rccore <- function(x, metadata = NULL, col_type = NULL, class = "data.table", ...) {
-  format_record(x = x$record_raw, metadata = x$metadata_raw, col_type = col_type, class = class, ...)
+format_record.rcer_rccore <- function(x, metadata = NULL, col_type = NULL, ...) {
+  format_record(x = x$record_raw, metadata = x$metadata_raw, col_type = col_type, ...)
 }
 
 #' @export
-format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, class = "data.table", ...) {
+format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, ...) {
 
   if (!is.null(metadata) & !is.null(col_type)) {
     message("Ignoring metadata, using col_type")
@@ -69,6 +68,7 @@ format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, c
     }
 
     ct <- col_type(metadata, ...)
+
   } else {
     if (!inherits(col_type, "rcer_col_type")) {
       stop("col_type needs to be rcer_col_type object")
@@ -78,32 +78,9 @@ format_record.rcer_raw_record <- function(x, metadata = NULL, col_type = NULL, c
 
   for (n in names(ct)) {
     if (n %in% names(x)) {
-      x[[n]] <- eval(ct[[n]], envir = x)
+      x[[n]] <-
+        eval(ct[[n]], envir = x)
     }
-  }
-
-  # set the columns in the record corresponding to checkboxes as integer values
-  for (n in metadata$field_name[metadata$field_type == "checkbox"]) {
-    for(nn in grep(paste0(n, "___\\d+"), names(x))) {
-      x[[nn]] <- as.integer(x[[nn]])
-    }
-  }
-
-
-  if (inherits(x, "data.table") | class == "data.table") {
-    x <- as.data.table(x)
-
-    # check for S4 classes in the columns and provide a warning to the user
-    S4cols <- Filter(isTRUE, sapply(x, isS4))
-    if (length(S4cols)) {
-      warning(paste0("At least one of the columns is an S4 class."
-                     , "\n  data.table might not work correctly for\n  "
-                     , paste(names(S4cols), collapse = ", ")
-                     , "\n  check status of https://github.com/Rdatatable/data.table/issues/4315"
-                     , "\n  and https://github.com/dewittpe/REDCapExporter/issues/17"
-              ))
-    }
-
   }
 
   x

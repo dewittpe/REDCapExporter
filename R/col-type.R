@@ -97,12 +97,12 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
   mc_fields <-
     Map(function(nm, choices) {
           sp <- strsplit(choices, split = " \\| ")[[1]]
-          lvls <- sub("^(\\d),\\s.+$", "\\1", sp)
-          lbls <- sub("^\\d,\\s(.+)$", "\\1", sp)
+          lvls <- sub("^(.+),\\s.+$", "\\1", sp)
+          lbls <- sub("^.+,\\s(.+)$", "\\1", sp)
           cl <- list(quote(factor),
                      x = as.name(nm),
-                     levels = lvls,#sp[[1]]$lvls,
-                     labels = lbls)#sp[[1]]$lbls)
+                     levels = lvls,
+                     labels = lbls)
           as.call(cl)
         },
         nm = x$field_name[x$field_type %in% c("radio", "dropdown")],
@@ -116,8 +116,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
             cl[[1]] <- quote(as.character)
             cl[[2]] <- xx
             as.call(cl)
-          },
-          mc_fields)
+        },
+        mc_fields)
   }
 
   # calc fields and slider (visual analog scale)
@@ -153,14 +153,33 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
     nm = paste(unique(x$form_name), "complete", sep = "_")
     )
 
+  # checkboxes
+  checkboxes <-
+    Map(function(nm, choices) {
+          sp <- strsplit(choices, split = " \\| ")[[1]]
+          lvls <- sub("^(.+),\\s.+$", "\\1", sp)
+          cls <- vector(mode = "list", length = length(lvls))
+          for (i in seq_along(cls)) {
+            cls[[i]] <- list()
+            cls[[i]][[1]] <- quote(as.integer)
+            cls[[i]][[2]] <- as.name(paste(nm, lvls[i], sep = "___"))
+            cls[[i]] <- as.call(cls[[i]])
+          }
+          cls <- stats::setNames(cls, paste(nm, lvls, sep = "___"))
+        },
+        nm = x$field_name[x$field_type %in% c("checkbox")],
+        choices = x$select_choices_or_calculations[x$field_type %in% c("checkbox")]
+        )
+
+  chbxnms <- unlist(lapply(checkboxes, names), recursive = TRUE, use.names = FALSE)
+  checkboxes <- setNames(unlist(checkboxes, recursive = FALSE), chbxnms)
+
   # set the order of the types to match the order of the field names
   # check boxes are omitted as well as there is likely more than one column in
   # the records object.  See `format_record`
-  rdr <- x$field_name[!(x$field_type %in% c("checkbox", "descriptive", "file"))]
+  #rdr <- x$field_name[!(x$field_type %in% c("checkbox", "descriptive", "file"))]
 
-
-  out <- c(text_fields, mc_fields, calc_fields, yn_fields)[rdr]
-  out <- c(out, complete_fields)
+  out <- c(text_fields, mc_fields, calc_fields, yn_fields, checkboxes, complete_fields)
   class(out) <- c("rcer_col_type", class(out))
   out
 }

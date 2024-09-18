@@ -12,7 +12,8 @@ TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
 
 # Targets
 VIGNETTES = $(PKG_ROOT)/vignettes/redcap2package.Rmd\
-						$(PKG_ROOT)/vignettes/api.Rmd
+						$(PKG_ROOT)/vignettes/api.Rmd\
+						$(PKG_ROOT)/vignettes/formatting.Rmd
 
 DATATARGETS = $(PKG_ROOT)/data/avs_raw_project.rda\
 							$(PKG_ROOT)/data/avs_raw_metadata.rda\
