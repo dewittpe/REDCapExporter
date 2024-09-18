@@ -32,7 +32,7 @@ Define a type for each column of the records for a REDCap project based on
 the metadata for the project.
 }
 \details{
-REDCap text fields for dates and times are formated via lubridate
+REDCap text fields for dates and times are formatted via lubridate
 
 \tabular{ll}{
   REDCap                \tab lubridate parsing function \cr
@@ -63,7 +63,7 @@ Other text files are coerced as
 
 Variables inputted into REDCap via radio button or dropdown lists (multiple
 choice - pick one) are coerced to factors by default but can be returned as
-characters if the arguement \code{factors = FALSE} is set.
+characters if the argument \code{factors = FALSE} is set.
 
 Calculated and slider (visual analog scale) variables are coerced via
 \code{as.numeric}.
@@ -72,10 +72,10 @@ Yes/No and True/False variables are include as integer values 0 = No or
 False, and 1 for Yes or True.
 
 Checkboxes are the most difficult to work with between the metadata and
-records.  A checkbox field_name in the metadata could be, for examle,
+records.  A checkbox field_name in the metadata could be, for example,
 "eg_checkbox" and the columns in the records will be "eg_checkbox___<code>"
 were "code" could be numbers, or character strings.  REDCapExporter attempts
-to coerce the "eg_checkbox___<code>" columns to integer values, 0 = uncheck
+to coerce the "eg_checkbox___<code>" columns to integer values, 0 = unchecked
 and 1 = checked.
 }
 \examples{

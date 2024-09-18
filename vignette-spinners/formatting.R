@@ -14,9 +14,9 @@
 knitr::opts_chunk$set(collapse = TRUE)
 
 #'
-#' This vignette covers different methods for formating the records from REDCap
+#' This vignette covers different methods for formatting the records from REDCap
 #' into an analysis ready data set.  It is assumed that the reader is familiar
-#' with the process for exporting data from REDCap to R as discribed in
+#' with the process for exporting data from REDCap to R as described in
 {{ qwraps2::backtick(vignette("api", package = "REDCapExporter")) }}
 #'
 #' For the purposes of this vignette we will use the example data sets provided
@@ -25,18 +25,18 @@ knitr::opts_chunk$set(collapse = TRUE)
 #' Reference](https://www.hockey-reference.com/teams/COL/2001.html) into a
 #' REDCap Project hosed at the University of Colorado Denver.
 #'
-#' The thre data sets we will work with in this vignette are:
+#' The data sets we will work with in this vignette are:
 #+ label = "namespace", eval = TRUE, results = "hide"
 #/*
 devtools::load_all() # load the dev version while editing
 #*/
 library(REDCapExporter)
 avs_raw_core      # object returned from export_core(format = "csv")
-avs_raw_metadata  # object retruned from export_content(content = "metadata", format = "csv")
-avs_raw_record    # object retruned from export_content(content = "record", format = "csv")
+avs_raw_metadata  # object returned from export_content(content = "metadata", format = "csv")
+avs_raw_record    # object returned from export_content(content = "record", format = "csv")
 
 #'
-#' There are two conceputal formatting tools provied by REDCapExporter:
+#' There are two conceptual formatting tools provided by REDCapExporter:
 #'
 #' 1.
 {{ qwraps2::backtick(as.data.frame) }}
@@ -158,7 +158,7 @@ avs_metadata_DF[avs_metadata_DF$field_name %in% cols, ] |>
 #' REDCapExporter attempts to make reasonable assumptions for the data types
 #' base on the metadata.  For example, dates in REDCap can by entered and
 #' validated in Year-Month-Day, Month-Day-Year, and Day-Month-Year formats.  The
-#' raw data is all in YMD format.
+#' raw data is all in Year-Month-Day format.
 #+ label = "date_metadata", echo = FALSE, results = "asis"
 avs_metadata_DF[
   avs_metadata_DF$field_name %in% c('birthdate', 'first_nhl_game', 'last_nhl_game'),
@@ -175,7 +175,7 @@ avs_metadata_DF[
 #' is defined by an implicit call to
 {{ qwraps2::backtick(col_type) }}
 #' which uses the metadata, in raw or formatted form, to determine the
-#' coercions.
+#' coercion.
 #'
 identical(col_type(avs_raw_metadata), col_type(avs_metadata_DF))
 ct <- col_type(avs_metadata_DF)
@@ -199,7 +199,10 @@ avsDF2 <- format_record(avs_raw_core, col_type = ct)
 
 #'
 #' Two notes to make here, first, we can see that the storage mode
-#' is different between avsDF$record_id and avsDF2$record_id
+#' is different between
+{{ qwraps2::backtick(avsDF$record_id) }}
+#' and
+{{ paste0(qwraps2::backtick(avsDF2$record_id), ".") }}
 #+ echo = TRUE, results = "markup"
 class(avsDF$record_id)
 class(avsDF2$record_id)
@@ -240,7 +243,7 @@ table(avsDF2$position)
 
 #'
 #' The default formatting is documented in the manual file
-#' The implimented code is within the S3 method:
+#' The implemented code is within the S3 method:
 #+ echo = TRUE, eval = FALSE
 #/*
 while(FALSE) {

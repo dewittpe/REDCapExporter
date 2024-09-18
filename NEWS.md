@@ -1,9 +1,9 @@
 # Version 0.2.2.9000
 
-* updated source code to address deprecated roxygen2 documentaion tags
+* updated source code to address deprecated roxygen2 documentation tags
 * Extend the col_types to use lubridate arguments for working with dates and
   datetimes
-* Add a vignette about formating
+* Add a vignette about formatting
 * remove `as.data.table` only return data.frames.  End users can then coerce the
   data.frame to a tibble or data.table if they prefer.
 
@@ -17,7 +17,7 @@
 
 * formatting of data from json
 
-* col_type handeling of checkboxes
+* col_type handling of checkboxes
 
 # Version 0.2.2
 

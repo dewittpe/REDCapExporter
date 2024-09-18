@@ -69,7 +69,7 @@ Sys.getenv("REDCap_API_format")
 #'
 #' There are many ways for you to store, set, and use your API token, some
 #' suggestions follow.  Consider the implications of each method carefully and
-#' use your best judgement and care.
+#' use your best judgment and care.
 #'
 Sys.setenv(REDCap_API_TOKEN = "YOURTOKENHERE")
 

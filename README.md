@@ -12,8 +12,8 @@
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
 <!-- badges: end -->
 
-The goal of REDCapExporter is to provide a simple and relativley secure way to
-downloading and formating data from a [REDCap](https://www.project-redcap.org/)
+The goal of REDCapExporter is to provide a simple and relatively secure way to
+downloading and formatting data from a [REDCap](https://www.project-redcap.org/)
 project.
 
 While REDCap (**R**esearch **E**lectronic **D**ata **Cap**ture) is a fantastic
@@ -86,9 +86,9 @@ REDCapExporter_add_api_token("PROJECT1")
 REDCapExporter_add_api_token("PROJECT2")
 ```
 
-To set the token to use for the current session, 
+To set the token to use for the current session,
 set an environmental variable and use
-`REDCapExporter_get_api_token` to retrive the token from the keyring.
+`REDCapExporter_get_api_token` to retrieve the token from the keyring.
 
 
 ``` r
