@@ -64,9 +64,11 @@ codecov :
 	R --vanilla --quiet -e 'covr::report(x = covr::package_coverage(type = "all"), file = "codecover.html")'
 
 clean:
-	$(RM) -f  $(PKG_NAME)_$(PKG_VERSION).tar.gz
-	$(RM) -f  codecover.html
-	$(RM) -rf $(PKG_NAME).Rcheck
-	$(RM) -f .document.Rout
-	$(RM) -f .install_dev_deps.Rout
+	$(RM)  $(PKG_NAME)_$(PKG_VERSION).tar.gz
+	$(RM)  codecover.html
+	$(RM) -r $(PKG_NAME).Rcheck
+	$(RM) .document.Rout
+	$(RM) .install_dev_deps.Rout
+	$(RM) -r lib/
+	$(RM) vignettes/*.html
 
