@@ -125,8 +125,8 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
   mc_fields <-
     Map(function(nm, choices) {
           sp <- strsplit(choices, split = " \\| ")[[1]]
-          lvls <- sub("^(.+),\\s.+$", "\\1", sp)
-          lbls <- sub("^.+,\\s(.+)$", "\\1", sp)
+          lvls <- substring(sp, first = 1, last = regexpr(",", sp) - 1)
+          lbls <- trimws(substring(sp, first = regexpr(",", sp) + 1, last = nchar(sp)))
           cl <- list(quote(factor),
                      x = as.name(nm),
                      levels = lvls,

@@ -21,6 +21,7 @@ Please read the vignette for examples and use cases.
 Useful links:
 \itemize{
   \item \url{https://github.com/dewittpe/REDCapExporter}
+  \item \url{http://www.peteredewitt.com/REDCapExporter/}
 }
 
 }
