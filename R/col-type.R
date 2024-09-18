@@ -6,7 +6,7 @@
 #' REDCap text fields for dates and times are formated via lubridate
 #'
 #' \tabular{ll}{
-#'   REDCap type           \tab lubridate parsing function \cr
+#'   REDCap                \tab lubridate parsing function \cr
 #'   --------------------- \tab -------------------------- \cr
 #'   date_mdy              \tab \code{\link[lubridate]{mdy}} \cr
 #'   date_dmy              \tab \code{\link[lubridate]{dmy}} \cr
@@ -20,6 +20,34 @@
 #'   time                  \tab \code{\link[lubridate]{hm}} \cr
 #'   time_mm_ss            \tab \code{\link[lubridate]{ms}} \cr
 #' }
+#'
+#' Other text files are coerced as
+#' \tabular{ll}{
+#'   REDCap                \tab R coercion \cr
+#'   --------------------- \tab -------------------------- \cr
+#'   number                \tab as.numeric   \cr
+#'   number_1dp            \tab as.numeric   \cr
+#'   number_2dp            \tab as.numeric   \cr
+#'   integer               \tab as.integer   \cr
+#'   ..default..           \tab as.character \cr
+#' }
+#'
+#' Variables inputted into REDCap via radio button or dropdown lists (multiple
+#' choice - pick one) are coerced to factors by default but can be returned as
+#' characters if the arguement \code{factors = FALSE} is set.
+#'
+#' Calculated and slider (visual analog scale) variables are coerced via
+#' \code{as.numeric}.
+#'
+#' Yes/No and True/False variables are include as integer values 0 = No or
+#' False, and 1 for Yes or True.
+#'
+#' Checkboxes are the most difficult to work with between the metadata and
+#' records.  A checkbox field_name in the metadata could be, for examle,
+#' "eg_checkbox" and the columns in the records will be "eg_checkbox___<code>"
+#' were "code" could be numbers, or character strings.  REDCapExporter attempts
+#' to coerce the "eg_checkbox___<code>" columns to integer values, 0 = uncheck
+#' and 1 = checked.
 #'
 #' @param x a \code{rcer_metadata} or \code{rcer_raw_metadata} object
 #' @param factors If \code{TRUE} (default) then variables reported via drop-down
@@ -173,11 +201,6 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
 
   chbxnms <- unlist(lapply(checkboxes, names), recursive = TRUE, use.names = FALSE)
   checkboxes <- stats::setNames(unlist(checkboxes, recursive = FALSE), chbxnms)
-
-  # set the order of the types to match the order of the field names
-  # check boxes are omitted as well as there is likely more than one column in
-  # the records object.  See `format_record`
-  #rdr <- x$field_name[!(x$field_type %in% c("checkbox", "descriptive", "file"))]
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields, checkboxes, complete_fields)
   class(out) <- c("rcer_col_type", class(out))

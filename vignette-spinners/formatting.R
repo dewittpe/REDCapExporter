@@ -238,4 +238,16 @@ class(avsDF2$position)
 summary(avsDF2$position)
 table(avsDF2$position)
 
+#'
+#' The default formatting is documented in the manual file
+#' The implimented code is within the S3 method:
+#+ echo = TRUE, eval = FALSE
+#/*
+while(FALSE) {
+#*/
+?col_type
+#/*
+}
+#*/
+
 
