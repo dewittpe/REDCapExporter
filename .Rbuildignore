@@ -20,3 +20,6 @@ inst/WORDLIST
 ^codecover\.html$
 ^lib/.*$
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

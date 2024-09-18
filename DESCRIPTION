@@ -12,7 +12,7 @@ Description: Export all data, including metadata, from a REDCap (Research
     default reports are generated as vignettes in the resulting package.
 License: GPL-2
 Encoding: UTF-8
-URL: https://github.com/dewittpe/REDCapExporter
+URL: https://github.com/dewittpe/REDCapExporter, http://www.peteredewitt.com/REDCapExporter/
 Language: en-us
 LazyData: true
 Depends:
