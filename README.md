@@ -1,7 +1,3 @@
----
-output: github_document
----
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
@@ -116,9 +112,7 @@ project via:
 
 ``` r
 project1_redcap_core <- export_core()
-#> Error in export_core(): could not find function "export_core"
 project1 <- format_record(project1_redcap_core)
-#> Error in format_record(project1_redcap_core): could not find function "format_record"
 ```
 
 ### Example
@@ -128,7 +122,8 @@ National Hockey League Stanley Cup Champion Colorado Avalanche.  The data was
 transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html)
 into a REDCap Project hosed at the University of Colorado Denver.
 
-The data set `avs_raw_core` was generated via
+The data set `avs_raw_core` was generated via the following, after setting up my
+keyring and token as described above.
 
 ``` r
 library(REDCapExporter)
