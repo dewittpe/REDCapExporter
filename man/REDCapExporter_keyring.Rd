@@ -51,8 +51,14 @@ REDCap API tokens.
 }
 \examples{
 \dontrun{
+# Check if a keyring exisits. If it does not, create one.
 REDCapExporter_keyring_check()
+
+# add token if it does not already exist.  If a token
+# already exists, then you will be told so unless overwrite is set to TRUE
 REDCapExporter_add_api_token("Project1")
+
+# get a token and set as an envrionmental variable
 Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 }
 
