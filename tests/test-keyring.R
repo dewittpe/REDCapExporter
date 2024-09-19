@@ -8,6 +8,7 @@ x <- tryCatch(REDCapExporter_keyring_check("testingring"), message = function(m)
 stopifnot(identical(x$message, "File based keyring testingring has been created\n"))
 x <- tryCatch(REDCapExporter_keyring_check("testingring"), message = function(m) {m})
 stopifnot(identical(x$message, "File based keyring testingring exists\n"))
+stopifnot(isTRUE(REDCapExporter_keyring_check("testingring")))
 
 # Expect that this will error because we are not interactive and a password
 # prompt cannot be filled in

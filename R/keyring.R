@@ -52,7 +52,9 @@ REDCapExporter_keyring_check <- function(keyring = "REDCapExporter", password = 
   } else {
     message(sprintf("File based keyring %s exists", keyring))
   }
+
   invisible(TRUE)
+
 }
 
 #' @rdname REDCapExporter_keyring
@@ -82,7 +84,9 @@ REDCapExporter_add_api_token <- function(project, keyring = "REDCapExporter", us
 
   # lock the keyring
   kr$keyring_lock(keyring = keyring)
+
   invisible(TRUE)
+
 }
 
 #' @rdname REDCapExporter_keyring
@@ -95,7 +99,9 @@ REDCapExporter_get_api_token <- function(project, keyring = "REDCapExporter", us
   kr <- keyring::backend_file$new()
   kr$keyring_unlock(keyring = keyring, password = password)
   token <- kr$get(service = project, username = user, keyring = keyring)
-  kr$keyring_unlock(keyring = keyring, password = password)
+  kr$keyring_lock(keyring = keyring)
+
   invisible(token)
+
 }
 
