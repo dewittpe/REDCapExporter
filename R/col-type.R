@@ -137,17 +137,6 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
         choices = x$select_choices_or_calculations[x$field_type %in% c("radio", "dropdown")]
         )
 
-  if (!factors) {
-    mc_fields <-
-      Map(function(xx) {
-            cl <- list()
-            cl[[1]] <- quote(as.character)
-            cl[[2]] <- xx
-            as.call(cl)
-        },
-        mc_fields)
-  }
-
   # calc fields and slider (visual analog scale)
   calc_fields <-
     Map(function(nm) {
@@ -201,6 +190,26 @@ col_type.rcer_metadata <- function(x, factors = TRUE, lubridate_args = list(quie
 
   chbxnms <- unlist(lapply(checkboxes, names), recursive = TRUE, use.names = FALSE)
   checkboxes <- stats::setNames(unlist(checkboxes, recursive = FALSE), chbxnms)
+
+  if (!factors) {
+    mc_fields <-
+      Map(function(xx) {
+            cl <- list()
+            cl[[1]] <- quote(as.character)
+            cl[[2]] <- xx
+            as.call(cl)
+        },
+        mc_fields)
+    complete_fields <-
+      Map(function(xx) {
+            cl <- list()
+            cl[[1]] <- quote(as.character)
+            cl[[2]] <- xx
+            as.call(cl)
+        },
+        complete_fields)
+  }
+
 
   out <- c(text_fields, mc_fields, calc_fields, yn_fields, checkboxes, complete_fields)
   class(out) <- c("rcer_col_type", class(out))

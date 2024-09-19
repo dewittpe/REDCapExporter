@@ -1,5 +1,7 @@
 library(REDCapExporter)
 
+# formatting the from the core
+
 DF <- format_record(avs_raw_core)
 classes <-
   c(record_id = "character",
@@ -81,5 +83,48 @@ classes <-
 
 stopifnot(identical(sapply(DF, class), classes))
 
-#(sapply(DF, class) == classes) |> all()
-#names(DF) == names(classes)
+# verify that the same result comes from calls with the same information but
+# different sets of arguments
+DF2 <- format_record(avs_raw_record, avs_raw_metadata)
+DF3 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata))
+stopifnot(identical(DF, DF2))
+stopifnot(identical(DF, DF3))
+
+# expect an error if the project info is passed to format record
+DF <- tryCatch(format_record(avs_raw_project), error = function(e) e)
+stopifnot(inherits(DF, 'error'))
+
+# expect an error when only the record is passed in
+DF <- tryCatch(format_record(avs_raw_record), error = function(e) e)
+stopifnot(inherits(DF, 'error'))
+
+# expect an error when metadata is used without col_type and the metadata is not
+# the correct class
+DF <- tryCatch(format_record(avs_raw_record, metadata = avs_raw_core)
+               , error = function(e) e)
+stopifnot(inherits(DF, 'error'))
+
+# expected and error when col_type is not null and an incorrect type
+DF <- tryCatch(format_record(avs_raw_record, col_type = avs_raw_metadata), error = function(e) e)
+stopifnot(inherits(DF, 'error'))
+
+# expected and error when col_type is not null and an incorrect type even when
+# meta data is provided and is correct
+DF <- tryCatch(format_record(avs_raw_record, metadata = avs_raw_metadata, col_type = avs_raw_metadata), error = function(e) e)
+stopifnot(inherits(DF, 'error'))
+
+# verify that col_type(factors = FALSE) will return characters instead of
+# factors
+DF <- format_record(avs_raw_core, col_type = col_type(avs_raw_metadata, factors = FALSE))
+classes[classes == "factor"] <- "character"
+stopifnot(identical(sapply(DF, class), classes))
+stopifnot(!any(sapply(DF, class) == "factor"))
+
+# verify that you can set the timezone for the dates
+DF0 <- format_record(avs_raw_core)
+DF1 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "US/Mountain")))
+DF2 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "UTC")))
+
+stopifnot(inherits(DF0$birthdate, "Date"))
+stopifnot(!inherits(DF1$birthdate, "Date"), inherits(DF1$birthdate, "POSIXct"), isTRUE(attr(DF1$birthdate, "tzone") == "US/Mountain"))
+stopifnot(!inherits(DF2$birthdate, "Date"), inherits(DF2$birthdate, "POSIXct"), isTRUE(attr(DF2$birthdate, "tzone") == "UTC"))

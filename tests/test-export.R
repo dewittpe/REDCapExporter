@@ -10,7 +10,10 @@ library(REDCapExporter)
 # archer        D72C6485B52FE9F75D27B696977FBA43  https://bbmc.ouhsc.edu/redcap/api/  268  oklahoma-bbmc  TRUE       TRUE         Russian characters; read-only
 
 archer01_csv  <- export_core(uri = 'https://bbmc.ouhsc.edu/redcap/api/', token = '9A81268476645C4E5F03428B8AC3AA7B')
-archer01_json <- export_core(uri = 'https://bbmc.ouhsc.edu/redcap/api/', token = '9A81268476645C4E5F03428B8AC3AA7B', format = "json")
+
+Sys.setenv("REDCap_API_URI" = 'https://bbmc.ouhsc.edu/redcap/api/')
+Sys.setenv("REDCap_API_TOKEN" = '9A81268476645C4E5F03428B8AC3AA7B')
+archer01_json <- export_core(format = "json")
 
 stopifnot(
   inherits(archer01_csv, "rcer_rccore"),
