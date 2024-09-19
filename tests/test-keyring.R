@@ -34,7 +34,6 @@ stopifnot(isTRUE(grepl("specified item could not be found in the keychain", x$me
 # create token
 kr$set_with_value(service = "testingproject", password = "testingTOKEN", keyring = "testingring")
 
-
 # verify you can get the token
 stopifnot(
   identical(
