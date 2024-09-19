@@ -67,19 +67,15 @@ REDCapExporter_add_api_token <- function(project, keyring = "REDCapExporter", us
   kr <- keyring::backend_file$new()
   kr$keyring_unlock(keyring = keyring, password = password)
 
-  if (is.null(user)) {
-    user <- Sys.info()[["user"]]
-  }
-
   cannot_get_token <- inherits(try(kr$get(service = project, username = user, keyring = keyring), silent = TRUE), "try-error")
 
   if (overwrite || cannot_get_token) {
-    message(sprintf("Please enter your API token\n\nProject: %s\nUser: %s\nKeyring: %s\n",
-                    project, user, keyring))
+    message(sprintf("Please enter your API token\n\nProject: %s\nKeyring: %s\n",
+                    project, keyring))
     kr$set(service = project, username = user, keyring = keyring, prompt = "API Token:")
   } else {
-    message(sprintf("API token exisits for\n\nProject: %s\nUser: %s\nKeyring: %s\n",
-                    project, user, keyring))
+    message(sprintf("API token exisits for\n\nProject: %s\nKeyring: %s\n",
+                    project, keyring))
   }
 
   # lock the keyring
