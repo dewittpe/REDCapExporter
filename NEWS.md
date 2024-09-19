@@ -1,4 +1,4 @@
-# Version 0.2.2.9000
+# Version 0.3.0
 
 * updated source code to address deprecated roxygen2 documentation tags
 * Extend the col_types to use lubridate arguments for working with dates and
@@ -6,7 +6,6 @@
 * Add a vignette about formatting
 * remove `as.data.table` only return data.frames.  End users can then coerce the
   data.frame to a tibble or data.table if they prefer.
-
 * add additional columns to the example data to test and demonstrate the use of
   the package
 
@@ -18,6 +17,8 @@
 * formatting of data from json
 
 * col_type handling of checkboxes
+
+* col_type correctly sets character instead of factor for "completed" fields
 
 # Version 0.2.2
 

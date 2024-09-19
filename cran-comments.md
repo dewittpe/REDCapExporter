@@ -1,4 +1,22 @@
-# Version 0.2.2.9000
+# Version 0.3.0
+- Initial submission 19 Sept 2024
+
+## Testing Environments
+* Local (macOS)
+
+  * R 4.4.1: status OK
+
+* Github workflow
+ 
+  * R Release: status  OK
+  * R devel: status  OK
+  * R oldrelease: status  OK
+
+* Rhub
+
+  * Status okay on all OS with exceptions of those using the clang complier.  In
+    those cases suggeted packages failed to build and the vignette code failed
+    to run during the checks.
 
 # Version 0.2.2
 - Initial submission 2 Feb 2021
