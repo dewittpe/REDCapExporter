@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">REDCapExporter</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,7 +148,7 @@ have the creator role assigned.</p>
 <span>  path         <span class="op">=</span> <span class="va">temppath</span>,</span>
 <span>  author_roles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dewittp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cre"</span>, <span class="st">"aut"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">## Creating source package at /tmp/RtmpUjSyqD/rcd14465</span></span>
+<span><span class="co">## Creating source package at /tmp/RtmpZBNMyG/rcd14465</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Updating <span style="color: #0000BB;">rcd14465</span> documentation</span></span>
 <span><span class="co">## First time using roxygen2. Upgrading automatically...</span></span>
 <span><span class="co">## Setting `RoxygenNote` to "7.3.2"</span></span>
@@ -161,10 +161,10 @@ have the creator role assigned.</p>
 <p>The resulting directory is: echo = FALSE, results = “markup”</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">temppath</span><span class="op">)</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpUjSyqD</span></span></span>
-<span><span class="co">## ├── file186c105f0c72</span></span>
-<span><span class="co">## ├── file186c30b2d194</span></span>
-<span><span class="co">## ├── file186c3e8e4841</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpZBNMyG</span></span></span>
+<span><span class="co">## ├── file18ba3b072310</span></span>
+<span><span class="co">## ├── file18ba6b661af1</span></span>
+<span><span class="co">## ├── file18ba7ecd2643</span></span>
 <span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">rcd14465</span></span></span>
 <span><span class="co">## │   ├── DESCRIPTION</span></span>
 <span><span class="co">## │   ├── LICENSE</span></span>
@@ -187,7 +187,7 @@ have the creator role assigned.</p>
 <span><span class="co">## │       ├── project.Rd</span></span>
 <span><span class="co">## │       ├── record.Rd</span></span>
 <span><span class="co">## │       └── user.Rd</span></span>
-<span><span class="co">## └── rmarkdown-str186c13654785.html</span></span></code></pre></div>
+<span><span class="co">## └── rmarkdown-str18ba48f1c500.html</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="details-on-exported-files">Details on exported Files<a class="anchor" aria-label="anchor" href="#details-on-exported-files"></a>
 </h3>
@@ -202,7 +202,7 @@ This name is also used in the DESCRIPTION file.</package-id></p>
 <span><span class="co">##                 [,1]                                                                                                                                                                                                                                                                                                                                                      </span></span>
 <span><span class="co">## Package         "rcd14465"                                                                                                                                                                                                                                                                                                                                                </span></span>
 <span><span class="co">## Title           "2000-2001 Colorado Avalanche"                                                                                                                                                                                                                                                                                                                            </span></span>
-<span><span class="co">## Version         "2024.09.19.22.55"                                                                                                                                                                                                                                                                                                                                        </span></span>
+<span><span class="co">## Version         "2024.09.19.23.07"                                                                                                                                                                                                                                                                                                                                        </span></span>
 <span><span class="co">## Authors@R       "c(person(given = \"Tell\", family = \"Bennett\", email = \"tell.bennett@ucdenver.edu\", role = c(\"ctb\")),\nperson(given = \"Peter\", family = \"DeWitt\", email = \"peter.dewitt@cuanschutz.edu\", role = c(\"cre\", \"aut\")),\nperson(given = \"Alexandria\", family = \"Jensen\", email = \"alexandria.jensen@cuanschutz.edu\", role = c(\"ctb\")))"</span></span>
 <span><span class="co">## Description     "Data and documentation from the REDCap Project."                                                                                                                                                                                                                                                                                                         </span></span>
 <span><span class="co">## License         "file LICENSE"                                                                                                                                                                                                                                                                                                                                            </span></span>
@@ -238,7 +238,7 @@ which can be accessed in an interactive R session.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tar_ball</span> <span class="op">&lt;-</span> <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/build.html" class="external-link">build</a></span><span class="op">(</span>pkg <span class="op">=</span> <span class="va">prj_dir</span><span class="op">)</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">## * checking for file ‘/tmp/RtmpUjSyqD/rcd14465/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">## * checking for file ‘/tmp/RtmpZBNMyG/rcd14465/DESCRIPTION’ ... OK</span></span>
 <span><span class="co">## * preparing ‘rcd14465’:</span></span>
 <span><span class="co">## * checking DESCRIPTION meta-information ... OK</span></span>
 <span><span class="co">## * checking for LF line-endings in source and make files and shell scripts</span></span>
@@ -252,9 +252,9 @@ which can be accessed in an interactive R session.</p>
 <span><span class="co">##     ‘rcd14465/inst/raw-data/metadata.rds’</span></span>
 <span><span class="co">##     ‘rcd14465/inst/raw-data/project.rds’</span></span>
 <span><span class="co">##     ‘rcd14465/inst/raw-data/record.rds’ ‘rcd14465/inst/raw-data/user.rds’</span></span>
-<span><span class="co">## * building ‘rcd14465_2024.09.19.22.55.tar.gz’</span></span>
+<span><span class="co">## * building ‘rcd14465_2024.09.19.23.07.tar.gz’</span></span>
 <span><span class="va">tar_ball</span></span>
-<span><span class="co">## [1] "/tmp/RtmpUjSyqD/rcd14465_2024.09.19.22.55.tar.gz"</span></span>
+<span><span class="co">## [1] "/tmp/RtmpZBNMyG/rcd14465_2024.09.19.23.07.tar.gz"</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="va">tar_ball</span>, lib <span class="op">=</span> <span class="va">temppath</span><span class="op">)</span></span>
 <span><span class="co">## inferring 'repos = NULL' from 'pkgs'</span></span></code></pre></div>
@@ -264,10 +264,10 @@ which can be accessed in an interactive R session.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"rcd14465"</span><span class="op">)</span><span class="op">$</span><span class="va">results</span></span>
 <span><span class="co">##      Package    LibPath           Item       Title     </span></span>
-<span><span class="co">## [1,] "rcd14465" "/tmp/RtmpUjSyqD" "metadata" "Metadata"</span></span>
-<span><span class="co">## [2,] "rcd14465" "/tmp/RtmpUjSyqD" "project"  "Project" </span></span>
-<span><span class="co">## [3,] "rcd14465" "/tmp/RtmpUjSyqD" "record"   "Record"  </span></span>
-<span><span class="co">## [4,] "rcd14465" "/tmp/RtmpUjSyqD" "user"     "User"</span></span></code></pre></div>
+<span><span class="co">## [1,] "rcd14465" "/tmp/RtmpZBNMyG" "metadata" "Metadata"</span></span>
+<span><span class="co">## [2,] "rcd14465" "/tmp/RtmpZBNMyG" "project"  "Project" </span></span>
+<span><span class="co">## [3,] "rcd14465" "/tmp/RtmpZBNMyG" "record"   "Record"  </span></span>
+<span><span class="co">## [4,] "rcd14465" "/tmp/RtmpZBNMyG" "user"     "User"</span></span></code></pre></div>
 <p>A simple data analysis question: how many goals were scored by
 position?</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
