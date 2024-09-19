@@ -122,9 +122,12 @@ stopifnot(!any(sapply(DF, class) == "factor"))
 
 # verify that you can set the timezone for the dates
 DF0 <- format_record(avs_raw_core)
-DF1 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "US/Mountain")))
+
+# this timezone specification is system and locale specific
+#DF1 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "US/Mountain")))
+DF1 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = Sys.timezone())))
 DF2 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "UTC")))
 
 stopifnot(inherits(DF0$birthdate, "Date"))
-stopifnot(!inherits(DF1$birthdate, "Date"), inherits(DF1$birthdate, "POSIXct"), isTRUE(attr(DF1$birthdate, "tzone") == "US/Mountain"))
+stopifnot(!inherits(DF1$birthdate, "Date"), inherits(DF1$birthdate, "POSIXct"), isTRUE(attr(DF1$birthdate, "tzone") == Sys.timezone()))
 stopifnot(!inherits(DF2$birthdate, "Date"), inherits(DF2$birthdate, "POSIXct"), isTRUE(attr(DF2$birthdate, "tzone") == "UTC"))
