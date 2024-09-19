@@ -1,6 +1,6 @@
 Package: REDCapExporter
 Title: Automated Construction of R Data Packages from REDCap Projects
-Version: 0.2.2.9001
+Version: 0.3.0
 Authors@R: c(
     person(given = "Peter", family = "DeWitt",  email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6391-0795"))
     )
@@ -20,16 +20,17 @@ Depends:
 Imports:
     curl,
     keyring,
-    lubridate
+    lubridate,
+    rjson
 Suggests:
     devtools,
     fs,
+    getPass,
     kableExtra,
     knitr,
     magrittr,
     qwraps2 (> 0.4.1),
     rmarkdown,
-    rjson,
     secret
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
