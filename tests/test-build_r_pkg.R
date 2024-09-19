@@ -11,6 +11,8 @@ x <- unname(sapply(strsplit(x, "rcd14465"), `[`, 2))
 x[is.na(x)] <- ""
 x <- paste0("rcd14465", x)
 
+print(x)
+
 stopifnot(
   identical(
     x, 
