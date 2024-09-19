@@ -7,8 +7,9 @@ build_r_data_package(
 )
 
 x <- fs::dir_tree(temppath)
-x <- substr(x, start = nchar(temppath) + 1, stop = nchar(x))
-x <- as.character(x)
+x <- unname(sapply(strsplit(x, "rcd14465"), `[`, 2))
+x[is.na(x)] <- ""
+x <- paste0("rcd14465", x)
 
 stopifnot(
   identical(
@@ -20,7 +21,8 @@ stopifnot(
       "rcd14465/inst", "rcd14465/inst/raw-data", "rcd14465/inst/raw-data/metadata.rds", 
       "rcd14465/inst/raw-data/project.rds", "rcd14465/inst/raw-data/record.rds", 
       "rcd14465/inst/raw-data/user.rds", "rcd14465/man", "rcd14465/man/metadata.Rd", 
-      "rcd14465/man/project.Rd", "rcd14465/man/record.Rd", "rcd14465/man/user.Rd")
+      "rcd14465/man/project.Rd", "rcd14465/man/record.Rd", "rcd14465/man/user.Rd"),
+      mustWork = FALSE
     )
   )
 )
