@@ -80,8 +80,7 @@ temppath <- tempdir()
 build_r_data_package(
   x            = avs_raw_core,
   path         = temppath,
-  author_roles = list(dewittp = c("cre", "aut")),
-  class        = "data.frame"                      # format data as data.frames
+  author_roles = list(dewittp = c("cre", "aut"))
 )
 ```
 
