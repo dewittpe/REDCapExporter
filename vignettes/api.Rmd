@@ -133,7 +133,7 @@ code base.  Setting these system environmental variables in a common
 .Rprofile as part of a collaborative project can resolve these issues.
 
 
-```{r}
+```{r eval = FALSE}
 Sys.setenv(USER_KEY = "~/.ssh/vaults")  # ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 ```
@@ -142,7 +142,7 @@ Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 Setting the environmental variable could be done via:
 
 
-```{r label = "REDCap_API_sysvar"}
+```{r label = "REDCap_API_sysvar", eval = FALSE}
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 ```
 

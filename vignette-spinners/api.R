@@ -122,6 +122,7 @@ Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 #' code base.  Setting these system environmental variables in a common
 #' .Rprofile as part of a collaborative project can resolve these issues.
 #'
+#+ eval = FALSE
 # /*
 while(FALSE) {
 # */
@@ -133,7 +134,7 @@ Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 #'
 #' Setting the environmental variable could be done via:
 #'
-#+ label = "REDCap_API_sysvar"
+#+ label = "REDCap_API_sysvar", eval = FALSE
 # /*
 while(FALSE) {
 # */
@@ -257,4 +258,3 @@ str(avs_raw_metadata)
 #+ label = "as_data_frame", eval = TRUE
 avs_metadata <- as.data.frame(avs_raw_metadata)
 str(avs_metadata)
-
