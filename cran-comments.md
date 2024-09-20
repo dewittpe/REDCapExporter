@@ -1,6 +1,10 @@
 # Version 0.3.0
 - Initial submission 19 Sept 2024
 
+- Second submission 19 Sept 2024 after correcting a test that was specific to
+  local and failed on CRAN.  This submission should have corrected that error in
+  the testing suite.
+
 ## Testing Environments
 * Local (macOS)
 
