@@ -1,3 +1,12 @@
+# Version 0.3.1
+- Initial submission 6 Nov 2024
+
+- Code fixes to improve backward compatability by omitting the use of the `|>`
+  operator
+
+- Passing all local and Rhub checks.
+
+
 # Version 0.3.0
 - Initial submission 19 Sept 2024
 
