@@ -1,3 +1,9 @@
+# Version 0.3.1
+
+## Bug fix
+* modify code in R/as.R to not use the `|>` operator so that the package code
+  has more backward compatibility.
+
 # Version 0.3.0
 
 * updated source code to address deprecated roxygen2 documentation tags

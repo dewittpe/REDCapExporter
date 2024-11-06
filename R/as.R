@@ -69,21 +69,31 @@ read_text <- function(x) {
     out <- utils::read.csv(text = x, colClasses = "character")
 
     if ("forms_export" %in% names(out)) {
-
-      f <-
-        strsplit(out[["forms"]], ",") |>
-        lapply(strsplit, ":") |>
-        lapply(lapply, function(x) stats::setNames(data.frame(x[2]), x[1])) |>
-        lapply(as.data.frame) |>
-        do.call(rbind, args = _)
+      # the following is great for R 4.2 or newer, need to make this work for older versions of R too.
+      #f <-
+      #  strsplit(out[["forms"]], ",") |>
+      #  lapply(strsplit, ":") |>
+      #  lapply(lapply, function(x) stats::setNames(data.frame(x[2]), x[1])) |>
+      #  lapply(as.data.frame) |>
+      #  do.call(rbind, args = _)
+      f <- strsplit(out[["forms"]], ",")
+      f <- lapply(f, strsplit, ":")
+      f <- lapply(f, lapply, function(x) stats::setNames(data.frame(x[2]), x[1]))
+      f <- lapply(f, as.data.frame)
+      f <- do.call(rbind, args = f)
       names(f) <- paste0("forms.", names(f))
 
-      fe <-
-        strsplit(out[["forms_export"]], ",") |>
-        lapply(strsplit, ":") |>
-        lapply(lapply, function(x) stats::setNames(data.frame(x[2]), x[1])) |>
-        lapply(as.data.frame) |>
-        do.call(rbind, args = _)
+      #fe <-
+      #  strsplit(out[["forms_export"]], ",") |>
+      #  lapply(strsplit, ":") |>
+      #  lapply(lapply, function(x) stats::setNames(data.frame(x[2]), x[1])) |>
+      #  lapply(as.data.frame) |>
+      #  do.call(rbind, args = _)
+      fe <- strsplit(out[["forms_export"]], ",")
+      fe <- lapply(fe, strsplit, ":")
+      fe <- lapply(fe, lapply, function(x) stats::setNames(data.frame(x[2]), x[1]))
+      fe <- lapply(fe, as.data.frame)
+      fe <- do.call(rbind, args = fe)
       names(fe) <- paste0("forms_export.", names(fe))
 
       out[["forms"]] <- NULL
