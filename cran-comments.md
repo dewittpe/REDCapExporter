@@ -1,4 +1,9 @@
 # Version 0.3.1
+- Initial submission 25 July 2025
+
+- Improve testing suite to account for possible timeouts from curl.
+
+# Version 0.3.1
 - Initial submission 6 Nov 2024
 
 - Code fixes to improve backward compatability by omitting the use of the `|>`
