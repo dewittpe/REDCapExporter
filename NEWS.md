@@ -1,3 +1,17 @@
+# Version 0.3.2
+
+* fix issue in test-export.R - it could/would fail if there was a time out
+  related to CURL.  Fix looks for an error and if the error is curl related the
+  testing is skipped.  Other errors will still be thrown.
+
+    > archer01_csv  <- export_core(uri = 'https://bbmc.ouhsc.edu/redcap/api/', token = '9A81268476645C4E5F03428B8AC3AA7B')
+    Getting Project Info
+    Error in curl::curl_fetch_memory(uri, handle = h) :
+      Timeout was reached [bbmc.ouhsc.edu]:
+    Connection timed out after 10001 milliseconds
+    Calls: export_core ... export_content -> <Anonymous> -> raise_libcurl_error
+    Execution halted
+
 # Version 0.3.1
 
 ## Bug fix
