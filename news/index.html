@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">REDCapExporter</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.2" id="version-032">Version 0.3.2<a class="anchor" aria-label="anchor" href="#version-032"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.3" id="version-033">Version 0.3.3<a class="anchor" aria-label="anchor" href="#version-033"></a></h2>
+<div class="section level3">
+<h3 id="testing-change-0-3-3">Testing Change<a class="anchor" aria-label="anchor" href="#testing-change-0-3-3"></a></h3>
+<ul><li>The API used for testing is no longer working. The test as been removed from this version of the package so the package can stay on CRAN while a better solution is found. (<a href="https://github.com/dewittpe/REDCapExporter/issues/18" class="external-link">#18</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-3-3">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-3-3"></a></h3>
+<ul><li>Fix spelling in documenttation</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.2" id="version-032">Version 0.3.2<a class="anchor" aria-label="anchor" href="#version-032"></a></h2><p class="text-muted">CRAN release: 2025-07-29</p>
 <ul><li>
 <p>fix issue in test-export.R - it could/would fail if there was a time out related to CURL. Fix looks for an error and if the error is curl related the testing is skipped. Other errors will still be thrown.</p>
 <blockquote>
@@ -114,7 +125,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

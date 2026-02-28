@@ -1,0 +1,284 @@
+# Export Data via the REDCap API
+
+``` r
+library(REDCapExporter)
+```
+
+The purpose of this vignette is to show examples of exporting elements
+of a REDCap project via the REDCap (Research Electronic Data Capture)
+API. The examples in this vignette rely on use of a API token which
+cannot be divulged and thus the end users will not be able to reproduce
+the following examples exactly, but hopefully will be able to use these
+examples as a guide for their own use.
+
+The raw return from the API calls has been provided and can be used as
+the input for examples the end users can evaluate.
+
+The example data provided in this package are statistics from the
+2000-2001 National Hockey League Stanley Cup Champion Colorado
+Avalanche. The data was transcribed from [Hockey
+Reference](https://www.hockey-reference.com/teams/COL/2001.html) into a
+REDCap Project hosed at the University of Colorado Denver.
+
+## System Environment Variables
+
+*[REDCapExporter](https://cran.r-project.org/package=REDCapExporter)*
+can use three system variables to simplify the user’s interaction with
+the REDCap API. The first variable is the URI for your institution’s
+REDCap instance. Set this once at the beginning of scripts, in a
+.Rprofile, and this will be the default uri used in any function call
+with a uri argument.
+
+``` r
+Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
+```
+
+An environmental variable can be used to specify is the format for data
+to be returned in from the API. Possible values for the API are ‘csv’,
+‘xml’, or ‘json’. However, within the
+*[REDCapExporter](https://cran.r-project.org/package=REDCapExporter)*
+package methods have been built to support csv or json; xml is not yet
+supported. csv is the default format and this is set when the namespace
+is loaded.
+
+``` r
+Sys.getenv("REDCap_API_format")
+```
+
+Lastly, but the most important with respect to security, is the API
+token. You will need to have API export rights for the REDCap project
+you are looking to export into an R data package. Contact the project
+owner, system admin, or go through your institution’s REDCap web page to
+acquire an API token.
+
+Remember, your API token is the equivalent of a username/password
+combination. Thus, you must treat the token with the same, or more,
+level of security you would treat any username/password combination.
+**DO NOT PUT THE TOKEN IN PLAIN TEXT!**
+
+There are many ways for you to store, set, and use your API token, some
+suggestions follow. Consider the implications of each method carefully
+and use your best judgment and care.
+
+``` r
+Sys.setenv(REDCap_API_TOKEN = "YOURTOKENHERE")
+```
+
+## REDCap API Tokens
+
+There are several methods to work with the token securely. Here are some
+suggestions:
+
+### getPass
+
+The *[getPass](https://cran.r-project.org/package=getPass)* package
+would let you input your token, interactively, e.g.
+
+``` r
+Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
+```
+
+The downside of this approach is that you will have to re-enter the
+token every time you open the project.
+
+### secret
+
+The reader could set up a vault with their API token as a secret. via
+the *[secret](https://cran.r-project.org/package=secret)* package. This
+package allows the user to set up a vault of secrets encrypted via ssh
+keys. We encourage the reader to read the “secrets” vignette in R via:
+[`vignette(topic = "secrets", package = "secret")`](https://cran.rstudio.com/web/packages/secret/vignettes/secrets.html)
+for details on the use of the secret package.
+
+Pros of this approach: the API key can be encrypted and stored within
+the version control repository for the project you are working on. This
+will make it easy move the project form machine to machine where the
+same private ssh key exists.
+
+Downsides to this approach: if your ssh key has a passphrase you’ll need
+to enter it when accessing the token. That may make non-interactive
+builds difficult. Having a specific key without a passphrase can make
+this approach easier, but will require explicit setting of the ssh key
+(see below). Also, when multiple people are contributing to the project
+different users will need to have specific secrets for their token(s)
+which will complicate the code base. Setting these system environmental
+variables in a common .Rprofile as part of a collaborative project can
+resolve these issues.
+
+``` r
+Sys.setenv(USER_KEY = "~/.ssh/vaults")  # ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.
+Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
+```
+
+Setting the environmental variable could be done via:
+
+``` r
+Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
+```
+
+### Keyring
+
+The *[keyring](https://cran.r-project.org/package=keyring)* package can
+set up and access a system or custom credential store from R.
+
+A major benefit of this approach is that one keyring could be set up for
+all the API tokens you may have for dozens of individual REDCap
+projects. Compared to the
+*[secret](https://cran.r-project.org/package=secret)* package approach
+where a project vault will be needed for each project and *might* make
+collaboration difficult, the keyring approach, with a little
+configuration, will allow multiple users to all securely store and
+access their API tokens with the same code base.
+
+For example, the
+*[REDCapExporter](https://cran.r-project.org/package=REDCapExporter)*
+package provides a few functions to help set up a keyring, define
+tokens, and access them. In the following chunk a file based keyring
+called “REDCapExporter” will be created, if needed. The user will be
+prompted to add a token for “Project1” and for “Project2.” The last line
+would access the token needed for the given project.
+
+``` r
+REDCapExporter_keyring_check()
+REDCapExporter_add_api_token("Project1")
+REDCapExporter_add_api_token("Project2")
+Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
+```
+
+After setting up the keyring and adding the token(s) you will only need
+to use the last line setting the system environmental variable in the
+specific scripts. If the above chunk is evaluated by all collaborators
+on the project with REDCap API tokens then no other modifications of the
+code base is needed for the collaborators to work together.
+
+## Exporting a REDCap Project
+
+Methods which will call REDCap API are `export_content` and
+`export_core`.
+
+The specific behavior and results of these functions will depended on
+your institution’s REDCap instance and the user access permissions
+associated with the token used to access the project.
+
+The next subsections provide details on these methods.
+
+### Export Core
+
+With one call to `export_core` Will call the API several times and
+download several elements of a REDCap project. The return is a list and
+is the expected object class to be used as the basis for building a R
+data package. An example of the return from this method below. It is a
+list of several rcer_raw\_\* objects.
+
+``` r
+data(avs_raw_core)
+lapply(avs_raw_core, class)
+## $project_raw
+## [1] "rcer_raw_project" "character"       
+## 
+## $metadata_raw
+## [1] "rcer_raw_metadata" "character"        
+## 
+## $user_raw
+## [1] "rcer_raw_user" "character"    
+## 
+## $record_raw
+## [1] "rcer_raw_record" "character"
+```
+
+### Export Specific Content of a REDCap Project
+
+The `export_content` method has five arguments:
+
+``` r
+args(export_content)
+## function (content, uri = NULL, token = NULL, format = NULL, ...) 
+## NULL
+```
+
+- The uri, token, and format arguments are set to NULL by default. If
+  the value is NULL then the system environmental variable values are
+  used. The end user need only define the content argument. Additional
+  arguments, if needed, are passed to RCurl::postForm via the ellipsis.
+
+- content return specific parts of the REDCap project.
+
+  - content = “metadata” returns the data dictionary
+
+  - content = “record” returns the records for a project. Note about
+    export rights: Please be aware that Data Export user rights will be
+    applied to this API request. For example, if you have ‘No Access’
+    data export rights in the project, then the API data export will
+    fail and return an error. And if you have ‘De-Identified’ or ‘Remove
+    all tagged Identifier fields’ data export rights, then some data
+    fields *might* be removed and filtered out of the data set returned
+    from the API. To make sure that no data is unnecessarily filtered
+    out of your API request, you should have ‘Full Data Set’ export
+    rights in the project.
+
+  - content = “project” exports some of the basic attributes of the
+    given REDCap project, such as the project’s title, if it is
+    longitudinal, if surveys are enabled, the time the project was
+    created and moved to production, etc.
+
+  - content = “user” exports the list of users for a project, including
+    their user privileges and also email address, first name, and last
+    name. Note: if the user has been assigned to a user role, it will
+    return the user with the role’s defined privileges.
+
+Check the API documentation for your host for specific additional
+options. The likely uri is redcap./api/help/.
+
+An example: the metadata, i.e., data dictionary, for the 2000-2001
+Colorado Avalanche data set could be retrieved via
+
+``` r
+avs_raw_metadata <- export_content(content = "metadata")
+```
+
+Since the reader does not have the API token needed to actively evaluate
+the above code, the `avs_raw_metadata` object is available as a data
+set.
+
+``` r
+ls()
+## [1] "avs_raw_core"
+data(avs_raw_metadata)
+ls()
+## [1] "avs_raw_core"     "avs_raw_metadata"
+str(avs_raw_metadata)
+##  'rcer_raw_metadata' chr "field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid"| __truncated__
+##  - attr(*, "url")= chr "https://redcap.ucdenver.edu/api/"
+##  - attr(*, "status_code")= int 200
+##  - attr(*, "times")= Named num [1:6] 0 0 0 0.0001 0.3102 ...
+##   ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
+##  - attr(*, "Content-Type")= chr "text/csv; charset=utf-8"
+##  - attr(*, "accessed")= POSIXct[1:1], format: "2026-02-28 16:03:21"
+```
+
+Using the as.data.frame methods will help you get the return from REDCap
+into a usable form:
+
+``` r
+avs_metadata <- as.data.frame(avs_raw_metadata)
+str(avs_metadata)
+## Classes 'rcer_metadata' and 'data.frame':    67 obs. of  18 variables:
+##  $ field_name                                : chr  "record_id" "uniform_number" "firstname" "lastname" ...
+##  $ form_name                                 : chr  "roster" "roster" "roster" "roster" ...
+##  $ section_header                            : chr  "" "" "" "" ...
+##  $ field_type                                : chr  "text" "text" "text" "text" ...
+##  $ field_label                               : chr  "Record ID" "Uniform Number" "First name" "Last name" ...
+##  $ select_choices_or_calculations            : chr  "" "" "" "" ...
+##  $ field_note                                : chr  "" "" "" "" ...
+##  $ text_validation_type_or_show_slider_number: chr  "" "" "" "" ...
+##  $ text_validation_min                       : chr  "" "" "" "" ...
+##  $ text_validation_max                       : chr  "" "" "" "" ...
+##  $ identifier                                : chr  "" "" "y" "y" ...
+##  $ branching_logic                           : chr  "" "" "" "" ...
+##  $ required_field                            : chr  "" "" "y" "y" ...
+##  $ custom_alignment                          : chr  "" "" "" "" ...
+##  $ question_number                           : chr  "" "" "" "" ...
+##  $ matrix_group_name                         : chr  "" "" "" "" ...
+##  $ matrix_ranking                            : chr  "" "" "" "" ...
+##  $ field_annotation                          : chr  "" "" "" "" ...
+```
