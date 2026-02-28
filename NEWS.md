@@ -1,3 +1,15 @@
+# Version 0.3.3
+
+## Testing Change
+
+* The API used for testing is no longer working.  The test as been removed from
+  this version of the package so the package can stay on CRAN while a better
+  solution is found. (#18)
+
+## Minor changes
+
+* Fix spelling in documenttation
+
 # Version 0.3.2
 
 * fix issue in test-export.R - it could/would fail if there was a time out

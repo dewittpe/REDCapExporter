@@ -1,4 +1,20 @@
-# Version 0.3.1
+# Version 0.3.3
+
+- Improve testing suite to account for a resource going offline
+- Fix several spelling errors in the documents
+
+## Testing
+
+- Local MacOS, R 4.5.2
+  - Status OK
+- GitHub Actions
+  - Status OK
+- Windows Builder
+  - Status OK
+- Rhub
+  - Status OK
+
+# Version 0.3.2
 - Initial submission 25 July 2025
 
 - Improve testing suite to account for possible timeouts from curl.
@@ -25,7 +41,7 @@
   * R 4.4.1: status OK
 
 * Github workflow
- 
+
   * R Release: status  OK
   * R devel: status  OK
   * R oldrelease: status  OK

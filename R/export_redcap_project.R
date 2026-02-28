@@ -28,7 +28,7 @@
 #'
 #' @examples
 #'
-#' # A reproducible example would require a REDCap project, accessable via an
+#' # A reproducible example would require a REDCap project, accessible via an
 #' # API token.  An example of the return from these calls are provided as data
 #' # with this package.
 #'
@@ -90,7 +90,7 @@ export_content <- function(content, uri = NULL, token = NULL, format = NULL, ...
 #'
 #' @examples
 #'
-#' # A reproducible example would require a REDCap project, accessable via an
+#' # A reproducible example would require a REDCap project, accessible via an
 #' # API token.  An example of the return from these calls are provided as data
 #' # with this package.
 #'

@@ -56,6 +56,5 @@ x <- tryCatch(
   REDCapExporter_add_api_token(project = 'testingproject', keyring = 'testingring'),
   message = function(m) {m}
 )
-
-stopifnot(isTRUE(grepl("API token exisits", x$message)))
+stopifnot(isTRUE(grepl("API token exists", x$message)))
 

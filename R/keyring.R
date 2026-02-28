@@ -22,14 +22,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Check if a keyring exisits. If it does not, create one.
+#' # Check if a keyring exists. If it does not, create one.
 #' REDCapExporter_keyring_check()
 #'
 #' # add token if it does not already exist.  If a token
 #' # already exists, then you will be told so unless overwrite is set to TRUE
 #' REDCapExporter_add_api_token("Project1")
 #'
-#' # get a token and set as an envrionmental variable
+#' # get a token and set as an environmental variable
 #' Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 #' }
 #'
@@ -74,7 +74,7 @@ REDCapExporter_add_api_token <- function(project, keyring = "REDCapExporter", us
                     project, keyring))
     kr$set(service = project, username = user, keyring = keyring, prompt = "API Token:")
   } else {
-    message(sprintf("API token exisits for\n\nProject: %s\nKeyring: %s\n",
+    message(sprintf("API token exists for\n\nProject: %s\nKeyring: %s\n",
                     project, keyring))
   }
 
@@ -100,4 +100,3 @@ REDCapExporter_get_api_token <- function(project, keyring = "REDCapExporter", us
   invisible(token)
 
 }
-
