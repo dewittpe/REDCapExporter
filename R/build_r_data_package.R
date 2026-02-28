@@ -4,7 +4,7 @@
 #'
 #' To export the data from a REDCap project you will need to have an API Token.
 #' Remember, the token is the equivalent of a username and password.  As such
-#' you should not list the token in plan text.  Several alternative methods for
+#' you should not list the token in plain text.  Several alternative methods for
 #' passing the token to this method will be provided in examples and vignettes.
 #' We strongly encourage the use of the package secret
 #' \url{https://cran.r-project.org/package=secret} to build vaults to store
@@ -88,9 +88,9 @@ build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL
       "#'",
       "#' Project information for REDcap Project",
       "#'",
-      "#' Attributes for the project.  For any values that are boolean, they will be represtned as either a 0 (no/false) or 1 (yes/true).  Also, all date/time values will be returned in Y-M-D H:M:S format.",
+      "#' Attributes for the project.  For any values that are boolean, they will be represented as either a 0 (no/false) or 1 (yes/true).  Also, all date/time values will be returned in Y-M-D H:M:S format.",
       "#'",
-      "#' @format a data.frame with the following collumns",
+      "#' @format a data.frame with the following columns",
       "#' \\itemize{",
       paste("\n#' \\item", names(project)),
       "#' }",
@@ -146,4 +146,3 @@ build_r_data_package.default <- function(x, uri = NULL, token = NULL, format = N
   core <- export_core(uri = uri, token = token, format = format, verbose = verbose, ...)
   build_r_data_package(core, path, author_roles, verbose, ...)
 }
-
