@@ -8,7 +8,7 @@ CRAN = "https://cran.rstudio.com"
 SRC       = $(wildcard $(PKG_ROOT)/src/*.cpp)
 RFILES    = $(wildcard $(PKG_ROOT)/R/*.R)
 EXAMPLES  = $(wildcard $(PKG_ROOT)/examples/*.R)
-TESTS     = $(wildcard $(PKG_ROOT)/tests/testthat/*.R)
+TESTS     = $(wildcard $(PKG_ROOT)/tests/test-*.R)
 
 # Targets
 VIGNETTES = $(PKG_ROOT)/vignettes/redcap2package.Rmd\
