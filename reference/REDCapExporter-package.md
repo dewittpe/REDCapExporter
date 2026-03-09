@@ -18,7 +18,7 @@ Useful links:
 
 - <https://github.com/dewittpe/REDCapExporter>
 
-- <http://www.peteredewitt.com/REDCapExporter/>
+- <https://www.peteredewitt.com/REDCapExporter/>
 
 ## Author
 

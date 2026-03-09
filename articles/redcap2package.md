@@ -86,7 +86,7 @@ build_r_data_package(
   path         = temppath,
   author_roles = list(dewittp = c("cre", "aut"))
 )
-## Creating source package at /tmp/RtmpUdhb7k/rcd14465
+## Creating source package at /tmp/RtmpPQOPx6/rcd14465
 ## ℹ Updating rcd14465 documentation
 ## First time using roxygen2. Upgrading automatically...
 ## ℹ Setting RoxygenNote to "7.3.3"
@@ -102,10 +102,10 @@ The resulting directory is: echo = FALSE, results = “markup”
 
 ``` r
 fs::dir_tree(temppath)
-## /tmp/RtmpUdhb7k
-## ├── file1cca157d000
-## ├── file1cca19f3b71e
-## ├── file1cca3036cf7d
+## /tmp/RtmpPQOPx6
+## ├── file1ebe2fbb054b
+## ├── file1ebe745afc3b
+## ├── file1ebe789d2e0
 ## ├── rcd14465
 ## │   ├── DESCRIPTION
 ## │   ├── LICENSE
@@ -128,7 +128,7 @@ fs::dir_tree(temppath)
 ## │       ├── project.Rd
 ## │       ├── record.Rd
 ## │       └── user.Rd
-## └── rmarkdown-str1cca627e2ab7.html
+## └── rmarkdown-str1ebe12d815d8.html
 ```
 
 ### Details on exported Files
@@ -146,7 +146,7 @@ t(read.dcf(paste(prj_dir, "DESCRIPTION", sep = "/")))
 ##                 [,1]                                                                                                                                                                                                                                                                                                                                                      
 ## Package         "rcd14465"                                                                                                                                                                                                                                                                                                                                                
 ## Title           "2000-2001 Colorado Avalanche"                                                                                                                                                                                                                                                                                                                            
-## Version         "2026.02.28.16.47"                                                                                                                                                                                                                                                                                                                                        
+## Version         "2026.03.09.17.58"                                                                                                                                                                                                                                                                                                                                        
 ## Authors@R       "c(person(given = \"Tell\", family = \"Bennett\", email = \"tell.bennett@ucdenver.edu\", role = c(\"ctb\")),\nperson(given = \"Peter\", family = \"DeWitt\", email = \"peter.dewitt@cuanschutz.edu\", role = c(\"cre\", \"aut\")),\nperson(given = \"Alexandria\", family = \"Jensen\", email = \"alexandria.jensen@cuanschutz.edu\", role = c(\"ctb\")))"
 ## Description     "Data and documentation from the REDCap Project."                                                                                                                                                                                                                                                                                                         
 ## License         "file LICENSE"                                                                                                                                                                                                                                                                                                                                            
@@ -188,27 +188,9 @@ Let’s install the package and explore the contents.
 
 ``` r
 tar_ball <- devtools::build(pkg = prj_dir)
-## ── R CMD build ─────────────────────────────────────────────────────────────────
-## * checking for file ‘/tmp/RtmpUdhb7k/rcd14465/DESCRIPTION’ ... OK
-## * preparing ‘rcd14465’:
-## * checking DESCRIPTION meta-information ... OK
-## * checking for LF line-endings in source and make files and shell scripts
-## * checking for empty or unneeded directories
-##   NB: this package now depends on R (>= 3.5.0)
-##   WARNING: Added dependency on R >= 3.5.0 because serialized objects in
-##   serialize/load version 3 cannot be read in older versions of R.
-##   File(s) containing such objects:
-##     ‘rcd14465/data/metadata.rda’ ‘rcd14465/data/project.rda’
-##     ‘rcd14465/data/record.rda’ ‘rcd14465/data/user.rda’
-##     ‘rcd14465/inst/raw-data/metadata.rds’
-##     ‘rcd14465/inst/raw-data/project.rds’
-##     ‘rcd14465/inst/raw-data/record.rds’ ‘rcd14465/inst/raw-data/user.rds’
-## * building ‘rcd14465_2026.02.28.16.47.tar.gz’
 tar_ball
-## [1] "/tmp/RtmpUdhb7k/rcd14465_2026.02.28.16.47.tar.gz"
 
 install.packages(pkgs = tar_ball, lib = temppath)
-## inferring 'repos = NULL' from 'pkgs'
 ```
 
 ``` r
@@ -219,21 +201,10 @@ The available data sets:
 
 ``` r
 data(package = "rcd14465")$results
-##      Package    LibPath           Item       Title     
-## [1,] "rcd14465" "/tmp/RtmpUdhb7k" "metadata" "Metadata"
-## [2,] "rcd14465" "/tmp/RtmpUdhb7k" "project"  "Project" 
-## [3,] "rcd14465" "/tmp/RtmpUdhb7k" "record"   "Record"  
-## [4,] "rcd14465" "/tmp/RtmpUdhb7k" "user"     "User"
 ```
 
 A simple data analysis question: how many goals were scored by position?
 
 ``` r
 aggregate(goals ~ position, data = record, FUN = sum)
-##     position goals
-## 1       Goal     0
-## 2  Left Wing    71
-## 3 Right Wing    72
-## 4     Center    93
-## 5    Defence    34
 ```

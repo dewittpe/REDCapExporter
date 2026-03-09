@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/dewittpe/REDCapExporter/blob/main/DESCRIPTION)
 
 DeWitt P (2026). *REDCapExporter: Automated Construction of R Data
-Packages from REDCap Projects*. R package version 0.3.3,
+Packages from REDCap Projects*. R package version 0.3.4,
 <https://github.com/dewittpe/REDCapExporter>.
 
     @Manual{,
       title = {REDCapExporter: Automated Construction of R Data Packages from REDCap Projects},
       author = {Peter DeWitt},
       year = {2026},
-      note = {R package version 0.3.3},
+      note = {R package version 0.3.4},
       url = {https://github.com/dewittpe/REDCapExporter},
     }

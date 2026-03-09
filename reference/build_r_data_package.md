@@ -87,7 +87,7 @@ library(REDCapExporter)
 data(avs_raw_core)
 tmppth <- tempdir()
 build_r_data_package(avs_raw_core, tmppth, author_roles = list(dewittp = c("cre", "aut")))
-#> Creating source package at /tmp/Rtmp0ZkF8D/rcd14465
+#> Creating source package at /tmp/RtmpF26E9H/rcd14465
 #> ℹ Updating rcd14465 documentation
 #> First time using roxygen2. Upgrading automatically...
 #> ℹ Setting RoxygenNote to "7.3.3"
@@ -98,7 +98,7 @@ build_r_data_package(avs_raw_core, tmppth, author_roles = list(dewittp = c("cre"
 #> Writing user.Rd
 #> Writing record.Rd
 fs::dir_tree(tmppth)
-#> /tmp/Rtmp0ZkF8D
+#> /tmp/RtmpF26E9H
 #> ├── bslib-246362e7e3ff6191071d5f9b40ba8d62
 #> │   ├── bootstrap.bundle.min.js
 #> │   ├── bootstrap.bundle.min.js.map
@@ -109,8 +109,8 @@ fs::dir_tree(tmppth)
 #> │   ├── pak
 #> │   ├── stats
 #> │   └── utils
-#> ├── file1b46252173dc
-#> ├── file1b467e9cffbb
+#> ├── file1cd935fcd9a9
+#> ├── file1cd9583cb541
 #> └── rcd14465
 #>     ├── DESCRIPTION
 #>     ├── LICENSE
