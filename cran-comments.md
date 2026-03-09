@@ -1,3 +1,29 @@
+# Version 0.3.4
+
+This submission to CRAN is coming shortly after the prior submission because of
+new CRAN check failures.
+
+- Prevent vignette build/install of the generated package (devtools/processx)
+  during checks.
+- Constrain keyring tests to a temporary keyring directory.
+- Gate `devtools::document()` inside `build_r_data_package()` when devtools is
+  not available, and update tests accordingly.
+- Update test-export to use the REDCapR public dev-2 test endpoint/token and
+  skip on curl-related failures.
+- Update the personal URL to HTTPS.
+
+## Testing
+
+- Local macOS, R 4.5.2
+  - R CMD check --as-cran REDCapExporter_0.3.4.tar.gz
+  - Status: OK (2 NOTEs: no Internet for URL checks, time-stamp check)
+- GitHub Actions
+  - Status: OK
+- Windows Builder
+  - Status: OK
+- Rhub
+  - Status: OK
+
 # Version 0.3.3
 
 - Improve testing suite to account for a resource going offline
@@ -247,5 +273,3 @@ be used in the examples and vignettes.
 
 > Please fix and resubmit, and document what was changed in the submission
 > comments.
-
-

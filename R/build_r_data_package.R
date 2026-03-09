@@ -130,7 +130,11 @@ build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL
       file = paste(path, "R/datasets.R", sep = "/")
   )
 
-  devtools::document(path)
+  if (requireNamespace("devtools", quietly = TRUE)) {
+    devtools::document(path)
+  } else {
+    message("Skipping devtools::document(): 'devtools' is not available.")
+  }
 
   invisible(TRUE)
 }

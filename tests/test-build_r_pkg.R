@@ -1,34 +1,74 @@
 library(REDCapExporter)
 temppath <- tempdir()
-build_r_data_package(
-  x            = avs_raw_core,
-  path         = temppath,
-  author_roles = list(dewittp = c("cre", "aut")),
+
+msgs <- character()
+withCallingHandlers(
+  {
+    build_r_data_package(
+      x            = avs_raw_core,
+      path         = temppath,
+      author_roles = list(dewittp = c("cre", "aut"))
+    )
+  },
+  message = function(m) {
+    msgs <<- c(msgs, conditionMessage(m))
+    invokeRestart("muffleMessage")
+  }
 )
 
-x <- fs::dir_tree(temppath)
-x <- unname(sapply(strsplit(x, "rcd14465"), `[`, 2))
-x[is.na(x)] <- ""
-x <- sort(paste0("rcd14465", x))
+pkgdir <- file.path(temppath, "rcd14465")
 
-print(x)
-
+# check the DESCRIPTION file for the built package
+d <- read.dcf(file.path(pkgdir, "DESCRIPTION"))
 stopifnot(
-  identical(
-    x,
-    sort(
-      c("rcd14465", "rcd14465/DESCRIPTION", "rcd14465/LICENSE", "rcd14465/NAMESPACE",
-      "rcd14465/R", "rcd14465/R/datasets.R", "rcd14465/data", "rcd14465/data/metadata.rda",
-      "rcd14465/data/project.rda", "rcd14465/data/record.rda", "rcd14465/data/user.rda",
-      "rcd14465/inst", "rcd14465/inst/raw-data", "rcd14465/inst/raw-data/metadata.rds",
-      "rcd14465/inst/raw-data/project.rds", "rcd14465/inst/raw-data/record.rds",
-      "rcd14465/inst/raw-data/user.rds", "rcd14465/man", "rcd14465/man/metadata.Rd",
-      "rcd14465/man/project.Rd", "rcd14465/man/record.Rd", "rcd14465/man/user.Rd")
-    )
-  )
+  d[1, "Package"] == "rcd14465",
+  grepl("\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{2}", d[1, "Version"])
 )
 
-stopifnot(
-    packageDescription(pkg = "rcd14465", lib.loc = temppath)$Package == "rcd14465",
-    grepl("\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{2}", packageDescription(pkg = "rcd14465", lib.loc = temppath)$Version)
-    )
+# check the file structure of the built package
+x <- list.files(
+  path         = pkgdir,
+  all.files    = TRUE,
+  recursive    = TRUE,
+  include.dirs = TRUE,
+  full.names   = FALSE,
+  no..         = TRUE
+)
+
+# switch slashes from windows to *nix
+x <- gsub("\\\\", "/", x)
+
+expected <- sort(c(
+  "DESCRIPTION",
+  "LICENSE",
+  "R",
+  "R/datasets.R",
+  "data",
+  "data/metadata.rda",
+  "data/project.rda",
+  "data/record.rda",
+  "data/user.rda",
+  "inst",
+  "inst/raw-data",
+  "inst/raw-data/metadata.rds",
+  "inst/raw-data/project.rds",
+  "inst/raw-data/record.rds",
+  "inst/raw-data/user.rds"
+))
+
+if (requireNamespace("devtools", quietly = TRUE)) {
+  expected <- sort(c(
+    expected,
+    "NAMESPACE",
+    "man",
+    "man/metadata.Rd",
+    "man/project.Rd",
+    "man/record.Rd",
+    "man/user.Rd"
+  ))
+  stopifnot(!any(grepl("Skipping devtools::document", msgs)))
+} else {
+  stopifnot(any(grepl("Skipping devtools::document", msgs)))
+}
+
+stopifnot(identical(x, expected))

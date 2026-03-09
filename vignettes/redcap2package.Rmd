@@ -135,7 +135,7 @@ be accessed in an interactive R session.
 
 Let's install the package and explore the contents.
 
-```{r}
+```{r eval = FALSE}
 tar_ball <- devtools::build(pkg = prj_dir)
 tar_ball
 
@@ -146,21 +146,20 @@ install.packages(pkgs = tar_ball, lib = temppath)
 library(rcd14465, lib.loc = temppath)
 
 ```
-```{r include = FALSE}
+```{r include = FALSE, eval = FALSE}
 do.call(library, args = list(package = "rcd14465", character.only = TRUE, lib.loc = temppath))
 ```
 
 
 The available data sets:
 
-```{r}
+```{r eval = FALSE}
 data(package = "rcd14465")$results
 ```
 
 
 A simple data analysis question: how many goals were scored by position?
 
-```{r}
+```{r eval = FALSE}
 aggregate(goals ~ position, data = record, FUN = sum)
 ```
-
