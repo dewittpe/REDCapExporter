@@ -1,5 +1,11 @@
 library(REDCapExporter)
 
+keyring_dir <- file.path(tempdir(), paste0("redcapexporter-keyring-", Sys.getpid()))
+dir.create(keyring_dir, showWarnings = FALSE, recursive = TRUE)
+op <- options(keyring_file_dir = keyring_dir)
+on.exit(options(op), add = TRUE)
+on.exit(unlink(keyring_dir, recursive = TRUE, force = TRUE), add = TRUE)
+
 kr <- keyring::backend_file$new()
 
 keyring_name <- paste0("testingring_", Sys.getpid())
