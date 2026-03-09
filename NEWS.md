@@ -2,6 +2,12 @@
 
 ## Testing Change
 
+* Update test-build_r_pkg.R to be robust to platform.
+
+# Version 0.3.3
+
+## Testing Change
+
 * The API used for testing is no longer working.  The test as been removed from
   this version of the package so the package can stay on CRAN while a better
   solution is found. (#18)

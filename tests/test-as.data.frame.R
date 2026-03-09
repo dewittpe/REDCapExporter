@@ -1,37 +1,36 @@
 library(REDCapExporter)
 
-# Expect error if the input in not csv or json.  the error should come from the
-# read_text call, which is not exported.
-x <- avs_raw_metadata
-attr(x, "Content-Type") <- c("not-csv", "not-json")
-x <- tools::assertError(REDCapExporter:::read_text(x))
-stopifnot(identical(x[[1]][["message"]], "Content-Type 'not-csv' is not yet supported."))
+# Unsupported content type should error
+x_bad <- avs_raw_metadata
+attr(x_bad, "Content-Type") <- c("not-csv", "not-json")
 
-# Testing coercion of rcer_raw_metadata to data.frame and data.table
-DF0 <- as.data.frame(avs_raw_metadata)
-DF1 <- as.data.frame(avs_raw_metadata_json)
+err <- tryCatch(
+  REDCapExporter:::read_text(x_bad),
+  error = function(e) e
+)
 
-stopifnot(all.equal(DF0, DF1))
+stopifnot(
+  inherits(err, "error"),
+  grepl("Content-Type .* not yet supported", err$message)
+)
 
-# Testing coercion of rcer_raw_record to data.frame and data.table
-rm(list = ls())
+# Metadata coercion
+md_csv  <- as.data.frame(avs_raw_metadata)
+md_json <- as.data.frame(avs_raw_metadata_json)
+stopifnot(isTRUE(all.equal(md_csv, md_json)))
 
-DF0 <- as.data.frame(avs_raw_record)
-DF1 <- as.data.frame(avs_raw_record_json)
+# Record coercion
+rec_csv  <- as.data.frame(avs_raw_record)
+rec_json <- as.data.frame(avs_raw_record_json)
+stopifnot(isTRUE(all.equal(rec_csv, rec_json)))
 
-stopifnot(all.equal(DF0, DF1))
+# Project coercion
+proj_csv  <- as.data.frame(avs_raw_project)
+proj_json <- as.data.frame(avs_raw_project_json)
+stopifnot(isTRUE(all.equal(proj_csv, proj_json)))
 
-# Testing coercion of rcer_raw_project to data.frame and data.table
-rm(list = ls())
-DF0 <- as.data.frame(avs_raw_project)
-DF1 <- as.data.frame(avs_raw_project_json)
-
-stopifnot(all.equal(DF0, DF1))
-
-# Testing coercion of rcer_raw_user to data.frame and data.table
-rm(list = ls())
-DF0 <- as.data.frame(avs_raw_user)
-DF1 <- as.data.frame(avs_raw_user_json)
-
-stopifnot(all.equal(DF0, DF1))
+# User coercion
+usr_csv  <- as.data.frame(avs_raw_user)
+usr_json <- as.data.frame(avs_raw_user_json)
+stopifnot(isTRUE(all.equal(usr_csv, usr_json)))
 

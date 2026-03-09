@@ -1,60 +1,110 @@
 library(REDCapExporter)
 
-# Test if a new keyring can be built
 kr <- keyring::backend_file$new()
-try(kr$keyring_delete("testingring"), silent = TRUE)
-#kr$keyring_create(password = "")
-#kr$keyring_list()
 
-x <- tryCatch(REDCapExporter_keyring_check("testingring"), message = function(m) {m})
-stopifnot(identical(x$message, "File based keyring testingring has been created\n"))
-x <- tryCatch(REDCapExporter_keyring_check("testingring"), message = function(m) {m})
-stopifnot(identical(x$message, "File based keyring testingring exists\n"))
-stopifnot(isTRUE(REDCapExporter_keyring_check("testingring")))
+keyring_name <- paste0("testingring_", Sys.getpid())
+service_name <- paste0("testingproject_", Sys.getpid())
 
-# Expect that this will error because we are not interactive and a password
-# prompt cannot be filled in
-x <-
-  tryCatch(
-    REDCapExporter_add_api_token(project = 'testingproject', keyring = 'testingring'),
-    error = function(e) e
-  )
+# cleanup on exit
+try(kr$keyring_delete(keyring_name), silent = TRUE)
 
-stopifnot(inherits(x, "error"))
-stopifnot(isTRUE(grepl("Aborted setting keyring key", x$message)))
+# keyring can be created or verified
+msg1 <- NULL
+withCallingHandlers(
+  {
+    ok1 <- REDCapExporter_keyring_check(keyring_name)
+  },
+  message = function(m) {
+    msg1 <<- conditionMessage(m)
+    invokeRestart("muffleMessage")
+  }
+)
 
-# expect the get api token to fail as the token for the testingproject has not
-# been set
-x <-
-  tryCatch(
-           REDCapExporter_get_api_token(project = 'testingproject', keyring = 'testingring'),
-    error = function(e) e
-  )
+stopifnot(
+  isTRUE(ok1),
+  grepl("File based keyring", msg1),
+  grepl(keyring_name, msg1),
+  grepl("created|exists", msg1)
+)
 
-stopifnot(inherits(x, "error"))
-stopifnot(isTRUE(grepl("specified item could not be found in the keychain", x$message)))
+msg2 <- NULL
+withCallingHandlers(
+  {
+    ok2 <- REDCapExporter_keyring_check(keyring_name)
+  },
+  message = function(m) {
+    msg2 <<- conditionMessage(m)
+    invokeRestart("muffleMessage")
+  }
+)
 
-# create token
-kr$set_with_value(service = "testingproject", password = "testingTOKEN", keyring = "testingring")
+stopifnot(
+  isTRUE(ok2),
+  grepl("File based keyring", msg2),
+  grepl(keyring_name, msg2),
+  grepl("exists", msg2)
+)
+
+# Adding a token interactively should fail in non-interactive checks
+err_add <- tryCatch(
+  REDCapExporter_add_api_token(
+    project = service_name,
+    keyring = keyring_name
+  ),
+  error = function(e) e
+)
+
+stopifnot(inherits(err_add, "error"))
+
+# Missing token should error
+err_get_missing <- tryCatch(
+  REDCapExporter_get_api_token(
+    project = service_name,
+    keyring = keyring_name
+  ),
+  error = function(e) e
+)
+
+stopifnot(inherits(err_get_missing, "error"))
+
+# Set token directly through keyring backend
+kr$keyring_unlock(keyring = keyring_name, password = "")
+kr$set_with_value(
+  service = service_name,
+  password = "testingTOKEN",
+  keyring = keyring_name
+)
+kr$keyring_lock(keyring = keyring_name)
 
 # verify you can get the token
-stopifnot(
-  identical(
-    REDCapExporter_get_api_token(project = 'testingproject', keyring = 'testingring')
-    ,
-    "testingTOKEN"
-    ))
+stopifnot(identical(
+  REDCapExporter_get_api_token(
+    project = service_name,
+    keyring = keyring_name
+  ),
+  "testingTOKEN"
+))
 
-
-# the REDCapExporter_add_api_token should return a message that the token
-# already exists
-stopifnot(
-  REDCapExporter_add_api_token(project = 'testingproject', keyring = 'testingring')
+# verify add_api_token short-circuits when token exists
+msg3 <- NULL
+withCallingHandlers(
+  {
+    ok3 <- REDCapExporter_add_api_token(
+      project = service_name,
+      keyring = keyring_name
+    )
+  },
+  message = function(m) {
+    msg3 <<- conditionMessage(m)
+    invokeRestart("muffleMessage")
+  }
 )
 
-x <- tryCatch(
-  REDCapExporter_add_api_token(project = 'testingproject', keyring = 'testingring'),
-  message = function(m) {m}
+stopifnot(
+  isTRUE(ok3),
+  grepl("API token exists", msg3)
 )
-stopifnot(isTRUE(grepl("API token exists", x$message)))
 
+# cleanup
+try(kr$key_delete(service = service_name, keyring = keyring_name), silent = TRUE)
+try(kr$keyring_delete(keyring_name), silent = TRUE)

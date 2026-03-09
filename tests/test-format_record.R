@@ -120,14 +120,42 @@ classes[classes == "factor"] <- "character"
 stopifnot(identical(sapply(DF, class), classes))
 stopifnot(!any(sapply(DF, class) == "factor"))
 
+################################################################################
 # verify that you can set the timezone for the dates
-DF0 <- format_record(avs_raw_core)
+# verify that you can set the timezone for the dates
+df_date <- format_record(avs_raw_core)
 
-# this timezone specification is system and locale specific
-#DF1 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "US/Mountain")))
-DF1 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = Sys.timezone())))
-DF2 <- format_record(avs_raw_record, col_type = col_type(avs_raw_metadata, lubridate_args = list(tz = "UTC")))
+tz_local <- Sys.timezone()
+if (is.na(tz_local) || !nzchar(tz_local)) {
+  tz_local <- "UTC"
+}
 
-stopifnot(inherits(DF0$birthdate, "Date"))
-stopifnot(!inherits(DF1$birthdate, "Date"), inherits(DF1$birthdate, "POSIXct"), isTRUE(attr(DF1$birthdate, "tzone") == Sys.timezone()))
-stopifnot(!inherits(DF2$birthdate, "Date"), inherits(DF2$birthdate, "POSIXct"), isTRUE(attr(DF2$birthdate, "tzone") == "UTC"))
+df_local <- format_record(
+  avs_raw_record,
+  col_type = col_type(
+    avs_raw_metadata,
+    lubridate_args = list(tz = tz_local)
+  )
+)
+
+df_utc <- format_record(
+  avs_raw_record,
+  col_type = col_type(
+    avs_raw_metadata,
+    lubridate_args = list(tz = "UTC")
+  )
+)
+
+stopifnot(inherits(df_date$birthdate, "Date"))
+
+stopifnot(
+  !inherits(df_local$birthdate, "Date"),
+  inherits(df_local$birthdate, "POSIXct"),
+  identical(attr(df_local$birthdate, "tzone"), tz_local)
+)
+
+stopifnot(
+  !inherits(df_utc$birthdate, "Date"),
+  inherits(df_utc$birthdate, "POSIXct"),
+  identical(attr(df_utc$birthdate, "tzone"), "UTC")
+)

@@ -1,3 +1,24 @@
+# Version 0.3.4
+
+This submission to cran is comming quickly after the prior submission as a new
+CRAN check failure occured.
+
+- Improve testing suite to account for instability of the fs::dir_tree() call on
+  different platforms and R versions.
+
+- Improve testing in general to make it more robust to platform and R versions.
+
+## Testing
+
+- Local MacOS, R 4.5.2
+  - Status OK
+- GitHub Actions
+  - Status OK
+- Windows Builder
+  - Status OK
+- Rhub
+  - Status OK
+
 # Version 0.3.3
 
 - Improve testing suite to account for a resource going offline
