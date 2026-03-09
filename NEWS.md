@@ -6,15 +6,10 @@
 
 ## Testing Change
 
+* Update test-build_r_pkg.R to be robust to platform.
 * Update `test-build_r_pkg.R` expectations based on devtools availability.
 * Constrain keyring tests to a temporary keyring directory.
 * Avoid building/installing a generated package inside the vignette during checks.
-
-# Version 0.3.3
-
-## Testing Change
-
-* Update test-build_r_pkg.R to be robust to platform.
 
 # Version 0.3.3
 
