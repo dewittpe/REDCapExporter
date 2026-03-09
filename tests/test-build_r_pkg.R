@@ -1,10 +1,19 @@
 library(REDCapExporter)
 temppath <- tempdir()
 
-build_r_data_package(
-  x            = avs_raw_core,
-  path         = temppath,
-  author_roles = list(dewittp = c("cre", "aut")),
+msgs <- character()
+withCallingHandlers(
+  {
+    build_r_data_package(
+      x            = avs_raw_core,
+      path         = temppath,
+      author_roles = list(dewittp = c("cre", "aut"))
+    )
+  },
+  message = function(m) {
+    msgs <<- c(msgs, conditionMessage(m))
+    invokeRestart("muffleMessage")
+  }
 )
 
 pkgdir <- file.path(temppath, "rcd14465")
@@ -32,7 +41,6 @@ x <- gsub("\\\\", "/", x)
 expected <- sort(c(
   "DESCRIPTION",
   "LICENSE",
-  "NAMESPACE",
   "R",
   "R/datasets.R",
   "data",
@@ -45,14 +53,22 @@ expected <- sort(c(
   "inst/raw-data/metadata.rds",
   "inst/raw-data/project.rds",
   "inst/raw-data/record.rds",
-  "inst/raw-data/user.rds",
-  "man",
-  "man/metadata.Rd",
-  "man/project.Rd",
-  "man/record.Rd",
-  "man/user.Rd"
+  "inst/raw-data/user.rds"
 ))
 
+if (requireNamespace("devtools", quietly = TRUE)) {
+  expected <- sort(c(
+    expected,
+    "NAMESPACE",
+    "man",
+    "man/metadata.Rd",
+    "man/project.Rd",
+    "man/record.Rd",
+    "man/user.Rd"
+  ))
+  stopifnot(!any(grepl("Skipping devtools::document", msgs)))
+} else {
+  stopifnot(any(grepl("Skipping devtools::document", msgs)))
+}
 
 stopifnot(identical(x, expected))
-
