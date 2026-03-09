@@ -1,23 +1,26 @@
 # Version 0.3.4
 
-This submission to cran is comming quickly after the prior submission as a new
-CRAN check failure occured.
+This submission to CRAN is coming shortly after the prior submission because of
+new CRAN check failures.
 
-- Improve testing suite to account for instability of the fs::dir_tree() call on
-  different platforms and R versions.
-
-- Improve testing in general to make it more robust to platform and R versions.
+- Prevent vignette build/install of the generated package (devtools/processx)
+  during checks.
+- Constrain keyring tests to a temporary keyring directory.
+- Gate `devtools::document()` inside `build_r_data_package()` when devtools is
+  not available, and update tests accordingly.
+- Update the personal URL to HTTPS.
 
 ## Testing
 
-- Local MacOS, R 4.5.2
-  - Status OK
+- Local macOS, R 4.5.2
+  - R CMD check --as-cran REDCapExporter_0.3.4.tar.gz
+  - Status: OK (2 NOTEs: no Internet for URL checks, time-stamp check)
 - GitHub Actions
-  - Status OK
+  - Status: OK
 - Windows Builder
-  - Status OK
+  - Status: OK
 - Rhub
-  - Status OK
+  - Status: OK
 
 # Version 0.3.3
 
@@ -268,5 +271,3 @@ be used in the examples and vignettes.
 
 > Please fix and resubmit, and document what was changed in the submission
 > comments.
-
-
