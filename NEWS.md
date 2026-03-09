@@ -1,3 +1,15 @@
+# Version 0.3.4
+
+## Improvements
+
+* Gate `devtools::document()` in `build_r_data_package()` when devtools is not available.
+
+## Testing Change
+
+* Update `test-build_r_pkg.R` expectations based on devtools availability.
+* Constrain keyring tests to a temporary keyring directory.
+* Avoid building/installing a generated package inside the vignette during checks.
+
 # Version 0.3.3
 
 ## Testing Change
