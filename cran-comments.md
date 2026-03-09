@@ -8,6 +8,8 @@ new CRAN check failures.
 - Constrain keyring tests to a temporary keyring directory.
 - Gate `devtools::document()` inside `build_r_data_package()` when devtools is
   not available, and update tests accordingly.
+- Update test-export to use the REDCapR public dev-2 test endpoint/token and
+  skip on curl-related failures.
 - Update the personal URL to HTTPS.
 
 ## Testing
