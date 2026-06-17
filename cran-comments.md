@@ -1,3 +1,20 @@
+# Version 0.3.5
+
+Reduce number of suggested packages and make the package more robust to missing
+suggested packages.
+
+## Testing
+
+- Local macOS, R 4.6.0
+  - R CMD check --as-cran REDCapExporter_0.3.5.tar.gz
+  - Status: OK
+- GitHub Actions
+  - Status: OK
+- Windows Builder
+  - Status: OK
+- Rhub
+  - Status: OK
+
 # Version 0.3.4
 
 This submission to CRAN is coming shortly after the prior submission because of
