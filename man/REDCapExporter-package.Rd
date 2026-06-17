@@ -22,6 +22,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/dewittpe/REDCapExporter}
   \item \url{https://www.peteredewitt.com/REDCapExporter/}
+  \item Report bugs at \url{https://github.com/dewittpe/REDCapExporter/issues}
 }
 
 }
