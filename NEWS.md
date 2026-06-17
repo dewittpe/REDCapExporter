@@ -1,5 +1,8 @@
 # Version 0.3.5
 
+The primary objective of these patches is to make the package more robust to not
+having suggested packages available.
+
 ## Improvements
 
 * Remove the unused `magrittr` from suggested dependencies.
