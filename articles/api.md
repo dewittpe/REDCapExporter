@@ -1,6 +1,7 @@
 # Export Data via the REDCap API
 
 ``` r
+
 library(REDCapExporter)
 ```
 
@@ -30,6 +31,7 @@ REDCap instance. Set this once at the beginning of scripts, in a
 with a uri argument.
 
 ``` r
+
 Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
 ```
 
@@ -42,6 +44,7 @@ supported. csv is the default format and this is set when the namespace
 is loaded.
 
 ``` r
+
 Sys.getenv("REDCap_API_format")
 ```
 
@@ -61,6 +64,7 @@ suggestions follow. Consider the implications of each method carefully
 and use your best judgment and care.
 
 ``` r
+
 Sys.setenv(REDCap_API_TOKEN = "YOURTOKENHERE")
 ```
 
@@ -75,6 +79,7 @@ The *[getPass](https://cran.r-project.org/package=getPass)* package
 would let you input your token, interactively, e.g.
 
 ``` r
+
 Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 ```
 
@@ -106,6 +111,7 @@ variables in a common .Rprofile as part of a collaborative project can
 resolve these issues.
 
 ``` r
+
 Sys.setenv(USER_KEY = "~/.ssh/vaults")  # ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 ```
@@ -113,6 +119,7 @@ Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 Setting the environmental variable could be done via:
 
 ``` r
+
 Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 ```
 
@@ -139,6 +146,7 @@ prompted to add a token for “Project1” and for “Project2.” The last line
 would access the token needed for the given project.
 
 ``` r
+
 REDCapExporter_keyring_check()
 REDCapExporter_add_api_token("Project1")
 REDCapExporter_add_api_token("Project2")
@@ -171,6 +179,7 @@ data package. An example of the return from this method below. It is a
 list of several rcer_raw\_\* objects.
 
 ``` r
+
 data(avs_raw_core)
 lapply(avs_raw_core, class)
 ## $project_raw
@@ -191,6 +200,7 @@ lapply(avs_raw_core, class)
 The `export_content` method has five arguments:
 
 ``` r
+
 args(export_content)
 ## function (content, uri = NULL, token = NULL, format = NULL, ...) 
 ## NULL
@@ -233,6 +243,7 @@ An example: the metadata, i.e., data dictionary, for the 2000-2001
 Colorado Avalanche data set could be retrieved via
 
 ``` r
+
 avs_raw_metadata <- export_content(content = "metadata")
 ```
 
@@ -241,6 +252,7 @@ the above code, the `avs_raw_metadata` object is available as a data
 set.
 
 ``` r
+
 ls()
 ## [1] "avs_raw_core"
 data(avs_raw_metadata)
@@ -260,6 +272,7 @@ Using the as.data.frame methods will help you get the return from REDCap
 into a usable form:
 
 ``` r
+
 avs_metadata <- as.data.frame(avs_raw_metadata)
 str(avs_metadata)
 ## Classes 'rcer_metadata' and 'data.frame':    67 obs. of  18 variables:

@@ -42,6 +42,7 @@ A `data.frame`
 ## Examples
 
 ``` r
+
 data("avs_raw_metadata")
 data("avs_raw_record")
 

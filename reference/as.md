@@ -37,6 +37,7 @@ exports from the REDCap API.
 ## Examples
 
 ``` r
+
 data("avs_raw_record")
 
 avs_record <- as.data.frame(avs_raw_record)

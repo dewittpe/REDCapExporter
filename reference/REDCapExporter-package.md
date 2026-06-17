@@ -24,3 +24,8 @@ Useful links:
 
 **Maintainer**: Peter DeWitt <peter.dewitt@cuanschutz.edu>
 ([ORCID](https://orcid.org/0000-0002-6391-0795))
+
+Authors:
+
+- Peter DeWitt <peter.dewitt@cuanschutz.edu>
+  ([ORCID](https://orcid.org/0000-0002-6391-0795))

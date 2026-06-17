@@ -1,12 +1,36 @@
 # Changelog
 
-## Version 0.3.4
+## Version 0.3.5
 
 ### Improvements
 
-- Gate
-  [`devtools::document()`](https://devtools.r-lib.org/reference/document.html)
-  in
+- Remove the unused `magrittr` from suggested dependencies.
+- Remove `fs` from suggested dependencies. Examples and vignettes now
+  use base R’s [`list.files()`](https://rdrr.io/r/base/list.files.html)
+  instead of
+  [`fs::dir_tree()`](https://fs.r-lib.org/reference/dir_tree.html).
+- Use
+  [`roxygen2::roxygenize()`](https://roxygen2.r-lib.org/reference/roxygenize.html)
+  instead of `devtools::document()` when documenting generated data
+  packages.
+- Show base `R CMD build` in the generated package vignette example
+  instead of `devtools::build()`.
+- Add `roxygen2` and the roxygen2 configuration field to generated data
+  package DESCRIPTION files so documentation tooling is declared
+  explicitly.
+
+### Testing Change
+
+- Check generated data package DESCRIPTION files for the expected
+  roxygen2 metadata.
+
+## Version 0.3.4
+
+CRAN release: 2026-03-09
+
+### Improvements
+
+- Gate `devtools::document()` in
   [`build_r_data_package()`](http://www.peteredewitt.com/REDCapExporter/reference/build_r_data_package.md)
   when devtools is not available.
 

@@ -44,21 +44,21 @@ a `rcer_col_type` object
 
 REDCap text fields for dates and times are formatted via lubridate
 
-|                      |                                                                     |
-|----------------------|---------------------------------------------------------------------|
-| REDCap               | lubridate parsing function                                          |
-| ———————              | ————————–                                                           |
-| date_mdy             | [`mdy`](https://lubridate.tidyverse.org/reference/ymd.html)         |
-| date_dmy             | [`dmy`](https://lubridate.tidyverse.org/reference/ymd.html)         |
-| date_ymd             | [`ymd`](https://lubridate.tidyverse.org/reference/ymd.html)         |
-| datetime_dmy         | [`dmy_hm`](https://lubridate.tidyverse.org/reference/ymd_hms.html)  |
-| datetime_mdy         | [`mdy_hm`](https://lubridate.tidyverse.org/reference/ymd_hms.html)  |
-| datetime_ymd         | [`ymd_hm`](https://lubridate.tidyverse.org/reference/ymd_hms.html)  |
+|  |  |
+|----|----|
+| REDCap | lubridate parsing function |
+| ——————— | ————————– |
+| date_mdy | [`mdy`](https://lubridate.tidyverse.org/reference/ymd.html) |
+| date_dmy | [`dmy`](https://lubridate.tidyverse.org/reference/ymd.html) |
+| date_ymd | [`ymd`](https://lubridate.tidyverse.org/reference/ymd.html) |
+| datetime_dmy | [`dmy_hm`](https://lubridate.tidyverse.org/reference/ymd_hms.html) |
+| datetime_mdy | [`mdy_hm`](https://lubridate.tidyverse.org/reference/ymd_hms.html) |
+| datetime_ymd | [`ymd_hm`](https://lubridate.tidyverse.org/reference/ymd_hms.html) |
 | datetime_seconds_dmy | [`dmy_hms`](https://lubridate.tidyverse.org/reference/ymd_hms.html) |
 | datetime_seconds_mdy | [`mdy_hms`](https://lubridate.tidyverse.org/reference/ymd_hms.html) |
 | datetime_seconds_ymd | [`ymd_hms`](https://lubridate.tidyverse.org/reference/ymd_hms.html) |
-| time                 | [`hm`](https://lubridate.tidyverse.org/reference/hms.html)          |
-| time_mm_ss           | [`ms`](https://lubridate.tidyverse.org/reference/hms.html)          |
+| time | [`hm`](https://lubridate.tidyverse.org/reference/hms.html) |
+| time_mm_ss | [`ms`](https://lubridate.tidyverse.org/reference/hms.html) |
 
 Other text files are coerced as
 
@@ -93,6 +93,7 @@ strings. REDCapExporter attempts to coerce the
 ## Examples
 
 ``` r
+
 data("avs_raw_metadata")
 col_type(avs_raw_metadata)
 #> $record_id

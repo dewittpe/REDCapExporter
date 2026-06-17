@@ -87,50 +87,39 @@ library(REDCapExporter)
 data(avs_raw_core)
 tmppth <- tempdir()
 build_r_data_package(avs_raw_core, tmppth, author_roles = list(dewittp = c("cre", "aut")))
-#> Creating source package at /tmp/RtmpF26E9H/rcd14465
-#> ℹ Updating rcd14465 documentation
-#> First time using roxygen2. Upgrading automatically...
-#> ℹ Setting RoxygenNote to "7.3.3"
+#> Creating source package at /tmp/RtmpLXobhx/rcd14465
 #> ℹ Loading rcd14465
 #> Writing NAMESPACE
 #> Writing project.Rd
 #> Writing metadata.Rd
 #> Writing user.Rd
 #> Writing record.Rd
-fs::dir_tree(tmppth)
-#> /tmp/RtmpF26E9H
-#> ├── bslib-246362e7e3ff6191071d5f9b40ba8d62
-#> │   ├── bootstrap.bundle.min.js
-#> │   ├── bootstrap.bundle.min.js.map
-#> │   └── bootstrap.min.css
-#> ├── downlit
-#> │   ├── REDCapExporter
-#> │   ├── base
-#> │   ├── pak
-#> │   ├── stats
-#> │   └── utils
-#> ├── file1cd935fcd9a9
-#> ├── file1cd9583cb541
-#> └── rcd14465
-#>     ├── DESCRIPTION
-#>     ├── LICENSE
-#>     ├── NAMESPACE
-#>     ├── R
-#>     │   └── datasets.R
-#>     ├── data
-#>     │   ├── metadata.rda
-#>     │   ├── project.rda
-#>     │   ├── record.rda
-#>     │   └── user.rda
-#>     ├── inst
-#>     │   └── raw-data
-#>     │       ├── metadata.rds
-#>     │       ├── project.rds
-#>     │       ├── record.rds
-#>     │       └── user.rds
-#>     └── man
-#>         ├── metadata.Rd
-#>         ├── project.Rd
-#>         ├── record.Rd
-#>         └── user.Rd
+list.files(tmppth, recursive = TRUE, all.files = TRUE, no.. = TRUE)
+#>  [1] "bslib-71d7f13118c36706c39339f77436fb7b/.sass_cache_keys"           
+#>  [2] "bslib-71d7f13118c36706c39339f77436fb7b/bootstrap.bundle.min.js"    
+#>  [3] "bslib-71d7f13118c36706c39339f77436fb7b/bootstrap.bundle.min.js.map"
+#>  [4] "bslib-71d7f13118c36706c39339f77436fb7b/bootstrap.min.css"          
+#>  [5] "downlit/REDCapExporter"                                            
+#>  [6] "downlit/base"                                                      
+#>  [7] "downlit/pak"                                                       
+#>  [8] "downlit/stats"                                                     
+#>  [9] "downlit/utils"                                                     
+#> [10] "file1adb1e5cbd8c"                                                  
+#> [11] "file1adb46919aa4"                                                  
+#> [12] "rcd14465/DESCRIPTION"                                              
+#> [13] "rcd14465/LICENSE"                                                  
+#> [14] "rcd14465/NAMESPACE"                                                
+#> [15] "rcd14465/R/datasets.R"                                             
+#> [16] "rcd14465/data/metadata.rda"                                        
+#> [17] "rcd14465/data/project.rda"                                         
+#> [18] "rcd14465/data/record.rda"                                          
+#> [19] "rcd14465/data/user.rda"                                            
+#> [20] "rcd14465/inst/raw-data/metadata.rds"                               
+#> [21] "rcd14465/inst/raw-data/project.rds"                                
+#> [22] "rcd14465/inst/raw-data/record.rds"                                 
+#> [23] "rcd14465/inst/raw-data/user.rds"                                   
+#> [24] "rcd14465/man/metadata.Rd"                                          
+#> [25] "rcd14465/man/project.Rd"                                           
+#> [26] "rcd14465/man/record.Rd"                                            
+#> [27] "rcd14465/man/user.Rd"                                              
 ```

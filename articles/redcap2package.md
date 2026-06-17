@@ -17,6 +17,7 @@ successfully. Given that call requires access to REDCap, the example
 data set `avs_raw_core` is provided.
 
 ``` r
+
 data(avs_raw_core, package = "REDCapExporter")
 str(avs_raw_core)
 ## List of 4
@@ -79,6 +80,7 @@ author role. To be a valid R package, at least one user will need to
 have the creator role assigned.
 
 ``` r
+
 temppath <- tempdir()
 
 build_r_data_package(
@@ -86,10 +88,7 @@ build_r_data_package(
   path         = temppath,
   author_roles = list(dewittp = c("cre", "aut"))
 )
-## Creating source package at /tmp/RtmpPQOPx6/rcd14465
-## ℹ Updating rcd14465 documentation
-## First time using roxygen2. Upgrading automatically...
-## ℹ Setting RoxygenNote to "7.3.3"
+## Creating source package at /tmp/RtmpPb5rc0/rcd14465
 ## ℹ Loading rcd14465
 ## Writing NAMESPACE
 ## Writing project.Rd
@@ -101,34 +100,18 @@ build_r_data_package(
 The resulting directory is: echo = FALSE, results = “markup”
 
 ``` r
-fs::dir_tree(temppath)
-## /tmp/RtmpPQOPx6
-## ├── file1ebe2fbb054b
-## ├── file1ebe745afc3b
-## ├── file1ebe789d2e0
-## ├── rcd14465
-## │   ├── DESCRIPTION
-## │   ├── LICENSE
-## │   ├── NAMESPACE
-## │   ├── R
-## │   │   └── datasets.R
-## │   ├── data
-## │   │   ├── metadata.rda
-## │   │   ├── project.rda
-## │   │   ├── record.rda
-## │   │   └── user.rda
-## │   ├── inst
-## │   │   └── raw-data
-## │   │       ├── metadata.rds
-## │   │       ├── project.rds
-## │   │       ├── record.rds
-## │   │       └── user.rds
-## │   └── man
-## │       ├── metadata.Rd
-## │       ├── project.Rd
-## │       ├── record.Rd
-## │       └── user.Rd
-## └── rmarkdown-str1ebe12d815d8.html
+
+list.files(temppath, recursive = TRUE, all.files = TRUE, no.. = TRUE)
+##  [1] "file1c5e2d1b0f6d"                    "file1c5e32801c8"                    
+##  [3] "file1c5e3c45f60"                     "rcd14465/data/metadata.rda"         
+##  [5] "rcd14465/data/project.rda"           "rcd14465/data/record.rda"           
+##  [7] "rcd14465/data/user.rda"              "rcd14465/DESCRIPTION"               
+##  [9] "rcd14465/inst/raw-data/metadata.rds" "rcd14465/inst/raw-data/project.rds" 
+## [11] "rcd14465/inst/raw-data/record.rds"   "rcd14465/inst/raw-data/user.rds"    
+## [13] "rcd14465/LICENSE"                    "rcd14465/man/metadata.Rd"           
+## [15] "rcd14465/man/project.Rd"             "rcd14465/man/record.Rd"             
+## [17] "rcd14465/man/user.Rd"                "rcd14465/NAMESPACE"                 
+## [19] "rcd14465/R/datasets.R"               "rmarkdown-str1c5e3df4e4b5.html"
 ```
 
 ### Details on exported Files
@@ -140,21 +123,22 @@ used in the DESCRIPTION file.
 The DESCRIPTION file is
 
 ``` r
+
 prj_dir <- list.dirs(temppath)
 prj_dir <- prj_dir[grepl("/rcd\\d+$", prj_dir)]
 t(read.dcf(paste(prj_dir, "DESCRIPTION", sep = "/")))
-##                 [,1]                                                                                                                                                                                                                                                                                                                                                      
-## Package         "rcd14465"                                                                                                                                                                                                                                                                                                                                                
-## Title           "2000-2001 Colorado Avalanche"                                                                                                                                                                                                                                                                                                                            
-## Version         "2026.03.09.17.58"                                                                                                                                                                                                                                                                                                                                        
-## Authors@R       "c(person(given = \"Tell\", family = \"Bennett\", email = \"tell.bennett@ucdenver.edu\", role = c(\"ctb\")),\nperson(given = \"Peter\", family = \"DeWitt\", email = \"peter.dewitt@cuanschutz.edu\", role = c(\"cre\", \"aut\")),\nperson(given = \"Alexandria\", family = \"Jensen\", email = \"alexandria.jensen@cuanschutz.edu\", role = c(\"ctb\")))"
-## Description     "Data and documentation from the REDCap Project."                                                                                                                                                                                                                                                                                                         
-## License         "file LICENSE"                                                                                                                                                                                                                                                                                                                                            
-## Encoding        "UTF-8"                                                                                                                                                                                                                                                                                                                                                   
-## LazyData        "true"                                                                                                                                                                                                                                                                                                                                                    
-## Suggests        "knitr"                                                                                                                                                                                                                                                                                                                                                   
-## VignetteBuilder "knitr"                                                                                                                                                                                                                                                                                                                                                   
-## RoxygenNote     "7.3.3"
+##                         [,1]                                                                                                                                                                                                                                                                                                                                                      
+## Package                 "rcd14465"                                                                                                                                                                                                                                                                                                                                                
+## Title                   "2000-2001 Colorado Avalanche"                                                                                                                                                                                                                                                                                                                            
+## Version                 "2026.06.17.22.19"                                                                                                                                                                                                                                                                                                                                        
+## Authors@R               "c(person(given = \"Tell\", family = \"Bennett\", email = \"tell.bennett@ucdenver.edu\", role = c(\"ctb\")),\nperson(given = \"Peter\", family = \"DeWitt\", email = \"peter.dewitt@cuanschutz.edu\", role = c(\"cre\", \"aut\")),\nperson(given = \"Alexandria\", family = \"Jensen\", email = \"alexandria.jensen@cuanschutz.edu\", role = c(\"ctb\")))"
+## Description             "Data and documentation from the REDCap Project."                                                                                                                                                                                                                                                                                                         
+## License                 "file LICENSE"                                                                                                                                                                                                                                                                                                                                            
+## Encoding                "UTF-8"                                                                                                                                                                                                                                                                                                                                                   
+## LazyData                "true"                                                                                                                                                                                                                                                                                                                                                    
+## Suggests                "knitr,\nroxygen2"                                                                                                                                                                                                                                                                                                                                        
+## VignetteBuilder         "knitr"                                                                                                                                                                                                                                                                                                                                                   
+## Config/roxygen2/version "8.0.0"
 ```
 
 The title comes from the project info recorded in REDCap. The version
@@ -166,6 +150,7 @@ installed or distributed to others who are not authorized to have access
 to the data.
 
 ``` r
+
 cat(readLines(paste(prj_dir[1], "LICENSE", sep = "/")), sep = "\n")
 ## Proprietary
 ## 
@@ -187,24 +172,33 @@ can be accessed in an interactive R session.
 Let’s install the package and explore the contents.
 
 ``` r
-tar_ball <- devtools::build(pkg = prj_dir)
+
+system2("R", c("CMD", "build", prj_dir))
+tar_ball <- list.files(
+  pattern = paste0(basename(prj_dir), "_.*[.]tar[.]gz$"),
+  full.names = TRUE
+)
+tar_ball <- tar_ball[which.max(file.info(tar_ball)$mtime)]
 tar_ball
 
 install.packages(pkgs = tar_ball, lib = temppath)
 ```
 
 ``` r
+
 library(rcd14465, lib.loc = temppath)
 ```
 
 The available data sets:
 
 ``` r
+
 data(package = "rcd14465")$results
 ```
 
 A simple data analysis question: how many goals were scored by position?
 
 ``` r
+
 aggregate(goals ~ position, data = record, FUN = sum)
 ```

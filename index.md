@@ -39,6 +39,7 @@ the data on the local disk.
 Install the released version from CRAN:
 
 ``` r
+
 install.packages("REDCapExporter", repos = "https://cran.rstudio.com")
 ```
 
@@ -46,6 +47,7 @@ You can install the development version of REDCapExporter from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("dewittpe/REDCapExporter")
 ```
@@ -61,6 +63,7 @@ There are several ways to do this. A simple way is based on the
 [keyring](https://keyring.r-lib.org/) package.
 
 ``` r
+
 library(REDCapExporter)
 
 # Check if a file based keyring called "REDCapExporter" exists and create one if
@@ -79,6 +82,7 @@ variable and use `REDCapExporter_get_api_token` to retrieve the token
 from the keyring.
 
 ``` r
+
 Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("PROJECT1"))
 ```
 
@@ -89,6 +93,7 @@ the call to `export_core`. It is recommended to set the environmental
 variable for easy of use.
 
 ``` r
+
 Sys.setenv(REDCap_API_URI = "https://<your-redcap-domain>/api/")
 ```
 
@@ -96,6 +101,7 @@ Export the data from REDCap and format it, based on the metadata of the
 REDCap project via:
 
 ``` r
+
 project1_redcap_core <- export_core()
 project1 <- format_record(project1_redcap_core)
 ```
@@ -112,6 +118,7 @@ The data set `avs_raw_core` was generated via the following, after
 setting up my keyring and token as described above.
 
 ``` r
+
 library(REDCapExporter)
 Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
 Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("2000_2001_Avalanche"))
@@ -127,6 +134,7 @@ A simple summary statistic from the data set: the number of goals scored
 by position:
 
 ``` r
+
 aggregate(goals ~ position, data = avsDF, FUN = sum)
 #>     position goals
 #> 1       Goal     0
