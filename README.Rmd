@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
 ![R-CMD-check](https://github.com/dewittpe/REDCapExporter/workflows/R-CMD-check/badge.svg)
 [![Codecov test coverage](https://codecov.io/gh/dewittpe/REDCapExporter/graph/badge.svg)](https://app.codecov.io/gh/dewittpe/REDCapExporter)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/REDCapExporter)](https://cran.r-project.org/package=REDCapExporter)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/REDCapExporter)](http://www.r-pkg.org/pkg/REDCapExporter)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/REDCapExporter)](https://www.r-pkg.org/pkg/REDCapExporter)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/REDCapExporter)](https://www.r-pkg.org/pkg/REDCapExporter)
 <!-- badges: end -->
 
 The goal of REDCapExporter is to provide a simple and relatively secure way to
