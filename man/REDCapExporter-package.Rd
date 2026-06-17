@@ -28,5 +28,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Peter DeWitt \email{peter.dewitt@cuanschutz.edu} (\href{https://orcid.org/0000-0002-6391-0795}{ORCID})
 
+Authors:
+\itemize{
+  \item Peter DeWitt \email{peter.dewitt@cuanschutz.edu} (\href{https://orcid.org/0000-0002-6391-0795}{ORCID})
+}
+
 }
 \keyword{internal}
