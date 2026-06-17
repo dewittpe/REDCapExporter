@@ -45,11 +45,15 @@ all: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 .document.Rout: $(SRC) $(RFILES) $(DATATARGETS) $(EXAMPLES) $(VIGNETTES) $(PKG_ROOT)/DESCRIPTION $(PKG_ROOT)/README.md
 	$(RSCRIPT) --quiet -e "options(warn = 2)" \
+		-e "if (!requireNamespace('devtools', quietly=TRUE)) install.packages('devtools', repos='$(CRAN)')" \
 		-e "devtools::document('$(PKG_ROOT)')"
 	touch $@
 
 $(PKG_ROOT)/README.md : $(PKG_ROOT)/README.Rmd
 	$(RSCRIPT) --quiet -e "options(warn = 2)" \
+		-e "if (!requireNamespace('devtools', quietly=TRUE)) install.packages('devtools', repos='$(CRAN)')" \
+		-e "if (!requireNamespace('knitr', quietly=TRUE)) install.packages('knitr', repos='$(CRAN)')" \
+		-e "devtools::load_all()" \
 		-e "knitr::knit('$(PKG_ROOT)/README.Rmd', output = 'README.md')"
 
 $(DATATARGETS) &: $(PKG_ROOT)/data-raw/avs-exports.R $(PKG_ROOT)/R/export_redcap_project.R $(PKG_ROOT)/R/keyring.R
@@ -73,8 +77,7 @@ install: $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
 codecov :
 	$(R) --quiet\
-		-e "if (!requireNamespace('covr', quietly=TRUE)) \
-	       install.packages('covr', repos='$(CRAN)')" \
+		-e "if (!requireNamespace('covr', quietly=TRUE)) install.packages('covr', repos='$(CRAN)')" \
 		-e "covr::report(x = covr::package_coverage(type = 'all'), file = 'codecover.html')"
 
 clean:
