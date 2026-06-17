@@ -131,7 +131,12 @@ check
 #'
 #' Let's install the package and explore the contents.
 #+ eval = FALSE
-tar_ball <- devtools::build(pkg = prj_dir)
+system2("R", c("CMD", "build", prj_dir))
+tar_ball <- list.files(
+  pattern = paste0(basename(prj_dir), "_.*[.]tar[.]gz$"),
+  full.names = TRUE
+)
+tar_ball <- tar_ball[which.max(file.info(tar_ball)$mtime)]
 tar_ball
 
 install.packages(pkgs = tar_ball, lib = temppath)

@@ -7,6 +7,8 @@
   vignettes now use base R's `list.files()` instead of `fs::dir_tree()`.
 * Use `roxygen2::roxygenize()` instead of `devtools::document()` when
   documenting generated data packages.
+* Show base `R CMD build` in the generated package vignette example instead of
+  `devtools::build()`.
 * Add `roxygen2` and the roxygen2 configuration field to generated data package
   DESCRIPTION files so documentation tooling is declared explicitly.
 
