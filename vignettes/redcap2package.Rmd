@@ -163,3 +163,4 @@ A simple data analysis question: how many goals were scored by position?
 ```{r eval = FALSE}
 aggregate(goals ~ position, data = record, FUN = sum)
 ```
+

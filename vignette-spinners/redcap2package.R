@@ -130,6 +130,7 @@ check
 #' ## Using the Exported Package
 #'
 #' Let's install the package and explore the contents.
+#+ eval = FALSE
 tar_ball <- devtools::build(pkg = prj_dir)
 tar_ball
 
@@ -138,13 +139,15 @@ install.packages(pkgs = tar_ball, lib = temppath)
 #+ eval = FALSE
 library(rcd14465, lib.loc = temppath)
 
-#+ include = FALSE
+#+ include = FALSE, eval = FALSE
 do.call(library, args = list(package = "rcd14465", character.only = TRUE, lib.loc = temppath))
 
 #'
 #' The available data sets:
+#+ eval = FALSE
 data(package = "rcd14465")$results
 
 #'
 #' A simple data analysis question: how many goals were scored by position?
+#+ eval = FALSE
 aggregate(goals ~ position, data = record, FUN = sum)

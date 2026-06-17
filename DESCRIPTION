@@ -23,12 +23,12 @@ Imports:
     lubridate,
     rjson
 Suggests:
-    devtools,
     getPass,
     kableExtra,
     knitr,
     qwraps2 (> 0.4.1),
     rmarkdown,
+    roxygen2,
     secret
 VignetteBuilder: knitr, rmarkdown
 Config/roxygen2/version: 8.0.0

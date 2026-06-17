@@ -130,10 +130,10 @@ build_r_data_package.rcer_rccore <- function(x, path = NULL, author_roles = NULL
       file = paste(path, "R/datasets.R", sep = "/")
   )
 
-  if (requireNamespace("devtools", quietly = TRUE)) {
-    devtools::document(path)
+  if (requireNamespace("roxygen2", quietly = TRUE)) {
+    roxygen2::roxygenize(path, roclets = c("namespace", "rd"))
   } else {
-    message("Skipping devtools::document(): 'devtools' is not available.")
+    message("Skipping documentation: 'roxygen2' is not available.")
   }
 
   invisible(TRUE)

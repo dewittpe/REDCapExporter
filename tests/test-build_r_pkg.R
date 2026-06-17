@@ -58,7 +58,7 @@ expected <- sort(c(
   "inst/raw-data/user.rds"
 ))
 
-if (requireNamespace("devtools", quietly = TRUE)) {
+if (requireNamespace("roxygen2", quietly = TRUE)) {
   expected <- sort(c(
     expected,
     "NAMESPACE",
@@ -68,9 +68,9 @@ if (requireNamespace("devtools", quietly = TRUE)) {
     "man/record.Rd",
     "man/user.Rd"
   ))
-  stopifnot(!any(grepl("Skipping devtools::document", msgs)))
+  stopifnot(!any(grepl("Skipping documentation", msgs)))
 } else {
-  stopifnot(any(grepl("Skipping devtools::document", msgs)))
+  stopifnot(any(grepl("Skipping documentation", msgs)))
 }
 
 stopifnot(identical(x, expected))
