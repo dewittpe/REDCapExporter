@@ -28,7 +28,6 @@ Suggests:
     getPass,
     kableExtra,
     knitr,
-    magrittr,
     qwraps2 (> 0.4.1),
     rmarkdown,
     secret
