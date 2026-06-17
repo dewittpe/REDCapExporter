@@ -38,8 +38,9 @@ write_description_file <- function(access_time, user, roles, project_info, path)
       "License: file LICENSE\n",
       "Encoding: UTF-8\n",
       "LazyData: true\n",
-      "Suggests:\n    knitr\n",
+      "Suggests:\n    knitr,\n    roxygen2\n",
       "VignetteBuilder: knitr\n",
+      "Config/roxygen2/version: 8.0.0\n",
       sep = "", file = paste(path, "DESCRIPTION", sep = "/"), append = FALSE)
 
   invisible()
