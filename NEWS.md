@@ -14,6 +14,7 @@ having suggested packages available.
   `devtools::build()`.
 * Add `roxygen2` and the roxygen2 configuration field to generated data package
   DESCRIPTION files so documentation tooling is declared explicitly.
+* Add BugReports url to `DESCRIPTION`
 
 ## Testing Change
 
