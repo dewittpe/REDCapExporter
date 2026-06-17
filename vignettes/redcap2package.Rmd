@@ -89,7 +89,7 @@ The resulting directory is:
 echo = FALSE, results = "markup"
 
 ```{r}
-fs::dir_tree(temppath)
+list.files(temppath, recursive = TRUE, all.files = TRUE, no.. = TRUE)
 ```
 
 

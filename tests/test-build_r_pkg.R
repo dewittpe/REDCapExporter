@@ -22,7 +22,9 @@ pkgdir <- file.path(temppath, "rcd14465")
 d <- read.dcf(file.path(pkgdir, "DESCRIPTION"))
 stopifnot(
   d[1, "Package"] == "rcd14465",
-  grepl("\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{2}", d[1, "Version"])
+  grepl("\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{2}", d[1, "Version"]),
+  all(c("knitr", "roxygen2") %in% trimws(strsplit(d[1, "Suggests"], ",")[[1]])),
+  d[1, "Config/roxygen2/version"] == "8.0.0"
 )
 
 # check the file structure of the built package

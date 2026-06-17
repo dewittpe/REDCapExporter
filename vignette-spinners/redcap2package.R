@@ -82,7 +82,7 @@ build_r_data_package(
 #'
 #' The resulting directory is:
 #' echo = FALSE, results = "markup"
-fs::dir_tree(temppath)
+list.files(temppath, recursive = TRUE, all.files = TRUE, no.. = TRUE)
 
 #'
 #' ## Details on exported Files

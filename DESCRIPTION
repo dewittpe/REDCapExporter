@@ -1,6 +1,6 @@
 Package: REDCapExporter
 Title: Automated Construction of R Data Packages from REDCap Projects
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: c(
     person(given = "Peter", family = "DeWitt",  email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6391-0795"))
     )
@@ -24,7 +24,6 @@ Imports:
     rjson
 Suggests:
     devtools,
-    fs,
     getPass,
     kableExtra,
     knitr,

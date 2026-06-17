@@ -1,3 +1,18 @@
+# Version 0.3.5
+
+## Improvements
+
+* Remove the unused `magrittr` from suggested dependencies.
+* Remove `fs` from suggested dependencies.  Examples and
+  vignettes now use base R's `list.files()` instead of `fs::dir_tree()`.
+* Add `roxygen2` and the roxygen2 configuration field to generated data package
+  DESCRIPTION files so documentation tooling is declared explicitly.
+
+## Testing Change
+
+* Check generated data package DESCRIPTION files for the expected roxygen2
+  metadata.
+
 # Version 0.3.4
 
 ## Improvements

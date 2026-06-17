@@ -69,6 +69,6 @@ library(REDCapExporter)
 data(avs_raw_core)
 tmppth <- tempdir()
 build_r_data_package(avs_raw_core, tmppth, author_roles = list(dewittp = c("cre", "aut")))
-fs::dir_tree(tmppth)
+list.files(tmppth, recursive = TRUE, all.files = TRUE, no.. = TRUE)
 
 }
