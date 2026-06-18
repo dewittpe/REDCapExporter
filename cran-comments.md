@@ -65,7 +65,7 @@ new CRAN check failures.
 # Version 0.3.1
 - Initial submission 6 Nov 2024
 
-- Code fixes to improve backward compatability by omitting the use of the `|>`
+- Code fixes to improve backward compatibility by omitting the use of the `|>`
   operator
 
 - Passing all local and Rhub checks.
@@ -91,8 +91,8 @@ new CRAN check failures.
 
 * Rhub
 
-  * Status okay on all OS with exceptions of those using the clang complier.  In
-    those cases suggeted packages failed to build and the vignette code failed
+  * Status okay on all OS with exceptions of those using the clang compiler.  In
+    those cases suggested packages failed to build and the vignette code failed
     to run during the checks.
 
 # Version 0.2.2
@@ -201,7 +201,7 @@ new CRAN check failures.
 
 Due to the extended documentation and some redesign of the code base to support
 examples which can be evaluated in interactive sessions by the end users I have
-bumped the version number form the initial submission of 0.0.3 to the submitted
+bumped the version number from the initial submission of 0.0.3 to the submitted
 0.1.0.
 
 ## Testing Environments
@@ -285,7 +285,7 @@ Done.  Thank you for identifying the spelling error.
 
 I have added several data sets and redesigned some of the functions in the
 package to allow for examples.  The original design required calls to an
-external API.  The redesign uses snapshots of exapected returns from the API to
+external API.  The redesign uses snapshots of expected returns from the API to
 be used in the examples and vignettes.
 
 > Please fix and resubmit, and document what was changed in the submission

@@ -4,7 +4,7 @@
 #'
 #' Use the REDCap (Research Electronic Data Capture) API to access (meta)data
 #' from a project and format for immediate use or as part of the source code for
-#' a R Data package.
+#' an R data package.
 #'
 #' Please read the vignette for examples and use cases.
 #'
@@ -12,4 +12,3 @@
 #'
 #' @keywords internal
 "_PACKAGE"
-

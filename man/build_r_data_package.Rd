@@ -30,8 +30,8 @@ build_r_data_package(x, ...)
 created/overwritten.}
 
 \item{author_roles}{a list naming specific roles for each user id found in
-the user table from an exported project.  By default all users with be
-contributors ('ctb').  You will need to define a author/creator.}
+the user table from an exported project.  By default all users will be
+contributors ('ctb').  You will need to define an author/creator.}
 
 \item{verbose}{provide messages to tell the user what is happening}
 
@@ -46,7 +46,7 @@ used.}
 \code{Sys.getenv("REDCap_API_format")} is used.}
 }
 \description{
-Build a R Data Package from the core contents of a REDCap Project.
+Build an R Data Package from the core contents of a REDCap Project.
 }
 \details{
 To export the data from a REDCap project you will need to have an API Token.

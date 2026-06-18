@@ -1,6 +1,6 @@
 #' Build R Data Package
 #'
-#' Build a R Data Package from the core contents of a REDCap Project.
+#' Build an R Data Package from the core contents of a REDCap Project.
 #'
 #' To export the data from a REDCap project you will need to have an API Token.
 #' Remember, the token is the equivalent of a username and password.  As such
@@ -35,8 +35,8 @@ build_r_data_package <- function(x, ...) {
 #' @param path Path where the exported project source will be
 #' created/overwritten.
 #' @param author_roles a list naming specific roles for each user id found in
-#' the user table from an exported project.  By default all users with be
-#' contributors ('ctb').  You will need to define a author/creator.
+#' the user table from an exported project.  By default all users will be
+#' contributors ('ctb').  You will need to define an author/creator.
 #' @param verbose provide messages to tell the user what is happening
 #' @rdname build_r_data_package
 #' @export

@@ -12,11 +12,11 @@ write_authors(user, roles = NULL)
 \arguments{
 \item{access_time}{The \code{Sys.time()} when the API calls were made}
 
-\item{user}{User(s), as noted in the REDCap project meta data.  This
+\item{user}{User(s), as noted in the REDCap project metadata.  This
 parameter is singular as it refers to the "user" content one can access from
 the REDCap API.}
 
-\item{roles}{roles the \code{user} hold with respect to the R data package.
+\item{roles}{roles the \code{user} holds with respect to the R data package.
 These roles have no relationship to REDCap roles.}
 
 \item{project_info}{project metadata}
@@ -24,8 +24,8 @@ These roles have no relationship to REDCap roles.}
 \item{path}{path to the root for the generated R data package.}
 }
 \description{
-Create the DESCRIPTION file for the R Data package based on an Exported
-REDCap Project
+Create the DESCRIPTION file for the R data package based on an exported
+REDCap project.
 }
 \details{
 This is a non-exported function and is not expected to be called by the end

@@ -22,8 +22,8 @@ library(REDCapExporter)
 #'
 #' The purpose of this vignette is to show examples of exporting elements of a
 #' REDCap project via the REDCap (Research Electronic Data Capture) API.  The
-#' examples in this vignette rely on use of a API token which cannot be divulged
-#' and thus the end users will not be able to reproduce the following examples
+#' examples in this vignette rely on an API token which cannot be divulged,
+#' so end users will not be able to reproduce the following examples
 #' exactly, but hopefully will be able to use these examples as a guide for
 #' their own use.
 #'
@@ -33,12 +33,12 @@ library(REDCapExporter)
 #' The example data provided in this package are statistics from the 2000-2001
 #' National Hockey League Stanley Cup Champion Colorado Avalanche.  The data was
 #' transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html)
-#' into a REDCap Project hosed at the University of Colorado Denver.
+#' into a REDCap project hosted at the University of Colorado Denver.
 #'
 #' # System Environment Variables
 #'
 {{ qwraps2::CRANpkg(REDCapExporter) }}
-#' can use three system variables to simplify the user's interaction with the
+#' can use three environment variables to simplify the user's interaction with the
 #' REDCap API.  The first variable is the URI for your institution's REDCap
 #' instance.  Set this once at the beginning of scripts, in a .Rprofile, and
 #' this will be the default uri used in any function call with a uri argument.
@@ -46,7 +46,7 @@ library(REDCapExporter)
 Sys.setenv(REDCap_API_URI = "https://redcap.ucdenver.edu/api/")
 
 #'
-#' An environmental variable can be used to specify is the format for data to be
+#' An environment variable can be used to specify the format for data to be
 #' returned in from the API.
 #' Possible values for the API are 'csv', 'xml', or 'json'.   However, within
 #' the
@@ -59,7 +59,7 @@ Sys.getenv("REDCap_API_format")
 #'
 #' Lastly, but the most important with respect to security, is the API token.
 #' You will need to have API export rights for the REDCap project you are
-#' looking to export into an R data package.  Contact the project owner, system
+#' exporting into an R data package.  Contact the project owner, system
 #' admin, or go through your institution's REDCap web page to acquire an API token.
 #'
 #' Remember, your API token is the equivalent of a username/password
@@ -106,11 +106,11 @@ Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 #' encrypted via ssh keys.
 #' We encourage the reader to read the "secrets" vignette in R via:
 {{ qwraps2::backtick(vignette(topic = "secrets", package = "secret")) }}
-#' for details on the use of the secret package.
+#' for details on the secret package.
 #'
 #' Pros of this approach: the API key can be encrypted and stored within the
 #' version control repository for the project you are working on.  This will
-#' make it easy move the project form machine to machine where the same private
+#' make it easy to move the project from machine to machine where the same private
 #' ssh key exists.
 #'
 #' Downsides to this approach: if your ssh key has a passphrase you'll need to
@@ -119,7 +119,7 @@ Sys.setenv(REDCap_API_TOKEN = getPass::getPass())
 #' easier, but will require explicit setting of the ssh key (see below).  Also,
 #' when multiple people are contributing to the project different users will
 #' need to have specific secrets for their token(s) which will complicate the
-#' code base.  Setting these system environmental variables in a common
+#' code base.  Setting these system environment variables in a common
 #' .Rprofile as part of a collaborative project can resolve these issues.
 #'
 #+ eval = FALSE
@@ -132,7 +132,7 @@ Sys.setenv(REDCap_API_TOKEN = secret::get_secret("2000_2001_Avalanche"))
 }
 # */
 #'
-#' Setting the environmental variable could be done via:
+#' Setting the environment variable could be done via:
 #'
 #+ label = "REDCap_API_sysvar", eval = FALSE
 # /*
@@ -181,7 +181,7 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 
 #'
 #' After setting up the keyring and adding the token(s) you will only need to
-#' use the last line setting the system environmental variable in the specific
+#' use the last line setting the system environment variable in the specific
 #' scripts.  If the above chunk is evaluated by all collaborators on the project
 #' with REDCap API tokens then no other modifications of the code base is needed
 #' for the collaborators to work together.
@@ -193,7 +193,7 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 #' and
 {{ paste0(qwraps2::backtick(export_core), ".") }}
 #'
-#' The specific behavior and results of these functions will depended on your
+#' The specific behavior and results of these functions will depend on your
 #' institution's REDCap instance and the user access permissions associated with
 #' the token used to access the project.
 #'
@@ -203,10 +203,10 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 #'
 #' With one call to
 {{ qwraps2::backtick(export_core) }}
-#' Will call the API several times and download several elements of a REDCap
+#' will call the API several times and download several elements of a REDCap
 #' project.  The return is a list and is the expected object class to be used
-#' as the basis for building a R data package.  An example of the return from
-#' this method below.  It is a list of several rcer_raw_* objects.
+#' as the basis for building an R data package.  An example of the return from
+#' this method is shown below.  It is a list of several rcer_raw_* objects.
 #+ eval = TRUE
 data(avs_raw_core)
 lapply(avs_raw_core, class)
@@ -220,7 +220,7 @@ lapply(avs_raw_core, class)
 args(export_content)
 #'
 #' * The uri, token, and format arguments are set to NULL by default.  If the
-#' value is NULL then the system environmental variable values are used.  The
+#' value is NULL then the system environment variable values are used.  The
 #' end user need only define the content argument.  Additional arguments, if
 #' needed, are passed to RCurl::postForm via the ellipsis.
 #'
@@ -228,7 +228,7 @@ args(export_content)
 #'
 #'     * content = "metadata" returns the data dictionary
 #'
-#'     * content = "record" returns the records for a project.  Note about export rights: Please be aware that Data Export user rights will be applied to this API request. For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
+#'     * content = "record" returns the records for a project.  Note about export rights: Please be aware that Data Export user rights will be applied to this API request. For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have export rights that remove identifiers or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
 #'
 #'     * content = "project" exports some of the basic attributes of the given REDCap project, such as the project's title, if it is longitudinal, if surveys are enabled, the time the project was created and moved to production, etc.
 #'

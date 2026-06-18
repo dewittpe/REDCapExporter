@@ -29,7 +29,7 @@
 #' # already exists, then you will be told so unless overwrite is set to TRUE
 #' REDCapExporter_add_api_token("Project1")
 #'
-#' # get a token and set as an environmental variable
+#' # get a token and set it as an environment variable
 #' Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("Project1"))
 #' }
 #'

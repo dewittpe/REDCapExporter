@@ -14,7 +14,7 @@ having suggested packages available.
   `devtools::build()`.
 * Add `roxygen2` and the roxygen2 configuration field to generated data package
   DESCRIPTION files so documentation tooling is declared explicitly.
-* Add BugReports url to `DESCRIPTION`
+* Add the BugReports URL to `DESCRIPTION`.
 
 ## Testing Change
 
@@ -40,17 +40,17 @@ having suggested packages available.
 
 ## Testing Change
 
-* The API used for testing is no longer working.  The test as been removed from
+* The API used for testing is no longer working.  The test has been removed from
   this version of the package so the package can stay on CRAN while a better
   solution is found. (#18)
 
 ## Minor changes
 
-* Fix spelling in documenttation
+* Fix spelling in documentation
 
 # Version 0.3.2
 
-* fix issue in test-export.R - it could/would fail if there was a time out
+* Fix issue in test-export.R - it could/would fail if there was a time out
   related to CURL.  Fix looks for an error and if the error is curl related the
   testing is skipped.  Other errors will still be thrown.
 

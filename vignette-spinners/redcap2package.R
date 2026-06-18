@@ -45,11 +45,11 @@ str(avs_raw_core)
 {{ qwraps2::backtick(export_core) }}
 #' and contains data on the 2000-2001 Stanley Cup Champion Colorado Avalanche.
 #' The data was transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html) into a
-#' REDCap Project hosed at the University of Colorado Denver.
+#' REDCap project hosted at the University of Colorado Denver.
 #'
-#' # Exporting a REDCap Project to a R Data Package
+#' # Exporting a REDCap Project to an R Data Package
 #'
-#' Exporting a REDCap project to a R data package is done with a call to
+#' Exporting a REDCap project to an R data package is done with a call to
 {{ paste0(qwraps2::backtick(build_r_data_package), ".") }}
 #' If the user passes the uri for the API and an API token a call to
 {{ qwraps2::backtick(export_core) }}
@@ -59,16 +59,16 @@ str(avs_raw_core)
 {{ qwraps2::backtick(rcer_rccore) }}
 #' object.
 #'
-#' To build the skeleton of a R data package you will need to pass in the core
-#' export from the REDCap project, a path for were the source code for the data
-#' package will be written, and some some information about
+#' To build the skeleton of an R data package you will need to pass in the core
+#' export from the REDCap project, a path where the source code for the data
+#' package will be written, and some information about
 #' the users. In this context, users are the persons who have, or had, access to the
 #' REDCap project and are listed under the UserRights section of the REDCap
 #' project.  The user data from REDCap is used to construct the Author section
 #' of the DESCRIPTION file for the R data package to be constructed.  By default,
 #' all users are listed as 'contributors'.  Modification of the roles can be
-#' provide by a named list object.  In the example below, the user dewittp is
-#' going to assigned the creator and author role.  To be a valid R package, at
+#' provided by a named list object.  In the example below, the user dewittp is
+#' assigned the creator and author role.  To be a valid R package, at
 #' least one user will need to have the creator role assigned.
 #'
 temppath <- tempdir()

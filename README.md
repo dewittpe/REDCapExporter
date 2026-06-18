@@ -13,35 +13,35 @@
 <!-- badges: end -->
 
 The goal of REDCapExporter is to provide a simple and relatively secure way to
-downloading and formatting data from a [REDCap](https://www.project-redcap.org/)
+download and format data from a [REDCap](https://www.project-redcap.org/)
 project.
 
-While REDCap (**R**esearch **E**lectronic **D**ata **Cap**ture) is a fantastic
-tool for data capture, the dissemination of the collected data in a format that
-multiple data analysis can easily access and share can be improved.  The
-REDCapExporter package provides a set of tools to provide easy access to REDCap
+While REDCap (Research Electronic Data Capture) is a fantastic
+tool for data capture, dissemination of the collected data in a format that
+multiple data analysts can easily access and share can be improved.  The
+REDCapExporter package provides tools for easy access to REDCap
 data via the REDCap API with two aims:
 
 1. Scripting functions to allow for easy access to, and formatting of, a data
    set within a REDCap project.
-2. Produce a skeleton R data package to house, document, archive, and
+2. Producing a skeleton R data package to house, document, archive, and
    disseminate a data set.
 
 _Why is REDCapExporter needed?_
 
 If you are familiar with REDCap then you know that exporting the data from the
-web interface is straight forward, easy to use, and powerful.  However, there is
+web interface is straightforward, easy to use, and powerful.  However, there is
 a fair amount of (meta) data that could be valuable to data analysis which is
-not included in the export.  The REDCapExporter aims to report and cross link
-the meta data, collected data, and (expanded) documentation in one location.
+not included in the export.  REDCapExporter aims to report and cross-link
+the metadata, collected data, and (expanded) documentation in one location.
 The resulting `.tar.gz` data package is easy to disseminate.
 
 Version control of data is difficult.  Small data files can easily be added to
 git repositories, and larger files using git-lfs.  Subversion can handle larger
 data sets with its own pros and cons.  However, adding the data to multiple
-repositories will consume a lot of disk space unnecessarily  and there are issues
-arising from sensitive data being versioned and while using public repository
-hosts.  A R data package will provide an implicit versioning of data while
+repositories will consume a lot of disk space unnecessarily, and there are issues
+with sensitive data being versioned while using public repository
+hosts.  An R data package will provide implicit versioning of data while
 keeping only one copy of the data on the local disk.
 
 ## Installation
@@ -75,19 +75,19 @@ There are several ways to do this.  A simple way is based on the
 ``` r
 library(REDCapExporter)
 
-# Check if a file based keyring called "REDCapExporter" exists and create one if
+# Check if a file-based keyring called "REDCapExporter" exists and create one if
 # not.
 REDCapExporter_keyring_check()
 
-# Add, or verify existance of, an API token for PROJECT1
+# Add, or verify existence of, an API token for PROJECT1
 REDCapExporter_add_api_token("PROJECT1")
 
-# Add, or verify existance of, an API token for PROJECT2
+# Add, or verify existence of, an API token for PROJECT2
 REDCapExporter_add_api_token("PROJECT2")
 ```
 
 To set the token to use for the current session,
-set an environmental variable and use
+set an environment variable and use
 `REDCapExporter_get_api_token` to retrieve the token from the keyring.
 
 
@@ -97,8 +97,8 @@ Sys.setenv(REDCap_API_TOKEN = REDCapExporter_get_api_token("PROJECT1"))
 
 ### Export data from REDCap
 
-You may set one more environmental variable, or specify it explicitly in the call
-to `export_core`.  It is recommended to set the environmental variable for easy
+You may set one more environment variable, or specify it explicitly in the call
+to `export_core`.  It is recommended to set the environment variable for ease
 of use.
 
 
@@ -120,7 +120,7 @@ project1 <- format_record(project1_redcap_core)
 The example data provided in this package are statistics from the 2000-2001
 National Hockey League Stanley Cup Champion Colorado Avalanche.  The data was
 transcribed from [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html)
-into a REDCap Project hosed at the University of Colorado Denver.
+into a REDCap project hosted at the University of Colorado Denver.
 
 The data set `avs_raw_core` was generated via the following, after setting up my
 keyring and token as described above.
@@ -150,8 +150,6 @@ aggregate(goals ~ position, data = avsDF, FUN = sum)
 #> 4     Center    93
 #> 5    Defence    34
 ```
-
-
 
 
 

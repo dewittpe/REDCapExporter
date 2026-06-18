@@ -7,7 +7,7 @@ Authors@R: c(
 Description: Export all data, including metadata, from a REDCap (Research
     Electronic Data Capture) Project via the REDCap API
     <https://projectredcap.org/wp-content/resources/REDCapTechnicalOverview.pdf>.
-    The exported (meta)data will be processed and formatted into a stand alone R
+    The exported (meta)data will be processed and formatted into a stand-alone R
     data package which can be installed and shared between researchers.  Several
     default reports are generated as vignettes in the resulting package.
 License: GPL-2
