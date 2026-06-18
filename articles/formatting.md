@@ -1,7 +1,7 @@
 # Formatting Data Exported from REDCap
 
 This vignette covers different methods for formatting the records from
-REDCap into an analysis ready data set. It is assumed that the reader is
+REDCap into an analysis-ready data set. It is assumed that the reader is
 familiar with the process for exporting data from REDCap to R as
 described in
 [`vignette("api", package = "REDCapExporter")`](http://www.peteredewitt.com/REDCapExporter/articles/api.md)
@@ -10,7 +10,7 @@ For the purposes of this vignette we will use the example data sets
 provided in the package from the 2000-2001 National Hockey League
 Stanley Cup Champion Colorado Avalanche. The data was transcribed from
 [Hockey Reference](https://www.hockey-reference.com/teams/COL/2001.html)
-into a REDCap Project hosed at the University of Colorado Denver.
+into a REDCap project hosted at the University of Colorado Denver.
 
 The data sets we will work with in this vignette are:
 
@@ -31,7 +31,7 @@ There are two conceptual formatting tools provided by REDCapExporter:
 ## Coercion to data.frame
 
 The object returned from `export_content` is a string in either csv or
-json format. To have that information as a data.frame call
+json format. To have that information as a data.frame, call
 `as.data.frame`.
 
 This method works for the metadata and records directly.
@@ -166,8 +166,8 @@ Notice that for the record_id and uniform_number the field_type is
 “text” with no value for “select_choices_or_calculations” and no value
 for “text_validation_type_or_show_slider_number”. This is interpreted,
 then, as just a text field and should be character vector in the
-data.frame. Obviously the user could coerce to integer of numeric is
-desired and if appropriate.
+data.frame. The user could coerce these columns to integer or numeric
+values if desired and appropriate.
 
 For height, note that the field_type is “text” and the
 “text_validation_type_or_show_slider_number” is “integer”, hence the
@@ -175,7 +175,7 @@ coercion from the raw data to integer when building the data.frame.
 Lastly, the points are a calculated field and set to numeric.
 
 REDCapExporter attempts to make reasonable assumptions for the data
-types base on the metadata. For example, dates in REDCap can by entered
+types based on the metadata. For example, dates in REDCap can be entered
 and validated in Year-Month-Day, Month-Day-Year, and Day-Month-Year
 formats. The raw data is all in Year-Month-Day format.
 

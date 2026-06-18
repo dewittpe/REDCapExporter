@@ -1,6 +1,6 @@
 # Build R Data Package
 
-Build a R Data Package from the core contents of a REDCap Project.
+Build an R Data Package from the core contents of a REDCap Project.
 
 ## Usage
 
@@ -41,8 +41,8 @@ build_r_data_package(
 - author_roles:
 
   a list naming specific roles for each user id found in the user table
-  from an exported project. By default all users with be contributors
-  ('ctb'). You will need to define a author/creator.
+  from an exported project. By default all users will be contributors
+  ('ctb'). You will need to define an author/creator.
 
 - verbose:
 
@@ -87,7 +87,7 @@ library(REDCapExporter)
 data(avs_raw_core)
 tmppth <- tempdir()
 build_r_data_package(avs_raw_core, tmppth, author_roles = list(dewittp = c("cre", "aut")))
-#> Creating source package at /tmp/RtmpLXobhx/rcd14465
+#> Creating source package at /tmp/RtmpYyInuE/rcd14465
 #> ℹ Loading rcd14465
 #> Writing NAMESPACE
 #> Writing project.Rd
@@ -104,8 +104,8 @@ list.files(tmppth, recursive = TRUE, all.files = TRUE, no.. = TRUE)
 #>  [7] "downlit/pak"                                                       
 #>  [8] "downlit/stats"                                                     
 #>  [9] "downlit/utils"                                                     
-#> [10] "file1adb1e5cbd8c"                                                  
-#> [11] "file1adb46919aa4"                                                  
+#> [10] "file1a2c1d30a2ad"                                                  
+#> [11] "file1a2c5e4b87b2"                                                  
 #> [12] "rcd14465/DESCRIPTION"                                              
 #> [13] "rcd14465/LICENSE"                                                  
 #> [14] "rcd14465/NAMESPACE"                                                

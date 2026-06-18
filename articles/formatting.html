@@ -68,7 +68,7 @@
     
     
 <p>This vignette covers different methods for formatting the records
-from REDCap into an analysis ready data set. It is assumed that the
+from REDCap into an analysis-ready data set. It is assumed that the
 reader is familiar with the process for exporting data from REDCap to R
 as described in
 <code><a href="../articles/api.html">vignette("api", package = "REDCapExporter")</a></code></p>
@@ -76,7 +76,7 @@ as described in
 provided in the package from the 2000-2001 National Hockey League
 Stanley Cup Champion Colorado Avalanche. The data was transcribed from
 <a href="https://www.hockey-reference.com/teams/COL/2001.html" class="external-link">Hockey
-Reference</a> into a REDCap Project hosed at the University of Colorado
+Reference</a> into a REDCap project hosted at the University of Colorado
 Denver.</p>
 <p>The data sets we will work with in this vignette are:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -94,8 +94,8 @@ REDCapExporter:</p>
 <h2 id="coercion-to-data-frame">Coercion to data.frame<a class="anchor" aria-label="anchor" href="#coercion-to-data-frame"></a>
 </h2>
 <p>The object returned from <code>export_content</code> is a string in
-either csv or json format. To have that information as a data.frame call
-<code>as.data.frame</code>.</p>
+either csv or json format. To have that information as a data.frame,
+call <code>as.data.frame</code>.</p>
 <p>This method works for the metadata and records directly.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">avs_metadata_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">avs_raw_metadata</span><span class="op">)</span></span>
@@ -7892,14 +7892,14 @@ Points
 “text” with no value for “select_choices_or_calculations” and no value
 for “text_validation_type_or_show_slider_number”. This is interpreted,
 then, as just a text field and should be character vector in the
-data.frame. Obviously the user could coerce to integer of numeric is
-desired and if appropriate.</p>
+data.frame. The user could coerce these columns to integer or numeric
+values if desired and appropriate.</p>
 <p>For height, note that the field_type is “text” and the
 “text_validation_type_or_show_slider_number” is “integer”, hence the
 coercion from the raw data to integer when building the data.frame.
 Lastly, the points are a calculated field and set to numeric.</p>
 <p>REDCapExporter attempts to make reasonable assumptions for the data
-types base on the metadata. For example, dates in REDCap can by entered
+types based on the metadata. For example, dates in REDCap can be entered
 and validated in Year-Month-Day, Month-Day-Year, and Day-Month-Year
 formats. The raw data is all in Year-Month-Day format.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; overflow-x: scroll; width:700px; ">

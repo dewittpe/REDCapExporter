@@ -64,8 +64,8 @@ str(avs_raw_metadata)
 #>  'rcer_raw_metadata' chr "field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid"| __truncated__
 #>  - attr(*, "url")= chr "https://redcap.ucdenver.edu/api/"
 #>  - attr(*, "status_code")= int 200
-#>  - attr(*, "times")= Named num [1:6] 0 0 0 0.0001 0.3102 ...
+#>  - attr(*, "times")= Named num [1:6] 0 0 0 0.000272 0.223027 ...
 #>   ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
 #>  - attr(*, "Content-Type")= chr "text/csv; charset=utf-8"
-#>  - attr(*, "accessed")= POSIXct[1:1], format: "2026-02-28 16:03:21"
+#>  - attr(*, "accessed")= POSIXct[1:1], format: "2026-06-17 23:33:53"
 ```

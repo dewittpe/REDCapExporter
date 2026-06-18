@@ -40,6 +40,7 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.5" id="version-035">Version 0.3.5<a class="anchor" aria-label="anchor" href="#version-035"></a></h2>
+<p>The primary objective of these patches is to make the package more robust to not having suggested packages available.</p>
 <div class="section level3">
 <h3 id="improvements-0-3-5">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-3-5"></a></h3>
 <ul><li>Remove the unused <code>magrittr</code> from suggested dependencies.</li>
@@ -47,6 +48,7 @@
 <li>Use <code><a href="https://roxygen2.r-lib.org/reference/roxygenize.html" class="external-link">roxygen2::roxygenize()</a></code> instead of <code>devtools::document()</code> when documenting generated data packages.</li>
 <li>Show base <code>R CMD build</code> in the generated package vignette example instead of <code>devtools::build()</code>.</li>
 <li>Add <code>roxygen2</code> and the roxygen2 configuration field to generated data package DESCRIPTION files so documentation tooling is declared explicitly.</li>
+<li>Add the BugReports URL to <code>DESCRIPTION</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="testing-change-0-3-5">Testing Change<a class="anchor" aria-label="anchor" href="#testing-change-0-3-5"></a></h3>
@@ -72,17 +74,17 @@
 <h2 class="pkg-version" data-toc-text="0.3.3" id="version-033">Version 0.3.3<a class="anchor" aria-label="anchor" href="#version-033"></a></h2><p class="text-muted">CRAN release: 2026-02-28</p>
 <div class="section level3">
 <h3 id="testing-change-0-3-3">Testing Change<a class="anchor" aria-label="anchor" href="#testing-change-0-3-3"></a></h3>
-<ul><li>The API used for testing is no longer working. The test as been removed from this version of the package so the package can stay on CRAN while a better solution is found. (<a href="https://github.com/dewittpe/REDCapExporter/issues/18" class="external-link">#18</a>)</li>
+<ul><li>The API used for testing is no longer working. The test has been removed from this version of the package so the package can stay on CRAN while a better solution is found. (<a href="https://github.com/dewittpe/REDCapExporter/issues/18" class="external-link">#18</a>)</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-0-3-3">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-3-3"></a></h3>
-<ul><li>Fix spelling in documenttation</li>
+<ul><li>Fix spelling in documentation</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.2" id="version-032">Version 0.3.2<a class="anchor" aria-label="anchor" href="#version-032"></a></h2><p class="text-muted">CRAN release: 2025-07-29</p>
 <ul><li>
-<p>fix issue in test-export.R - it could/would fail if there was a time out related to CURL. Fix looks for an error and if the error is curl related the testing is skipped. Other errors will still be thrown.</p>
+<p>Fix issue in test-export.R - it could/would fail if there was a time out related to CURL. Fix looks for an error and if the error is curl related the testing is skipped. Other errors will still be thrown.</p>
 <blockquote>
 <p>archer01_csv &lt;- export_core(uri = ‘<a href="https://bbmc.ouhsc.edu/redcap/api/" class="external-link uri">https://bbmc.ouhsc.edu/redcap/api/</a>’, token = ‘9A81268476645C4E5F03428B8AC3AA7B’) Getting Project Info Error in curl::curl_fetch_memory(uri, handle = h) : Timeout was reached [bbmc.ouhsc.edu]: Connection timed out after 10001 milliseconds Calls: export_core … export_content -&gt; <anonymous> -&gt; raise_libcurl_error Execution halted</anonymous></p>
 </blockquote>

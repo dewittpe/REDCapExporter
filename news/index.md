@@ -2,6 +2,9 @@
 
 ## Version 0.3.5
 
+The primary objective of these patches is to make the package more
+robust to not having suggested packages available.
+
 ### Improvements
 
 - Remove the unused `magrittr` from suggested dependencies.
@@ -18,6 +21,7 @@
 - Add `roxygen2` and the roxygen2 configuration field to generated data
   package DESCRIPTION files so documentation tooling is declared
   explicitly.
+- Add the BugReports URL to `DESCRIPTION`.
 
 ### Testing Change
 
@@ -51,20 +55,20 @@ CRAN release: 2026-02-28
 
 ### Testing Change
 
-- The API used for testing is no longer working. The test as been
+- The API used for testing is no longer working. The test has been
   removed from this version of the package so the package can stay on
   CRAN while a better solution is found.
   ([\#18](https://github.com/dewittpe/REDCapExporter/issues/18))
 
 ### Minor changes
 
-- Fix spelling in documenttation
+- Fix spelling in documentation
 
 ## Version 0.3.2
 
 CRAN release: 2025-07-29
 
-- fix issue in test-export.R - it could/would fail if there was a time
+- Fix issue in test-export.R - it could/would fail if there was a time
   out related to CURL. Fix looks for an error and if the error is curl
   related the testing is skipped. Other errors will still be thrown.
 

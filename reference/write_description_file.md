@@ -1,7 +1,7 @@
 # Write DESCRIPTION File from REDCap Metadata
 
-Create the DESCRIPTION file for the R Data package based on an Exported
-REDCap Project
+Create the DESCRIPTION file for the R data package based on an exported
+REDCap project.
 
 ## Usage
 
@@ -20,13 +20,13 @@ write_authors(user, roles = NULL)
 
 - user:
 
-  User(s), as noted in the REDCap project meta data. This parameter is
+  User(s), as noted in the REDCap project metadata. This parameter is
   singular as it refers to the "user" content one can access from the
   REDCap API.
 
 - roles:
 
-  roles the `user` hold with respect to the R data package. These roles
+  roles the `user` holds with respect to the R data package. These roles
   have no relationship to REDCap roles.
 
 - project_info:

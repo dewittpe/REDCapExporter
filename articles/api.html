@@ -71,31 +71,31 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dewittpe/REDCapExporter" class="external-link">REDCapExporter</a></span><span class="op">)</span></span></code></pre></div>
 <p>The purpose of this vignette is to show examples of exporting
 elements of a REDCap project via the REDCap (Research Electronic Data
-Capture) API. The examples in this vignette rely on use of a API token
-which cannot be divulged and thus the end users will not be able to
-reproduce the following examples exactly, but hopefully will be able to
-use these examples as a guide for their own use.</p>
+Capture) API. The examples in this vignette rely on an API token which
+cannot be divulged, so end users will not be able to reproduce the
+following examples exactly, but hopefully will be able to use these
+examples as a guide for their own use.</p>
 <p>The raw return from the API calls has been provided and can be used
 as the input for examples the end users can evaluate.</p>
 <p>The example data provided in this package are statistics from the
 2000-2001 National Hockey League Stanley Cup Champion Colorado
 Avalanche. The data was transcribed from <a href="https://www.hockey-reference.com/teams/COL/2001.html" class="external-link">Hockey
-Reference</a> into a REDCap Project hosed at the University of Colorado
+Reference</a> into a REDCap project hosted at the University of Colorado
 Denver.</p>
 <div class="section level2">
 <h2 id="system-environment-variables">System Environment Variables<a class="anchor" aria-label="anchor" href="#system-environment-variables"></a>
 </h2>
 <p><em><a href="https://cran.r-project.org/package=REDCapExporter" class="external-link">REDCapExporter</a></em>
-can use three system variables to simplify the user’s interaction with
-the REDCap API. The first variable is the URI for your institution’s
-REDCap instance. Set this once at the beginning of scripts, in a
-.Rprofile, and this will be the default uri used in any function call
-with a uri argument.</p>
+can use three environment variables to simplify the user’s interaction
+with the REDCap API. The first variable is the URI for your
+institution’s REDCap instance. Set this once at the beginning of
+scripts, in a .Rprofile, and this will be the default uri used in any
+function call with a uri argument.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>REDCap_API_URI <span class="op">=</span> <span class="st">"https://redcap.ucdenver.edu/api/"</span><span class="op">)</span></span></code></pre></div>
-<p>An environmental variable can be used to specify is the format for
-data to be returned in from the API. Possible values for the API are
-‘csv’, ‘xml’, or ‘json’. However, within the <em><a href="https://cran.r-project.org/package=REDCapExporter" class="external-link">REDCapExporter</a></em>
+<p>An environment variable can be used to specify the format for data to
+be returned in from the API. Possible values for the API are ‘csv’,
+‘xml’, or ‘json’. However, within the <em><a href="https://cran.r-project.org/package=REDCapExporter" class="external-link">REDCapExporter</a></em>
 package methods have been built to support csv or json; xml is not yet
 supported. csv is the default format and this is set when the namespace
 is loaded.</p>
@@ -103,8 +103,8 @@ is loaded.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"REDCap_API_format"</span><span class="op">)</span></span></code></pre></div>
 <p>Lastly, but the most important with respect to security, is the API
 token. You will need to have API export rights for the REDCap project
-you are looking to export into an R data package. Contact the project
-owner, system admin, or go through your institution’s REDCap web page to
+you are exporting into an R data package. Contact the project owner,
+system admin, or go through your institution’s REDCap web page to
 acquire an API token.</p>
 <p>Remember, your API token is the equivalent of a username/password
 combination. Thus, you must treat the token with the same, or more,
@@ -140,10 +140,10 @@ package. This package allows the user to set up a vault of secrets
 encrypted via ssh keys. We encourage the reader to read the “secrets”
 vignette in R via:
 <code><a href="https://cran.rstudio.com/web/packages/secret/vignettes/secrets.html" class="external-link">vignette(topic = "secrets", package = "secret")</a></code> for details
-on the use of the secret package.</p>
+on the secret package.</p>
 <p>Pros of this approach: the API key can be encrypted and stored within
 the version control repository for the project you are working on. This
-will make it easy move the project form machine to machine where the
+will make it easy to move the project from machine to machine where the
 same private ssh key exists.</p>
 <p>Downsides to this approach: if your ssh key has a passphrase you’ll
 need to enter it when accessing the token. That may make non-interactive
@@ -151,13 +151,13 @@ builds difficult. Having a specific key without a passphrase can make
 this approach easier, but will require explicit setting of the ssh key
 (see below). Also, when multiple people are contributing to the project
 different users will need to have specific secrets for their token(s)
-which will complicate the code base. Setting these system environmental
+which will complicate the code base. Setting these system environment
 variables in a common .Rprofile as part of a collaborative project can
 resolve these issues.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>USER_KEY <span class="op">=</span> <span class="st">"~/.ssh/vaults"</span><span class="op">)</span>  <span class="co"># ~/.ssh/id_rsa has a passphrase, ~/.ssh/vaults does not.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>REDCap_API_TOKEN <span class="op">=</span> <span class="fu">secret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/secret/man/get_secret.html" class="external-link">get_secret</a></span><span class="op">(</span><span class="st">"2000_2001_Avalanche"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Setting the environmental variable could be done via:</p>
+<p>Setting the environment variable could be done via:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>REDCap_API_TOKEN <span class="op">=</span> <span class="fu">secret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/secret/man/get_secret.html" class="external-link">get_secret</a></span><span class="op">(</span><span class="st">"2000_2001_Avalanche"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -186,11 +186,10 @@ would access the token needed for the given project.</p>
 <span><span class="fu"><a href="../reference/REDCapExporter_keyring.html">REDCapExporter_add_api_token</a></span><span class="op">(</span><span class="st">"Project2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>REDCap_API_TOKEN <span class="op">=</span> <span class="fu"><a href="../reference/REDCapExporter_keyring.html">REDCapExporter_get_api_token</a></span><span class="op">(</span><span class="st">"Project1"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>After setting up the keyring and adding the token(s) you will only
-need to use the last line setting the system environmental variable in
-the specific scripts. If the above chunk is evaluated by all
-collaborators on the project with REDCap API tokens then no other
-modifications of the code base is needed for the collaborators to work
-together.</p>
+need to use the last line setting the system environment variable in the
+specific scripts. If the above chunk is evaluated by all collaborators
+on the project with REDCap API tokens then no other modifications of the
+code base is needed for the collaborators to work together.</p>
 </div>
 </div>
 <div class="section level2">
@@ -198,18 +197,18 @@ together.</p>
 </h2>
 <p>Methods which will call REDCap API are <code>export_content</code>
 and <code>export_core</code>.</p>
-<p>The specific behavior and results of these functions will depended on
+<p>The specific behavior and results of these functions will depend on
 your institution’s REDCap instance and the user access permissions
 associated with the token used to access the project.</p>
 <p>The next subsections provide details on these methods.</p>
 <div class="section level3">
 <h3 id="export-core">Export Core<a class="anchor" aria-label="anchor" href="#export-core"></a>
 </h3>
-<p>With one call to <code>export_core</code> Will call the API several
+<p>With one call to <code>export_core</code> will call the API several
 times and download several elements of a REDCap project. The return is a
 list and is the expected object class to be used as the basis for
-building a R data package. An example of the return from this method
-below. It is a list of several rcer_raw_* objects.</p>
+building an R data package. An example of the return from this method is
+shown below. It is a list of several rcer_raw_* objects.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">avs_raw_core</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">avs_raw_core</span>, <span class="va">class</span><span class="op">)</span></span>
@@ -235,7 +234,7 @@ below. It is a list of several rcer_raw_* objects.</p>
 <span><span class="co">## NULL</span></span></code></pre></div>
 <ul>
 <li><p>The uri, token, and format arguments are set to NULL by default.
-If the value is NULL then the system environmental variable values are
+If the value is NULL then the system environment variable values are
 used. The end user need only define the content argument. Additional
 arguments, if needed, are passed to RCurl::postForm via the
 ellipsis.</p></li>
@@ -247,12 +246,12 @@ ellipsis.</p></li>
 export rights: Please be aware that Data Export user rights will be
 applied to this API request. For example, if you have ‘No Access’ data
 export rights in the project, then the API data export will fail and
-return an error. And if you have ‘De-Identified’ or ‘Remove all tagged
-Identifier fields’ data export rights, then some data fields
-<em>might</em> be removed and filtered out of the data set returned from
-the API. To make sure that no data is unnecessarily filtered out of your
-API request, you should have ‘Full Data Set’ export rights in the
-project.</p></li>
+return an error. And if you have export rights that remove identifiers
+or ‘Remove all tagged Identifier fields’ data export rights, then some
+data fields <em>might</em> be removed and filtered out of the data set
+returned from the API. To make sure that no data is unnecessarily
+filtered out of your API request, you should have ‘Full Data Set’ export
+rights in the project.</p></li>
 <li><p>content = “project” exports some of the basic attributes of the
 given REDCap project, such as the project’s title, if it is
 longitudinal, if surveys are enabled, the time the project was created
@@ -283,10 +282,10 @@ available as a data set.</p>
 <span><span class="co">##  'rcer_raw_metadata' chr "field_name,form_name,section_header,field_type,field_label,select_choices_or_calculations,field_note,text_valid"| __truncated__</span></span>
 <span><span class="co">##  - attr(*, "url")= chr "https://redcap.ucdenver.edu/api/"</span></span>
 <span><span class="co">##  - attr(*, "status_code")= int 200</span></span>
-<span><span class="co">##  - attr(*, "times")= Named num [1:6] 0 0 0 0.0001 0.3102 ...</span></span>
+<span><span class="co">##  - attr(*, "times")= Named num [1:6] 0 0 0 0.000272 0.223027 ...</span></span>
 <span><span class="co">##   ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...</span></span>
 <span><span class="co">##  - attr(*, "Content-Type")= chr "text/csv; charset=utf-8"</span></span>
-<span><span class="co">##  - attr(*, "accessed")= POSIXct[1:1], format: "2026-02-28 16:03:21"</span></span></code></pre></div>
+<span><span class="co">##  - attr(*, "accessed")= POSIXct[1:1], format: "2026-06-17 23:33:53"</span></span></code></pre></div>
 <p>Using the as.data.frame methods will help you get the return from
 REDCap into a usable form:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
