@@ -1,3 +1,15 @@
+# Version 0.3.6
+
+## Improvements
+
+* Use the installed `roxygen2` version in DESCRIPTION files generated for data
+  packages, and omit the roxygen2 configuration field when `roxygen2` is not
+  available.
+
+## Testing Change
+
+* Make `test-build_r_pkg.R` robust to future `roxygen2` version changes.
+
 # Version 0.3.5
 
 The primary objective of these patches is to make the package more robust to not

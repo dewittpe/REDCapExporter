@@ -23,9 +23,15 @@ d <- read.dcf(file.path(pkgdir, "DESCRIPTION"))
 stopifnot(
   d[1, "Package"] == "rcd14465",
   grepl("\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{2}", d[1, "Version"]),
-  all(c("knitr", "roxygen2") %in% trimws(strsplit(d[1, "Suggests"], ",")[[1]])),
-  d[1, "Config/roxygen2/version"] == "8.0.0"
+  all(c("knitr", "roxygen2") %in% trimws(strsplit(d[1, "Suggests"], ",")[[1]]))
 )
+
+if (requireNamespace("roxygen2", quietly = TRUE)) {
+  stopifnot(
+    "Config/roxygen2/version" %in% colnames(d),
+    !is.na(numeric_version(d[1, "Config/roxygen2/version"]))
+  )
+}
 
 # check the file structure of the built package
 x <- list.files(

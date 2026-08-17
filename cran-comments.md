@@ -1,3 +1,14 @@
+# Version 0.3.6
+
+Make generated data package DESCRIPTION files and tests robust to changes in
+the installed `roxygen2` version.
+
+## Testing
+
+- Local macOS, R 4.6.1
+  - R CMD check --as-cran REDCapExporter_0.3.6.tar.gz
+  - Status: pending
+
 # Version 0.3.5
 
 Reduce number of suggested packages and make the package more robust to missing

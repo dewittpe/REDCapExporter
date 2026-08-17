@@ -30,6 +30,14 @@ write_description_file <- function(access_time, user, roles, project_info, path)
           formatC(lubridate::minute(access_time), width = 2, flag = 0),
           sep = ".")
 
+  roxygen2_config <- if (requireNamespace("roxygen2", quietly = TRUE)) {
+    paste0("Config/roxygen2/version: ",
+           as.character(utils::packageVersion("roxygen2")),
+           "\n")
+  } else {
+    ""
+  }
+
   cat("Package: ", paste0("rcd", project_info$project_id), "\n",
       "Title: ",   project_info$project_title, "\n",
       "Version: ", pkg_version, "\n",
@@ -40,7 +48,7 @@ write_description_file <- function(access_time, user, roles, project_info, path)
       "LazyData: true\n",
       "Suggests:\n    knitr,\n    roxygen2\n",
       "VignetteBuilder: knitr\n",
-      "Config/roxygen2/version: 8.0.0\n",
+      roxygen2_config,
       sep = "", file = paste(path, "DESCRIPTION", sep = "/"), append = FALSE)
 
   invisible()
